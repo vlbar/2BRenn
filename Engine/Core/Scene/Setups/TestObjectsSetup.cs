@@ -14,20 +14,21 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
             HashSet<RennObject> objects = new HashSet<RennObject>();
 
             RennObject cube = new RennObject();
-            cube.SetLocalPosition(0.5f, 0, 0);
-            cube.SetLocalScale(0.2f);
-            cube.AddComponent<MeshRender>().SetRenderAction(DrawCube);
+            cube.Transform.SetPosition(1f, 0, 0);
+            cube.Transform.SetRotation(90, 0, 0f);
+            cube.Transform.SetScale(0.2f);
+            cube.AddComponent<MeshRenderer>().SetRenderAction(DrawCube);
             objects.Add(cube);
 
             RennObject cube2 = new RennObject();
+            cube2.Transform.SetPosition(-1f, 0, 0);
+            cube2.Transform.SetScale(0.5f);
+            cube2.AddComponent<MeshRenderer>().SetRenderAction(DrawCube);
             cube2.SetParent(cube);
-            cube2.SetLocalPosition(-1, 0, 0);
-            cube2.SetLocalScale(0.2f);
-            cube2.AddComponent<MeshRender>().SetRenderAction(DrawCube);
             objects.Add(cube2);
 
             RennObject axis = new RennObject();
-            axis.AddComponent<MeshRender>().SetRenderAction(DrawAxis);
+            axis.AddComponent<MeshRenderer>().SetRenderAction(DrawAxis);
             objects.Add(axis);
 
             return objects;

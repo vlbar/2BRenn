@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\Components\Component.cs" />
-    <Compile Include="Engine\Components\MeshRender.cs" />
+    <Compile Include="Engine\Components\MeshRenderer.cs" />
     <Compile Include="Engine\Core\Interfaces\IComponent.cs" />
     <Compile Include="Engine\Core\Renderer.cs" />
     <Compile Include="Engine\Core\RennEngine.cs" />
@@ -75,6 +75,7 @@
     <Compile Include="Engine\Core\Scene\SceneManager.cs" />
     <Compile Include="Engine\Core\Interfaces\IObjectsSetup.cs" />
     <Compile Include="Engine\Core\Scene\Setups\TestObjectsSetup.cs" />
+    <Compile Include="Engine\Core\Transform.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +97,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include=".gitignore" />
+    <None Include="Engine\Core\Render\Shaders\baseFragmentShader.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Core\Render\Shaders\baseVertexShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
