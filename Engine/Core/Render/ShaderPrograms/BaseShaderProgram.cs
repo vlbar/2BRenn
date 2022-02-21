@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using TwoBRenn.Engine.Core.Render.ShaderPrograms;
 
@@ -40,6 +39,7 @@ namespace TwoBRenn.Engine.Core.Render
             }
         }
 
+        // program
         public void ActiveProgram()
         {
             ActiveProgram(defaultAttributes);
@@ -54,46 +54,7 @@ namespace TwoBRenn.Engine.Core.Render
         public void DeactiveProgram() => GL.UseProgram(0);
         public void DeleteProgram() => GL.DeleteProgram(programId);
 
-
-
-        public int CreateVertexArray()
-        {
-            int vertexArray = GL.GenVertexArray();
-            GL.BindVertexArray(vertexArray);
-            return vertexArray;
-        }
-
-        public void DrawVertexArray(int vertexArray, float[] data)
-        {
-            GL.BindVertexArray(vertexArray);
-            GL.DrawArrays(PrimitiveType.Triangles, 0, data.Length / 3);
-        }
-
-        public int CreateBuffer(float[] data, BufferTarget target = BufferTarget.ArrayBuffer, BufferUsageHint bufferUsage = BufferUsageHint.StaticDraw)
-        {
-            int buffer = GL.GenBuffer();
-            GL.BindBuffer(target, buffer);
-            GL.BufferData(target, data.Length * sizeof(float), data, bufferUsage);
-            return buffer;
-        }
-
-        public void SetupBuffer(int buffer, int attributeLocation, int size = 3)
-        {
-            GL.EnableVertexAttribArray(attributeLocation);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
-            GL.VertexAttribPointer(attributeLocation, size, VertexAttribPointerType.Float, false, size * sizeof(float), 0);
-
-            GL.BindVertexArray(0);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.DisableVertexAttribArray(attributeLocation);
-        }
-
-        public void DeleteBuffer(int buffer, BufferTarget target = BufferTarget.ArrayBuffer)
-        {
-            GL.BindBuffer(target, 0);
-            GL.DeleteBuffer(buffer);
-        }
-
+        // attributes
         public int GetAttributeLocation(string name)
         {
             return GL.GetAttribLocation(programId, name);
@@ -127,6 +88,7 @@ namespace TwoBRenn.Engine.Core.Render
             }
         }
 
+        // utils
         private int CreateShader(ShaderType shaderType, string path)
         {
             string shader = File.ReadAllText(path);
