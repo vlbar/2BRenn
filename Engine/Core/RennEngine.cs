@@ -1,25 +1,23 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Text;
-using System.Threading;
-using System.Windows.Forms;
+﻿using TwoBRenn.Engine.Core.Render;
 
 namespace TwoBRenn.Engine.Core
 {
     class RennEngine
     {
-        private SceneManager sceneManager = new SceneManager();
-        public Renderer Renderer { get; } = new Renderer();
+        private SceneManager sceneManager;
+        public RenderControl RenderControl { get; } = new RenderControl();
 
         public RennEngine()
         {
-            Renderer.AddRenderAction(delegate
+            RenderControl.OnSetup += delegate
+            {
+                sceneManager = new SceneManager();
+            };
+
+            RenderControl.OnRender += delegate
             {
                 sceneManager.OnUpdate();
-            });
+            };
         }
     }
 }

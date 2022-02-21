@@ -69,7 +69,11 @@
     <Compile Include="Engine\Components\Component.cs" />
     <Compile Include="Engine\Components\MeshRenderer.cs" />
     <Compile Include="Engine\Core\Interfaces\IComponent.cs" />
-    <Compile Include="Engine\Core\Renderer.cs" />
+    <Compile Include="Engine\Core\Render\RenderControl.cs" />
+    <Compile Include="Engine\Core\Render\ShaderPrograms\BaseShaderProgram.cs" />
+    <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderAttribute.cs" />
+    <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderDefinition.cs" />
+    <Compile Include="Engine\Core\Render\ShaderPrograms\SimpleShader.cs" />
     <Compile Include="Engine\Core\RennEngine.cs" />
     <Compile Include="Engine\Core\RennObject.cs" />
     <Compile Include="Engine\Core\Scene\SceneManager.cs" />

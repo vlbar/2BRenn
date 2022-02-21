@@ -17,11 +17,11 @@ namespace TwoBRenn
 
         private void glControl1_Load(object sender, EventArgs e)
         {
-            engine.Renderer.SetupGlControl(glControl);
-            engine.Renderer.AddRenderAction(delegate
+            engine.RenderControl.SetupGlControl(glControl);
+            engine.RenderControl.OnRender += delegate
             {
-                debugInfoLabel.Text = engine.Renderer.GetDynamicDebugInfo();
-            });
+                debugInfoLabel.Text = engine.RenderControl.GetDynamicDebugInfo();
+            };
         }
     }
 }

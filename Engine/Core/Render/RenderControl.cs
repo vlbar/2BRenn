@@ -1,5 +1,5 @@
 ﻿using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -7,14 +7,16 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace TwoBRenn.Engine.Core
+namespace TwoBRenn.Engine.Core.Render
 {
-    class Renderer
+    class RenderControl
     {
         private GLControl glControl;
 
+        public Action OnSetup { get; set; }
+        public Action OnRender { get; set; }
+        
         private int maxFrameRate = 75;
-        private Action renderAction;
         private Stopwatch preciseTimer;
         private double accumulator = 0;
         private int frameCount = 0;
@@ -34,11 +36,8 @@ namespace TwoBRenn.Engine.Core
             preciseTimer = new Stopwatch();
             Application.Idle += Application_Idle;
             glControl.Paint += GlControl_Paint;
-        }
 
-        public void AddRenderAction(Action renderAction)
-        {
-            this.renderAction += renderAction;
+            OnSetup?.Invoke();
         }
 
         private void SetupViewport()
@@ -47,10 +46,6 @@ namespace TwoBRenn.Engine.Core
             int height = glControl.Height;
 
             GL.Viewport(0, 0, width, height);
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(-1, 1, -1, 1, -1, 100);
-            GL.MatrixMode(MatrixMode.Modelview);
             glControl.Invalidate();
         }
 
@@ -80,7 +75,7 @@ namespace TwoBRenn.Engine.Core
             Accumulate(frameTime + waitingTime);
 
             // render cycle
-            renderAction?.Invoke();
+            OnRender?.Invoke();
 
             glControl.SwapBuffers();
         }
@@ -101,7 +96,6 @@ namespace TwoBRenn.Engine.Core
             accumulator += milliseconds;
             if (accumulator > 1000)
             {
-
                 fps = frameCount;
                 accumulator -= 1000;
                 frameCount = 0;

@@ -11,5 +11,6 @@ namespace TwoBRenn.Engine.Components
     {
         public RennObject rennObject { get; set; }
         public abstract void OnUpdate();
+        public abstract void OnUnload();
     }
 }
