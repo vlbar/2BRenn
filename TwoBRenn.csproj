@@ -71,6 +71,7 @@
     <Compile Include="Engine\Components\Component.cs" />
     <Compile Include="Engine\Components\MeshRenderer.cs" />
     <Compile Include="Engine\Core\Interfaces\IComponent.cs" />
+    <Compile Include="Engine\Core\Render\Mesh.cs" />
     <Compile Include="Engine\Core\Render\RenderControl.cs" />
     <Compile Include="Engine\Core\Render\BaseShaderProgram.cs" />
     <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderAttribute.cs" />
@@ -81,7 +82,8 @@
     <Compile Include="Engine\Core\RennObject.cs" />
     <Compile Include="Engine\Core\Scene\SceneManager.cs" />
     <Compile Include="Engine\Core\Interfaces\IObjectsSetup.cs" />
-    <Compile Include="Engine\Core\Scene\Setups\TestObjectsSetup.cs" />
+    <Compile Include="ObjectsSetups\TestMeshFactory.cs" />
+    <Compile Include="ObjectsSetups\TestObjectsSetup.cs" />
     <Compile Include="Engine\Core\Transform.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -135,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Engine\Utils\" />
-    <Folder Include="ObjectsSetups\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Textures\container.png">

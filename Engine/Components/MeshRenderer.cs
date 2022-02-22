@@ -7,9 +7,7 @@ namespace TwoBRenn.Engine.Components
 {
     class MeshRenderer : Component
     {
-        float[] triangleVertices;
-        uint[] vertexIndexes;
-
+        private Mesh mesh;
         private BaseShaderProgram shaderProgram;
         private Texture texture;
         private Dictionary<string, ShaderAttribute> attributes;
@@ -17,7 +15,6 @@ namespace TwoBRenn.Engine.Components
 
         private int vertexArray;
         private int vertexBuffer;
-
         private int elementBuffer;
 
         public void SetShaderProgram(BaseShaderProgram shaderProgram)
@@ -31,10 +28,9 @@ namespace TwoBRenn.Engine.Components
             this.texture = texture;
         }
 
-        public void SetTriangleMesh(float[] vertices, uint[] indexes)
+        public void SetTriangleMesh(Mesh mesh)
         {
-            triangleVertices = vertices;
-            vertexIndexes = indexes;
+            this.mesh = mesh;
 
             // vertex array
             vertexArray = GL.GenVertexArray();
@@ -43,7 +39,7 @@ namespace TwoBRenn.Engine.Components
             // vertex buffer
             vertexBuffer = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
-            GL.BufferData(BufferTarget.ArrayBuffer, triangleVertices.Length * sizeof(float), triangleVertices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, mesh.TriangleVertices.Length * sizeof(float), mesh.TriangleVertices, BufferUsageHint.StaticDraw);
 
             int positionLocation = shaderProgram.GetAttributeLocation("aVertexPos");
             GL.EnableVertexAttribArray(positionLocation);
@@ -56,7 +52,7 @@ namespace TwoBRenn.Engine.Components
             // element buffer
             elementBuffer = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBuffer);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, vertexIndexes.Length * sizeof(uint), vertexIndexes, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, mesh.VertexIndexes.Length * sizeof(uint), mesh.VertexIndexes, BufferUsageHint.StaticDraw);
 
             // unload
             GL.BindVertexArray(0);
@@ -88,12 +84,12 @@ namespace TwoBRenn.Engine.Components
 
         public override void OnUpdate()
         {
-            if (triangleVertices == null || vertexIndexes == null) return;
+            if (mesh.TriangleVertices == null || mesh.VertexIndexes == null) return;
 
             shaderProgram.ActiveProgram(attributes);
             if (texture != null) texture.Use();
             GL.BindVertexArray(vertexArray);
-            GL.DrawElements(PrimitiveType.Triangles, vertexIndexes.Length, DrawElementsType.UnsignedInt, 0);
+            GL.DrawElements(PrimitiveType.Triangles, mesh.VertexIndexes.Length, DrawElementsType.UnsignedInt, 0);
             shaderProgram.DeactiveProgram();
         }
 
