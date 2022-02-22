@@ -11,6 +11,7 @@ namespace TwoBRenn.Engine.Components
         uint[] vertexIndexes;
 
         private BaseShaderProgram shaderProgram;
+        private Texture texture;
         private Dictionary<string, ShaderAttribute> attributes;
         private bool isDetachedAttributes = false;
 
@@ -23,6 +24,11 @@ namespace TwoBRenn.Engine.Components
         {
             attributes = shaderProgram.GetDefaultShaderAttributes();
             this.shaderProgram = shaderProgram;
+        }
+
+        public void SetTexture(Texture texture)
+        {
+            this.texture = texture;
         }
 
         public void SetTriangleMesh(float[] vertices, uint[] indexes)
@@ -38,11 +44,14 @@ namespace TwoBRenn.Engine.Components
             vertexBuffer = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
             GL.BufferData(BufferTarget.ArrayBuffer, triangleVertices.Length * sizeof(float), triangleVertices, BufferUsageHint.StaticDraw);
-            int positionLocation = shaderProgram.GetAttributeLocation("vertexPos");
 
+            int positionLocation = shaderProgram.GetAttributeLocation("aVertexPos");
             GL.EnableVertexAttribArray(positionLocation);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
-            GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
+            GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
+
+            int texCoordLocation = shaderProgram.GetAttributeLocation("aTexCoord");
+            GL.EnableVertexAttribArray(texCoordLocation);
+            GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
 
             // element buffer
             elementBuffer = GL.GenBuffer();
@@ -54,6 +63,7 @@ namespace TwoBRenn.Engine.Components
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.DisableVertexAttribArray(positionLocation);
+            GL.DisableVertexAttribArray(texCoordLocation);
         }
 
         public void SetShaderAttribute(string name, ShaderAttribute value)
@@ -81,6 +91,7 @@ namespace TwoBRenn.Engine.Components
             if (triangleVertices == null || vertexIndexes == null) return;
 
             shaderProgram.ActiveProgram(attributes);
+            if (texture != null) texture.Use();
             GL.BindVertexArray(vertexArray);
             GL.DrawElements(PrimitiveType.Triangles, vertexIndexes.Length, DrawElementsType.UnsignedInt, 0);
             shaderProgram.DeactiveProgram();

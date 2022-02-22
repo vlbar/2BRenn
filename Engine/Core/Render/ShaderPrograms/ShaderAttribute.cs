@@ -8,9 +8,11 @@ namespace TwoBRenn.Engine.Core.Render.ShaderPrograms
     {
         public abstract void Uniform(int location);
 
-        public static ShaderAttribute Value(Color color) => new ShaderAttribute_Vector4(new Vector4(color.R, color.G, color.B, color.A));
+        public static ShaderAttribute Value(Color color) => new ShaderAttribute_Vector4(new Vector4(color.R/255, color.G/255, color.B/255, color.A/255));
         public static ShaderAttribute Value(Vector4 vector) => new ShaderAttribute_Vector4(vector);
         public static ShaderAttribute Value(float x, float y, float z, float w) => new ShaderAttribute_Vector4(new Vector4(x, y, z, w));
+
+        public static ShaderAttribute Value(float x, float y) => new ShaderAttribute_Vector2(new Vector2(x, y));
     }
 
     class ShaderAttribute_Vector4 : ShaderAttribute
@@ -22,5 +24,16 @@ namespace TwoBRenn.Engine.Core.Render.ShaderPrograms
         }
 
         public override void Uniform(int location) => GL.Uniform4(location, vector);
+    }
+
+    class ShaderAttribute_Vector2 : ShaderAttribute
+    {
+        Vector2 vector;
+        public ShaderAttribute_Vector2(Vector2 vector)
+        {
+            this.vector = vector;
+        }
+
+        public override void Uniform(int location) => GL.Uniform2(location, vector);
     }
 }

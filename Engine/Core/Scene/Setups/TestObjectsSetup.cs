@@ -9,13 +9,15 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
 {
     class TestObjectsSetup : IObjectsSetup
     {
-        BaseShaderProgram baseShader;
+        SimpleShader baseShader;
+        Texture containerTexture;
 
         float[] planeVertices = new float[] {
-            -0.5f, -0.3f, -0.5f,
-             0.5f, -0.3f, -0.5f,
-            -0.5f,  0.7f, -0.5f,
-             0.5f,  0.7f, -0.5f
+            // vertex              // tex coords
+            -0.5f, -0.3f, -0.5f,   0f, 0f,
+             0.5f, -0.3f, -0.5f,   1f, 0f,
+            -0.5f,  0.7f, -0.5f,   0f, 1f,
+             0.5f,  0.7f, -0.5f,   1f, 1f,   
         };
 
         uint[] planeIndexes = new uint[] {
@@ -24,14 +26,14 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
         };
 
         float[] cubeVertices = new float[] {
-            0.5f, 0.5f, -0.5f,
-            0.5f, -0.5f, -0.5f,
-            0.5f, 0.5f, 0.5f,
-            0.5f, -0.5f, 0.5f,
-            -0.5f, 0.5f, -0.5f,
-            -0.5f, -0.5f, -0.5f,
-            -0.5f, 0.5f, 0.5f,
-            -0.5f, -0.5f, 0.5f,
+             0.5f,  0.5f, -0.5f,   1f, 0f,
+             0.5f, -0.5f, -0.5f,   0f, 0f,
+             0.5f,  0.5f,  0.5f,   1f, 1f,
+             0.5f, -0.5f,  0.5f,   0f, 1f,
+            -0.5f,  0.5f, -0.5f,   1f, 1f,
+            -0.5f, -0.5f, -0.5f,   0f, 1f,
+            -0.5f,  0.5f,  0.5f,   1f, 0f,
+            -0.5f, -0.5f,  0.5f,   0f, 0f,
         };
 
         uint[] cubeIndexes = new uint[] {
@@ -50,7 +52,8 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
         public TestObjectsSetup()
         {
             baseShader = new SimpleShader();
-            baseShader.SetDefaultShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(Color.Aqua));
+            baseShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(2, 2));
+            containerTexture = new Texture(@"Textures/container.png");
         }
 
         public HashSet<RennObject> GetObjects()
@@ -65,7 +68,7 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
             MeshRenderer planeRenderer = plane.GetComponent<MeshRenderer>();
             planeRenderer.SetShaderProgram(baseShader);
             planeRenderer.SetTriangleMesh(planeVertices, planeIndexes);
-            planeRenderer.SetShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(Color.Red));
+            planeRenderer.SetTexture(containerTexture);
             objects.Add(plane);
 
             RennObject cube = new RennObject();

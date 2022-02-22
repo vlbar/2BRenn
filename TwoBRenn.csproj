@@ -11,6 +11,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -55,6 +56,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,10 +72,11 @@
     <Compile Include="Engine\Components\MeshRenderer.cs" />
     <Compile Include="Engine\Core\Interfaces\IComponent.cs" />
     <Compile Include="Engine\Core\Render\RenderControl.cs" />
-    <Compile Include="Engine\Core\Render\ShaderPrograms\BaseShaderProgram.cs" />
+    <Compile Include="Engine\Core\Render\BaseShaderProgram.cs" />
     <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderAttribute.cs" />
     <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderDefinition.cs" />
     <Compile Include="Engine\Core\Render\ShaderPrograms\SimpleShader.cs" />
+    <Compile Include="Engine\Core\Render\Texture.cs" />
     <Compile Include="Engine\Core\RennEngine.cs" />
     <Compile Include="Engine\Core\RennObject.cs" />
     <Compile Include="Engine\Core\Scene\SceneManager.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include=".gitignore" />
     <None Include="Engine\Core\Render\Shaders\baseFragmentShader.frag">
@@ -132,6 +136,11 @@
   <ItemGroup>
     <Folder Include="Engine\Utils\" />
     <Folder Include="ObjectsSetups\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Textures\container.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
