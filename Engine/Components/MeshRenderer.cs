@@ -85,8 +85,9 @@ namespace TwoBRenn.Engine.Components
         public override void OnUpdate()
         {
             if (mesh.TriangleVertices == null || mesh.VertexIndexes == null) return;
-
             shaderProgram.ActiveProgram(attributes);
+            shaderProgram.SetMatrix4(BaseShaderProgram.MODEL, rennObject.Transform.GetGlobalModelMatrix());
+
             if (texture != null) texture.Use();
             GL.BindVertexArray(vertexArray);
             GL.DrawElements(PrimitiveType.Triangles, mesh.VertexIndexes.Length, DrawElementsType.UnsignedInt, 0);

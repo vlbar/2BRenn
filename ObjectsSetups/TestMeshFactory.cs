@@ -8,10 +8,10 @@ namespace TwoBRenn.ObjectsSetups
         {
             float[] planeVertices = new float[] {
                 // vertex              // tex coords
-                -0.5f, -0.3f, -0.5f,   0f, 0f,
-                 0.5f, -0.3f, -0.5f,   1f, 0f,
-                -0.5f,  0.7f, -0.5f,   0f, 1f,
-                 0.5f,  0.7f, -0.5f,   1f, 1f,
+                -0.5f, -0.5f, -0.5f,   0f, 0f,
+                 0.5f, -0.5f, -0.5f,   1f, 0f,
+                -0.5f,  0.5f, -0.5f,   0f, 1f,
+                 0.5f,  0.5f, -0.5f,   1f, 1f,
             };
 
             uint[] planeIndexes = new uint[] {

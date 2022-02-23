@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using TwoBRenn.Engine.Core.Render.ShaderPrograms;
 
@@ -8,6 +9,8 @@ namespace TwoBRenn.Engine.Core.Render
 {
     class BaseShaderProgram
     {
+        public static string MODEL = "model";
+
         private int programId = 0;
         private List<int> shaders = new List<int>();
 
@@ -60,6 +63,11 @@ namespace TwoBRenn.Engine.Core.Render
             return GL.GetAttribLocation(programId, name);
         }
 
+        public int GetUniformLocation(string name)
+        {
+            return GL.GetUniformLocation(programId, name);
+        }
+
         public Dictionary<string, ShaderAttribute> GetDefaultShaderAttributes()
         {
             return defaultAttributes;
@@ -86,6 +94,11 @@ namespace TwoBRenn.Engine.Core.Render
                 int location = GL.GetUniformLocation(programId, attribute.Key);
                 attribute.Value.Uniform(location);
             }
+        }
+
+        public void SetMatrix4(string name, Matrix4 data)
+        {
+            GL.UniformMatrix4(GetUniformLocation(name), true, ref data);
         }
 
         // utils

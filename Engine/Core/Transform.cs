@@ -12,7 +12,6 @@ namespace TwoBRenn.Engine.Core
         private Matrix4 parentModelMatrix = Matrix4.Identity;
 
         // matrix
-
         private Matrix4 GetLocalModelMatrix()
         {
             Matrix4 rotationX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(rotation.X));
@@ -23,7 +22,7 @@ namespace TwoBRenn.Engine.Core
             Matrix4 translateMatrix = Matrix4.CreateTranslation(position);
             Matrix4 scaleMatrix = Matrix4.CreateScale(scale);
 
-            return scaleMatrix * rotationMatrix * translateMatrix;
+            return translateMatrix * rotationMatrix * scaleMatrix;
         }
 
         public void UpdateGlobalModel()
@@ -31,7 +30,7 @@ namespace TwoBRenn.Engine.Core
             if (parentModelMatrix == Matrix4.Identity)
                 globalModelMatrix = GetLocalModelMatrix();
             else
-                globalModelMatrix = parentModelMatrix * GetLocalModelMatrix();
+                globalModelMatrix = GetLocalModelMatrix() * parentModelMatrix;
         }
 
         public Matrix4 GetGlobalModelMatrix() => globalModelMatrix;
@@ -43,16 +42,10 @@ namespace TwoBRenn.Engine.Core
         }
 
         // transfrom change
-
         public void SetPosition(Vector3 vector)
         {
             position = vector;
             UpdateGlobalModel();
-        }
-
-        public void SetPosition(float x, float y, float z)
-        {
-            SetPosition(new Vector3(x, y, z));
         }
 
         public void SetRotation(Vector3 vector)
@@ -61,15 +54,21 @@ namespace TwoBRenn.Engine.Core
             UpdateGlobalModel();
         }
 
-        public void SetRotation(float x, float y, float z)
-        {
-            SetRotation(new Vector3(x, y, z));
-        }
-
         public void SetScale(Vector3 vector)
         {
             scale = vector;
             UpdateGlobalModel();
+        }
+
+        // transform overloading
+        public void SetPosition(float x, float y, float z)
+        {
+            SetPosition(new Vector3(x, y, z));
+        }
+
+        public void SetRotation(float x, float y, float z)
+        {
+            SetRotation(new Vector3(x, y, z));
         }
 
         public void SetScale(float x, float y, float z)
