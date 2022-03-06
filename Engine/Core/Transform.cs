@@ -22,7 +22,7 @@ namespace TwoBRenn.Engine.Core
             Matrix4 translateMatrix = Matrix4.CreateTranslation(position);
             Matrix4 scaleMatrix = Matrix4.CreateScale(scale);
 
-            return translateMatrix * rotationMatrix * scaleMatrix;
+            return scaleMatrix * rotationMatrix * translateMatrix;
         }
 
         public void UpdateGlobalModel()
@@ -48,6 +48,20 @@ namespace TwoBRenn.Engine.Core
             UpdateGlobalModel();
         }
 
+        public void Translate(Vector3 vector)
+        {
+            position += vector;
+            UpdateGlobalModel();
+        }
+
+        public void SetGlobalPosition(Vector3 vector)
+        {
+            Matrix4 translateMatrix = Matrix4.CreateTranslation(vector);
+            Matrix4 localMatrix = parentModelMatrix.Inverted() * parentModelMatrix.ClearTranslation() * translateMatrix;
+            position = localMatrix.ExtractTranslation();
+            UpdateGlobalModel();
+        }
+
         public void SetRotation(Vector3 vector)
         {
             rotation = vector;
@@ -60,10 +74,20 @@ namespace TwoBRenn.Engine.Core
             UpdateGlobalModel();
         }
 
+        public Vector3 GetPosition()
+        {
+            return globalModelMatrix.ExtractTranslation();
+        }
+
         // transform overloading
         public void SetPosition(float x, float y, float z)
         {
             SetPosition(new Vector3(x, y, z));
+        }
+
+        public void SetGlobalPosition(float x, float y, float z)
+        {
+            SetGlobalPosition(new Vector3(x, y, z));
         }
 
         public void SetRotation(float x, float y, float z)
