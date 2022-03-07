@@ -87,6 +87,8 @@ namespace TwoBRenn.Engine.Components
             if (mesh.TriangleVertices == null || mesh.VertexIndexes == null) return;
             shaderProgram.ActiveProgram(attributes);
             shaderProgram.SetMatrix4(BaseShaderProgram.MODEL, rennObject.Transform.GetGlobalModelMatrix());
+            shaderProgram.SetMatrix4(BaseShaderProgram.VIEW, Camera.GetViewMatrix());
+            shaderProgram.SetMatrix4(BaseShaderProgram.PROJECTION, Camera.GetProjectionMatrix());
 
             if (texture != null) texture.Use();
             GL.BindVertexArray(vertexArray);

@@ -12,15 +12,23 @@ namespace TwoBRenn.Engine.Core.Render
     class RenderControl
     {
         private GLControl glControl;
+        private Camera camera;
 
         public Action OnSetup { get; set; }
         public Action OnRender { get; set; }
-        
+
+        private Time time;
         private int maxFrameRate = 75;
         private Stopwatch preciseTimer;
         private double accumulator = 0;
         private int frameCount = 0;
         private int fps = 0;
+
+        public RenderControl()
+        {
+            camera = Camera.GetInstance();
+            time = Time.GetInstance();
+        }
 
         public void SetupGlControl(GLControl glControl)
         {
@@ -37,6 +45,7 @@ namespace TwoBRenn.Engine.Core.Render
             Application.Idle += Application_Idle;
             glControl.Paint += GlControl_Paint;
 
+            GL.Enable(EnableCap.DepthTest);
             OnSetup?.Invoke();
         }
 
@@ -45,7 +54,7 @@ namespace TwoBRenn.Engine.Core.Render
             int width = glControl.Width;
             int height = glControl.Height;
 
-            GL.Viewport(0, 0, width, height);
+            camera.SetupViewport(width, height);
             glControl.Invalidate();
         }
 
@@ -64,6 +73,8 @@ namespace TwoBRenn.Engine.Core.Render
 
         private void Render()
         {
+            camera.OnUpdate();
+
             glControl.MakeCurrent();
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.ClearColor(Color.LightBlue);
@@ -73,6 +84,7 @@ namespace TwoBRenn.Engine.Core.Render
             float waitingTime = Math.Max(0, (1000.0f / maxFrameRate) - frameTime);
             if (waitingTime > 0) Thread.Sleep((int)waitingTime);
             Accumulate(frameTime + waitingTime);
+            time.CaptureFrametime(frameTime + waitingTime);
 
             // render cycle
             OnRender?.Invoke();
@@ -83,11 +95,11 @@ namespace TwoBRenn.Engine.Core.Render
         private double GetElapsedTime()
         {
             preciseTimer.Stop();
-            double deltaTime = preciseTimer.Elapsed.TotalMilliseconds;
+            double elapsedTime = preciseTimer.Elapsed.TotalMilliseconds;
             preciseTimer.Reset();
             preciseTimer.Start();
 
-            return deltaTime;
+            return elapsedTime;
         }
 
         private void Accumulate(float milliseconds)

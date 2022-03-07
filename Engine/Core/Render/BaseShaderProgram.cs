@@ -10,6 +10,8 @@ namespace TwoBRenn.Engine.Core.Render
     class BaseShaderProgram
     {
         public static string MODEL = "model";
+        public static string VIEW = "view";
+        public static string PROJECTION = "projection";
 
         private int programId = 0;
         private List<int> shaders = new List<int>();
