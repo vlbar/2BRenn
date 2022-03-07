@@ -30,7 +30,7 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
             plane.Transform.SetScale(2f);
             MeshRenderer planeRenderer = plane.AddComponent<MeshRenderer>();
             planeRenderer.SetShaderProgram(baseShader);
-            planeRenderer.SetTriangleMesh(TestMeshFactory.CreatePlane());
+            planeRenderer.SetTriangleMesh(PrimitiveMeshFactory.CreatePlane());
             planeRenderer.SetTexture(containerTexture);
             objects.Add(plane);
 
@@ -40,7 +40,7 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
             cube.Transform.SetScale(1f);
             MeshRenderer cubeRenderer = cube.AddComponent<MeshRenderer>();
             cubeRenderer.SetShaderProgram(baseShader);
-            cubeRenderer.SetTriangleMesh(TestMeshFactory.CreateCube());
+            cubeRenderer.SetTriangleMesh(PrimitiveMeshFactory.CreateCube());
             objects.Add(cube);
 
             return objects;

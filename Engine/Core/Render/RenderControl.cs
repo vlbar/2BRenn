@@ -46,6 +46,8 @@ namespace TwoBRenn.Engine.Core.Render
             glControl.Paint += GlControl_Paint;
 
             GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.CullFace);
+            GL.CullFace(CullFaceMode.Front);
             OnSetup?.Invoke();
         }
 
