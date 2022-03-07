@@ -9,7 +9,7 @@ namespace TwoBRenn.Engine.Core
         public Vector3 scale { get; private set; } = Vector3.One;
 
         private Matrix4 globalModelMatrix = Matrix4.Identity;
-        private Matrix4 parentModelMatrix = Matrix4.Identity;
+        private Transform parentTransform;
 
         // matrix
         private Matrix4 GetLocalModelMatrix()
@@ -27,17 +27,17 @@ namespace TwoBRenn.Engine.Core
 
         public void UpdateGlobalModel()
         {
-            if (parentModelMatrix == Matrix4.Identity)
+            if (parentTransform == null)
                 globalModelMatrix = GetLocalModelMatrix();
             else
-                globalModelMatrix = GetLocalModelMatrix() * parentModelMatrix;
+                globalModelMatrix = GetLocalModelMatrix() * parentTransform.GetGlobalModelMatrix();
         }
 
         public Matrix4 GetGlobalModelMatrix() => globalModelMatrix;
 
-        public void SetParentModelMatrix(Matrix4 modelMatrix)
+        public void SetParentTransform(Transform transform)
         {
-            parentModelMatrix = modelMatrix;
+            parentTransform = transform;
             UpdateGlobalModel();
         }
 
@@ -56,10 +56,17 @@ namespace TwoBRenn.Engine.Core
 
         public void SetGlobalPosition(Vector3 vector)
         {
-            Matrix4 translateMatrix = Matrix4.CreateTranslation(vector);
-            Matrix4 localMatrix = parentModelMatrix.Inverted() * parentModelMatrix.ClearTranslation() * translateMatrix;
-            position = localMatrix.ExtractTranslation();
-            UpdateGlobalModel();
+            if (parentTransform == null)
+            {
+                SetPosition(vector);
+            }
+            else
+            {
+                Matrix4 translateMatrix = Matrix4.CreateTranslation(vector);
+                Matrix4 localMatrix = parentTransform.GetGlobalModelMatrix().Inverted() * parentTransform.GetGlobalModelMatrix().ClearTranslation() * translateMatrix;
+                position = localMatrix.ExtractTranslation();
+                UpdateGlobalModel();
+            }
         }
 
         public void SetRotation(Vector3 vector)

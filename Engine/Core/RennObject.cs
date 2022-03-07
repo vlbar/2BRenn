@@ -1,9 +1,7 @@
-﻿using OpenTK;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using TwoBRenn.Engine.Components;
-using TwoBRenn.Engine.Interfaces;
 
 namespace TwoBRenn.Engine.Core
 {
@@ -70,7 +68,7 @@ namespace TwoBRenn.Engine.Core
                 parent = newParent;
                 newParent.AddChild(this);
 
-                Transform.SetParentModelMatrix(newParent.Transform.GetGlobalModelMatrix());
+                Transform.SetParentTransform(newParent.Transform);
                 foreach (var child in ChildObjects)
                 {
                     child.Transform.UpdateGlobalModel();
