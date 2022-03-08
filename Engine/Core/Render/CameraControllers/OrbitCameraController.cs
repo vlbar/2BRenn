@@ -9,7 +9,7 @@ namespace TwoBRenn.Engine.Core.Render.CameraControllers
         private float rotationSensitivity = 0.5f;
         private float zoomSensitivity = 15f;
 
-        private Vector2 pitchLimit = new Vector2(0, 90);
+        private Vector2 pitchLimit = new Vector2(-90, 90);
         private Vector2 zoomLimit = new Vector2(2, 10);
 
         private Vector3 targetPosition;

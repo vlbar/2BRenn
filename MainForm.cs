@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using TwoBRenn.Engine.Core;
+using TwoBRenn.Engine.Core.Render;
 
 namespace TwoBRenn
 {
@@ -22,6 +23,15 @@ namespace TwoBRenn
             {
                 debugInfoLabel.Text = engine.RenderControl.GetDynamicDebugInfo();
             };
+
+            engine.RenderControl.Skybox = new Skybox(new string[] {
+                @"Textures\skybox\right.png",
+                @"Textures\skybox\left.png",
+                @"Textures\skybox\top.png",
+                @"Textures\skybox\bottom.png",
+                @"Textures\skybox\front.png",
+                @"Textures\skybox\back.png"
+            });
         }
     }
 }

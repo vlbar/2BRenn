@@ -80,6 +80,8 @@
     <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderAttribute.cs" />
     <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderDefinition.cs" />
     <Compile Include="Engine\Core\Render\ShaderPrograms\SimpleShader.cs" />
+    <Compile Include="Engine\Core\Render\ShaderPrograms\SkyboxShader.cs" />
+    <Compile Include="Engine\Core\Render\Skybox.cs" />
     <Compile Include="Engine\Core\Render\Texture.cs" />
     <Compile Include="Engine\Core\Render\Time.cs" />
     <Compile Include="Engine\Core\RennEngine.cs" />
@@ -117,6 +119,12 @@
     <None Include="Engine\Core\Render\Shaders\baseVertexShader.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Engine\Core\Render\Shaders\skyboxShader.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Core\Render\Shaders\skyboxShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -143,6 +151,24 @@
     <Folder Include="Engine\Utils\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Textures\skybox\back.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\skybox\bottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\skybox\front.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\skybox\left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\skybox\right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\skybox\top.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="Textures\container.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

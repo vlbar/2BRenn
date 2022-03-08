@@ -103,6 +103,11 @@ namespace TwoBRenn.Engine.Core.Render
             GL.UniformMatrix4(GetUniformLocation(name), true, ref data);
         }
 
+        public void SetInt(string name, int value)
+        {
+            GL.Uniform1(GetUniformLocation(name), value);
+        }
+
         // utils
         private int CreateShader(ShaderType shaderType, string path)
         {

@@ -13,6 +13,7 @@ namespace TwoBRenn.Engine.Core.Render
     {
         private GLControl glControl;
         private Camera camera;
+        public Skybox Skybox { get; set; }
 
         public Action OnSetup { get; set; }
         public Action OnRender { get; set; }
@@ -90,6 +91,7 @@ namespace TwoBRenn.Engine.Core.Render
 
             // render cycle
             OnRender?.Invoke();
+            if (Skybox != null) Skybox.Use();
 
             glControl.SwapBuffers();
         }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using TwoBRenn.Engine.Components;
 using TwoBRenn.Engine.Core.Render;
 using TwoBRenn.Engine.Core.Render.ShaderPrograms;
@@ -17,7 +16,7 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
         {
             baseShader = new SimpleShader();
             baseShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(2, 2));
-            containerTexture = new Texture(@"Textures/container.png");
+            containerTexture = new Texture(@"Textures\container.png");
         }
 
         public HashSet<RennObject> GetObjects()

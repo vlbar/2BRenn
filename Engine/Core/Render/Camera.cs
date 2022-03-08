@@ -11,8 +11,8 @@ namespace TwoBRenn.Engine.Core.Render
         private int width;
         private int height;
         private bool isOrthographic = false;
-        private float fov = 90;
-        private float clipingNear = 0.01f;
+        private float fov = 75;
+        private float clipingNear = 0.1f;
         private float clipingFar = 100f;
 
         private static Matrix4 projection;
@@ -30,7 +30,7 @@ namespace TwoBRenn.Engine.Core.Render
             GL.Viewport(0, 0, width, height);
             SetupProjection();
 
-            view = Matrix4.LookAt(Vector3.Zero, Vector3.UnitX, Vector3.UnitZ);
+            view = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);
         }
 
         public void SetupProjection()
