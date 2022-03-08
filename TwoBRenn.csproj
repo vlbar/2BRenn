@@ -151,6 +151,9 @@
     <Folder Include="Engine\Utils\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Textures\ground.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Textures\skybox\back.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

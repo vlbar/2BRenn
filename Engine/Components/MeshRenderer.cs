@@ -21,6 +21,7 @@ namespace TwoBRenn.Engine.Components
         {
             attributes = shaderProgram.GetDefaultShaderAttributes();
             this.shaderProgram = shaderProgram;
+            if (mesh != null) BindVertex();
         }
 
         public void SetTexture(Texture texture)
@@ -31,7 +32,11 @@ namespace TwoBRenn.Engine.Components
         public void SetTriangleMesh(Mesh mesh)
         {
             this.mesh = mesh;
+            if (shaderProgram != null) BindVertex();
+        }
 
+        private void BindVertex()
+        {
             // vertex array
             vertexArray = GL.GenVertexArray();
             GL.BindVertexArray(vertexArray);
