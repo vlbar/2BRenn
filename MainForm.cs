@@ -16,7 +16,7 @@ namespace TwoBRenn
             InitializeComponent();
         }
 
-        private void glControl1_Load(object sender, EventArgs e)
+        private void glControl_Load(object sender, EventArgs e)
         {
             engine.RenderControl.SetupGlControl(glControl);
             engine.RenderControl.OnRender += delegate
