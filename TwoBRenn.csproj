@@ -11,6 +11,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -55,6 +56,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,6 +68,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Components\Component.cs" />
+    <Compile Include="Engine\Components\MeshRenderer.cs" />
+    <Compile Include="Engine\Core\Interfaces\IComponent.cs" />
+    <Compile Include="Engine\Core\Render\Camera.cs" />
+    <Compile Include="Engine\Core\Render\CameraControllers\CameraController.cs" />
+    <Compile Include="Engine\Core\Render\CameraControllers\OrbitCameraController.cs" />
+    <Compile Include="Engine\Core\Render\Mesh.cs" />
+    <Compile Include="Engine\Core\Render\RenderControl.cs" />
+    <Compile Include="Engine\Core\Render\BaseShaderProgram.cs" />
+    <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderAttribute.cs" />
+    <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderDefinition.cs" />
+    <Compile Include="Engine\Core\Render\ShaderPrograms\SimpleShader.cs" />
+    <Compile Include="Engine\Core\Render\ShaderPrograms\SkyboxShader.cs" />
+    <Compile Include="Engine\Core\Render\Skybox.cs" />
+    <Compile Include="Engine\Core\Render\Texture.cs" />
+    <Compile Include="Engine\Core\Render\Time.cs" />
+    <Compile Include="Engine\Core\RennEngine.cs" />
+    <Compile Include="Engine\Core\RennObject.cs" />
+    <Compile Include="Engine\Core\Scene\SceneManager.cs" />
+    <Compile Include="Engine\Core\Interfaces\IObjectsSetup.cs" />
+    <Compile Include="ObjectsSetups\PrimitiveMeshFactory.cs" />
+    <Compile Include="ObjectsSetups\TestObjectsSetup.cs" />
+    <Compile Include="Engine\Core\Transform.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,8 +110,21 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include=".gitignore" />
+    <None Include="Engine\Core\Render\Shaders\baseFragmentShader.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Core\Render\Shaders\baseVertexShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Core\Render\Shaders\skyboxShader.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Core\Render\Shaders\skyboxShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -108,6 +146,35 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\Utils\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Textures\ground.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Textures\skybox\back.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\skybox\bottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\skybox\front.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\skybox\left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\skybox\right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textures\skybox\top.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="Textures\container.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -36,27 +36,28 @@ namespace TwoBRenn
             this.effectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.glControl1 = new OpenTK.GLControl();
+            this.glControl = new OpenTK.GLControl();
             this.bottomContainer = new System.Windows.Forms.Panel();
+            this.rightContainer = new System.Windows.Forms.Panel();
             this.structuresContainer = new System.Windows.Forms.Panel();
+            this.structListView = new System.Windows.Forms.ListView();
+            this.structCountLabel = new System.Windows.Forms.Label();
+            this.structCountTextLabel = new System.Windows.Forms.Label();
+            this.structTextLabel = new System.Windows.Forms.Label();
+            this.bottomPanel = new System.Windows.Forms.Panel();
             this.budgetTextLabel = new System.Windows.Forms.Label();
             this.budgetLabel = new System.Windows.Forms.Label();
-            this.controlButton = new System.Windows.Forms.Button();
-            this.testButton = new System.Windows.Forms.Button();
             this.timeLeftLabel = new System.Windows.Forms.Label();
-            this.structTextLabel = new System.Windows.Forms.Label();
-            this.structCountTextLabel = new System.Windows.Forms.Label();
-            this.structCountLabel = new System.Windows.Forms.Label();
+            this.testButton = new System.Windows.Forms.Button();
+            this.controlButton = new System.Windows.Forms.Button();
+            this.mapContainer = new System.Windows.Forms.Panel();
             this.sidebarContainer = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.mapContainer = new System.Windows.Forms.Panel();
-            this.rightContainer = new System.Windows.Forms.Panel();
-            this.bottomPanel = new System.Windows.Forms.Panel();
-            this.structListView = new System.Windows.Forms.ListView();
+            this.debugInfoLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.bottomContainer.SuspendLayout();
-            this.structuresContainer.SuspendLayout();
             this.rightContainer.SuspendLayout();
+            this.structuresContainer.SuspendLayout();
             this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,15 +112,16 @@ namespace TwoBRenn
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
             this.aboutToolStripMenuItem.Text = "О программе";
             // 
-            // glControl1
+            // glControl
             // 
-            this.glControl1.BackColor = System.Drawing.Color.Black;
-            this.glControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glControl1.Location = new System.Drawing.Point(0, 24);
-            this.glControl1.Name = "glControl1";
-            this.glControl1.Size = new System.Drawing.Size(719, 477);
-            this.glControl1.TabIndex = 1;
-            this.glControl1.VSync = false;
+            this.glControl.BackColor = System.Drawing.Color.Black;
+            this.glControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.glControl.Location = new System.Drawing.Point(0, 24);
+            this.glControl.Name = "glControl";
+            this.glControl.Size = new System.Drawing.Size(719, 477);
+            this.glControl.TabIndex = 1;
+            this.glControl.VSync = true;
+            this.glControl.Load += new System.EventHandler(this.glControl_Load);
             // 
             // bottomContainer
             // 
@@ -132,6 +134,17 @@ namespace TwoBRenn
             this.bottomContainer.Size = new System.Drawing.Size(907, 110);
             this.bottomContainer.TabIndex = 2;
             // 
+            // rightContainer
+            // 
+            this.rightContainer.BackColor = System.Drawing.SystemColors.Control;
+            this.rightContainer.Controls.Add(this.structuresContainer);
+            this.rightContainer.Controls.Add(this.bottomPanel);
+            this.rightContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rightContainer.Location = new System.Drawing.Point(200, 0);
+            this.rightContainer.Name = "rightContainer";
+            this.rightContainer.Size = new System.Drawing.Size(707, 110);
+            this.rightContainer.TabIndex = 7;
+            // 
             // structuresContainer
             // 
             this.structuresContainer.Controls.Add(this.structListView);
@@ -143,6 +156,58 @@ namespace TwoBRenn
             this.structuresContainer.Name = "structuresContainer";
             this.structuresContainer.Size = new System.Drawing.Size(707, 80);
             this.structuresContainer.TabIndex = 3;
+            // 
+            // structListView
+            // 
+            this.structListView.HideSelection = false;
+            this.structListView.Location = new System.Drawing.Point(180, 0);
+            this.structListView.Name = "structListView";
+            this.structListView.Size = new System.Drawing.Size(527, 80);
+            this.structListView.TabIndex = 0;
+            this.structListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // structCountLabel
+            // 
+            this.structCountLabel.AutoSize = true;
+            this.structCountLabel.Location = new System.Drawing.Point(132, 34);
+            this.structCountLabel.Name = "structCountLabel";
+            this.structCountLabel.Size = new System.Drawing.Size(36, 13);
+            this.structCountLabel.TabIndex = 2;
+            this.structCountLabel.Text = "0/128";
+            this.structCountLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // structCountTextLabel
+            // 
+            this.structCountTextLabel.AutoSize = true;
+            this.structCountTextLabel.Location = new System.Drawing.Point(12, 34);
+            this.structCountTextLabel.Name = "structCountTextLabel";
+            this.structCountTextLabel.Size = new System.Drawing.Size(77, 13);
+            this.structCountTextLabel.TabIndex = 1;
+            this.structCountTextLabel.Text = "Установлено:";
+            // 
+            // structTextLabel
+            // 
+            this.structTextLabel.AutoSize = true;
+            this.structTextLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.structTextLabel.Location = new System.Drawing.Point(12, 10);
+            this.structTextLabel.Name = "structTextLabel";
+            this.structTextLabel.Size = new System.Drawing.Size(156, 13);
+            this.structTextLabel.TabIndex = 0;
+            this.structTextLabel.Text = "Структуры безопасности";
+            // 
+            // bottomPanel
+            // 
+            this.bottomPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.bottomPanel.Controls.Add(this.budgetTextLabel);
+            this.bottomPanel.Controls.Add(this.budgetLabel);
+            this.bottomPanel.Controls.Add(this.timeLeftLabel);
+            this.bottomPanel.Controls.Add(this.testButton);
+            this.bottomPanel.Controls.Add(this.controlButton);
+            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottomPanel.Location = new System.Drawing.Point(0, 80);
+            this.bottomPanel.Name = "bottomPanel";
+            this.bottomPanel.Size = new System.Drawing.Size(707, 30);
+            this.bottomPanel.TabIndex = 0;
             // 
             // budgetTextLabel
             // 
@@ -162,26 +227,6 @@ namespace TwoBRenn
             this.budgetLabel.TabIndex = 1;
             this.budgetLabel.Text = "10 000 ₽";
             // 
-            // controlButton
-            // 
-            this.controlButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.controlButton.Location = new System.Drawing.Point(595, 3);
-            this.controlButton.Name = "controlButton";
-            this.controlButton.Size = new System.Drawing.Size(100, 23);
-            this.controlButton.TabIndex = 2;
-            this.controlButton.Text = "Контроль";
-            this.controlButton.UseVisualStyleBackColor = true;
-            // 
-            // testButton
-            // 
-            this.testButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.testButton.Location = new System.Drawing.Point(519, 3);
-            this.testButton.Name = "testButton";
-            this.testButton.Size = new System.Drawing.Size(75, 23);
-            this.testButton.TabIndex = 3;
-            this.testButton.Text = "Тест";
-            this.testButton.UseVisualStyleBackColor = true;
-            // 
             // timeLeftLabel
             // 
             this.timeLeftLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -194,34 +239,34 @@ namespace TwoBRenn
             this.timeLeftLabel.Text = "00:00";
             this.timeLeftLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // structTextLabel
+            // testButton
             // 
-            this.structTextLabel.AutoSize = true;
-            this.structTextLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.structTextLabel.Location = new System.Drawing.Point(12, 10);
-            this.structTextLabel.Name = "structTextLabel";
-            this.structTextLabel.Size = new System.Drawing.Size(156, 13);
-            this.structTextLabel.TabIndex = 0;
-            this.structTextLabel.Text = "Структуры безопасности";
+            this.testButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.testButton.Location = new System.Drawing.Point(519, 3);
+            this.testButton.Name = "testButton";
+            this.testButton.Size = new System.Drawing.Size(75, 23);
+            this.testButton.TabIndex = 3;
+            this.testButton.Text = "Тест";
+            this.testButton.UseVisualStyleBackColor = true;
             // 
-            // structCountTextLabel
+            // controlButton
             // 
-            this.structCountTextLabel.AutoSize = true;
-            this.structCountTextLabel.Location = new System.Drawing.Point(12, 34);
-            this.structCountTextLabel.Name = "structCountTextLabel";
-            this.structCountTextLabel.Size = new System.Drawing.Size(77, 13);
-            this.structCountTextLabel.TabIndex = 1;
-            this.structCountTextLabel.Text = "Установлено:";
+            this.controlButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.controlButton.Location = new System.Drawing.Point(595, 3);
+            this.controlButton.Name = "controlButton";
+            this.controlButton.Size = new System.Drawing.Size(100, 23);
+            this.controlButton.TabIndex = 2;
+            this.controlButton.Text = "Контроль";
+            this.controlButton.UseVisualStyleBackColor = true;
             // 
-            // structCountLabel
+            // mapContainer
             // 
-            this.structCountLabel.AutoSize = true;
-            this.structCountLabel.Location = new System.Drawing.Point(132, 34);
-            this.structCountLabel.Name = "structCountLabel";
-            this.structCountLabel.Size = new System.Drawing.Size(36, 13);
-            this.structCountLabel.TabIndex = 2;
-            this.structCountLabel.Text = "0/128";
-            this.structCountLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.mapContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.mapContainer.Dock = System.Windows.Forms.DockStyle.Left;
+            this.mapContainer.Location = new System.Drawing.Point(0, 0);
+            this.mapContainer.Name = "mapContainer";
+            this.mapContainer.Size = new System.Drawing.Size(200, 110);
+            this.mapContainer.TabIndex = 6;
             // 
             // sidebarContainer
             // 
@@ -241,55 +286,22 @@ namespace TwoBRenn
             this.splitter1.TabIndex = 5;
             this.splitter1.TabStop = false;
             // 
-            // mapContainer
+            // debugInfoLabel
             // 
-            this.mapContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.mapContainer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.mapContainer.Location = new System.Drawing.Point(0, 0);
-            this.mapContainer.Name = "mapContainer";
-            this.mapContainer.Size = new System.Drawing.Size(200, 110);
-            this.mapContainer.TabIndex = 6;
-            // 
-            // rightContainer
-            // 
-            this.rightContainer.BackColor = System.Drawing.SystemColors.Control;
-            this.rightContainer.Controls.Add(this.structuresContainer);
-            this.rightContainer.Controls.Add(this.bottomPanel);
-            this.rightContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightContainer.Location = new System.Drawing.Point(200, 0);
-            this.rightContainer.Name = "rightContainer";
-            this.rightContainer.Size = new System.Drawing.Size(707, 110);
-            this.rightContainer.TabIndex = 7;
-            // 
-            // bottomPanel
-            // 
-            this.bottomPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.bottomPanel.Controls.Add(this.budgetTextLabel);
-            this.bottomPanel.Controls.Add(this.budgetLabel);
-            this.bottomPanel.Controls.Add(this.timeLeftLabel);
-            this.bottomPanel.Controls.Add(this.testButton);
-            this.bottomPanel.Controls.Add(this.controlButton);
-            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottomPanel.Location = new System.Drawing.Point(0, 80);
-            this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(707, 30);
-            this.bottomPanel.TabIndex = 0;
-            // 
-            // structListView
-            // 
-            this.structListView.HideSelection = false;
-            this.structListView.Location = new System.Drawing.Point(180, 0);
-            this.structListView.Name = "structListView";
-            this.structListView.Size = new System.Drawing.Size(527, 80);
-            this.structListView.TabIndex = 0;
-            this.structListView.UseCompatibleStateImageBehavior = false;
+            this.debugInfoLabel.AutoSize = true;
+            this.debugInfoLabel.Location = new System.Drawing.Point(12, 35);
+            this.debugInfoLabel.Name = "debugInfoLabel";
+            this.debugInfoLabel.Size = new System.Drawing.Size(35, 13);
+            this.debugInfoLabel.TabIndex = 6;
+            this.debugInfoLabel.Text = "label1";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(907, 611);
-            this.Controls.Add(this.glControl1);
+            this.Controls.Add(this.debugInfoLabel);
+            this.Controls.Add(this.glControl);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.sidebarContainer);
             this.Controls.Add(this.bottomContainer);
@@ -301,9 +313,9 @@ namespace TwoBRenn
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.bottomContainer.ResumeLayout(false);
+            this.rightContainer.ResumeLayout(false);
             this.structuresContainer.ResumeLayout(false);
             this.structuresContainer.PerformLayout();
-            this.rightContainer.ResumeLayout(false);
             this.bottomPanel.ResumeLayout(false);
             this.bottomPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -320,7 +332,7 @@ namespace TwoBRenn
         private System.Windows.Forms.ToolStripMenuItem effectsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private OpenTK.GLControl glControl1;
+        private OpenTK.GLControl glControl;
         private System.Windows.Forms.Panel bottomContainer;
         private System.Windows.Forms.Panel structuresContainer;
         private System.Windows.Forms.Label budgetTextLabel;
@@ -337,6 +349,7 @@ namespace TwoBRenn
         private System.Windows.Forms.Panel rightContainer;
         private System.Windows.Forms.Panel bottomPanel;
         private System.Windows.Forms.ListView structListView;
+        private System.Windows.Forms.Label debugInfoLabel;
     }
 }
 
