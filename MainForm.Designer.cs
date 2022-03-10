@@ -40,7 +40,6 @@ namespace TwoBRenn
             this.bottomContainer = new System.Windows.Forms.Panel();
             this.rightContainer = new System.Windows.Forms.Panel();
             this.structuresContainer = new System.Windows.Forms.Panel();
-            this.structListView = new System.Windows.Forms.ListView();
             this.structCountLabel = new System.Windows.Forms.Label();
             this.structCountTextLabel = new System.Windows.Forms.Label();
             this.structTextLabel = new System.Windows.Forms.Label();
@@ -54,6 +53,7 @@ namespace TwoBRenn
             this.sidebarContainer = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.debugInfoLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.bottomContainer.SuspendLayout();
             this.rightContainer.SuspendLayout();
@@ -147,7 +147,6 @@ namespace TwoBRenn
             // 
             // structuresContainer
             // 
-            this.structuresContainer.Controls.Add(this.structListView);
             this.structuresContainer.Controls.Add(this.structCountLabel);
             this.structuresContainer.Controls.Add(this.structCountTextLabel);
             this.structuresContainer.Controls.Add(this.structTextLabel);
@@ -156,15 +155,6 @@ namespace TwoBRenn
             this.structuresContainer.Name = "structuresContainer";
             this.structuresContainer.Size = new System.Drawing.Size(707, 80);
             this.structuresContainer.TabIndex = 3;
-            // 
-            // structListView
-            // 
-            this.structListView.HideSelection = false;
-            this.structListView.Location = new System.Drawing.Point(180, 0);
-            this.structListView.Name = "structListView";
-            this.structListView.Size = new System.Drawing.Size(527, 80);
-            this.structListView.TabIndex = 0;
-            this.structListView.UseCompatibleStateImageBehavior = false;
             // 
             // structCountLabel
             // 
@@ -275,6 +265,7 @@ namespace TwoBRenn
             this.sidebarContainer.Name = "sidebarContainer";
             this.sidebarContainer.Size = new System.Drawing.Size(184, 477);
             this.sidebarContainer.TabIndex = 4;
+            this.sidebarContainer.Visible = false;
             // 
             // splitter1
             // 
@@ -289,17 +280,29 @@ namespace TwoBRenn
             // debugInfoLabel
             // 
             this.debugInfoLabel.AutoSize = true;
-            this.debugInfoLabel.Location = new System.Drawing.Point(12, 35);
+            this.debugInfoLabel.Location = new System.Drawing.Point(4, 27);
             this.debugInfoLabel.Name = "debugInfoLabel";
-            this.debugInfoLabel.Size = new System.Drawing.Size(35, 13);
+            this.debugInfoLabel.Size = new System.Drawing.Size(36, 13);
             this.debugInfoLabel.TabIndex = 6;
-            this.debugInfoLabel.Text = "label1";
+            this.debugInfoLabel.Text = "0 FPS";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(4, 423);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(286, 75);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Управление:\r\nWASD - перемещение камеры\r\nУдерживание средней кнопки мыши - вращени" +
+    "е\r\nвокруг оси\r\nКолсео мыши - приближение/удаление";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(907, 611);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.debugInfoLabel);
             this.Controls.Add(this.glControl);
             this.Controls.Add(this.splitter1);
@@ -348,8 +351,8 @@ namespace TwoBRenn
         private System.Windows.Forms.Panel mapContainer;
         private System.Windows.Forms.Panel rightContainer;
         private System.Windows.Forms.Panel bottomPanel;
-        private System.Windows.Forms.ListView structListView;
         private System.Windows.Forms.Label debugInfoLabel;
+        private System.Windows.Forms.Label label1;
     }
 }
 
