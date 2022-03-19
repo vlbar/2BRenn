@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using OpenTK;
 using TwoBRenn.Engine.Core.Render;
 
@@ -54,17 +53,12 @@ namespace TwoBRenn.Engine.Common.Path
                 trisIndex += 6;
             }
 
-            List<float> vertsArray = new List<float>();
-            for (int i = 0; i < verts.Length; i++)
+            return new Mesh
             {
-                vertsArray.Add(verts[i].X);
-                vertsArray.Add(verts[i].Y);
-                vertsArray.Add(verts[i].Z);
-                vertsArray.Add(uvs[i].X);
-                vertsArray.Add(uvs[i].Y);
-            }
-
-            return new Mesh(vertsArray.ToArray(), tris);
+                Vertices = verts,
+                Triangles = tris,
+                UVs = uvs
+            };
         }
     }
 }

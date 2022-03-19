@@ -13,9 +13,9 @@ namespace TwoBRenn.Engine.Components
         private Dictionary<string, ShaderAttribute> attributes;
         private bool isDetachedAttributes = false;
 
-        private int vertexArray;
-        private int vertexBuffer;
-        private int elementBuffer;
+        private VertexArrayObject vertexArray = new VertexArrayObject();
+        private BufferObject vertexBuffer = new BufferObject(BufferTarget.ArrayBuffer);
+        private BufferObject elementBuffer = new BufferObject(BufferTarget.ElementArrayBuffer);
 
         public void SetShaderProgram(BaseShaderProgram shaderProgram)
         {
@@ -37,34 +37,27 @@ namespace TwoBRenn.Engine.Components
 
         private void BindVertex()
         {
-            // vertex array
-            vertexArray = GL.GenVertexArray();
-            GL.BindVertexArray(vertexArray);
+            if (mesh?.Vertices == null) return;
 
-            // vertex buffer
-            vertexBuffer = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
-            GL.BufferData(BufferTarget.ArrayBuffer, mesh.TriangleVertices.Length * sizeof(float), mesh.TriangleVertices, BufferUsageHint.StaticDraw);
+            vertexArray = new VertexArrayObject();
+            vertexBuffer = new BufferObject(BufferTarget.ArrayBuffer);
+            elementBuffer = new BufferObject(BufferTarget.ElementArrayBuffer);
 
             int positionLocation = shaderProgram.GetAttributeLocation("aVertexPos");
-            GL.EnableVertexAttribArray(positionLocation);
-            GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
+            int texCoordsLocation = shaderProgram.GetAttributeLocation("aTexCoords");
 
-            int texCoordLocation = shaderProgram.GetAttributeLocation("aTexCoord");
-            GL.EnableVertexAttribArray(texCoordLocation);
-            GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
+            vertexArray.Bind();
 
-            // element buffer
-            elementBuffer = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBuffer);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, mesh.VertexIndexes.Length * sizeof(uint), mesh.VertexIndexes, BufferUsageHint.StaticDraw);
+            vertexBuffer.Bind();
+            vertexBuffer.SetSubDataSize(mesh.DataArraySize);
+            vertexBuffer.SetSubData(mesh.VerticesArray, 3, positionLocation);
+            vertexBuffer.SetSubData(mesh.UVsArray, 2, texCoordsLocation);
 
-            // unload
-            GL.BindVertexArray(0);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-            GL.DisableVertexAttribArray(positionLocation);
-            GL.DisableVertexAttribArray(texCoordLocation);
+            elementBuffer.Bind();
+            elementBuffer.SetData(mesh.Triangles);
+
+            vertexArray.Unbind();
+            elementBuffer.Unbind();
         }
 
         public void SetShaderAttribute(string name, ShaderAttribute value)
@@ -89,22 +82,22 @@ namespace TwoBRenn.Engine.Components
 
         public override void OnUpdate()
         {
-            if (mesh.TriangleVertices == null || mesh.VertexIndexes == null) return;
+            if (mesh?.Vertices == null) return;
             shaderProgram.ActiveProgram(attributes);
             shaderProgram.SetMatrix4(BaseShaderProgram.MODEL, rennObject.Transform.GetGlobalModelMatrix());
             shaderProgram.SetMatrix4(BaseShaderProgram.VIEW, Camera.GetViewMatrix());
             shaderProgram.SetMatrix4(BaseShaderProgram.PROJECTION, Camera.GetProjectionMatrix());
 
             if (texture != null) texture.Use();
-            GL.BindVertexArray(vertexArray);
-            GL.DrawElements(PrimitiveType.Triangles, mesh.VertexIndexes.Length, DrawElementsType.UnsignedInt, 0);
+            vertexArray.Bind();
+            GL.DrawElements(PrimitiveType.Triangles, mesh.Triangles.Length, DrawElementsType.UnsignedInt, 0);
             shaderProgram.DeactiveProgram();
         }
 
         public override void OnUnload()
         {
-            GL.DeleteBuffer(vertexBuffer);
-            GL.DeleteBuffer(elementBuffer);
+            vertexBuffer.Delete();
+            elementBuffer.Delete();
         }
     }
 }

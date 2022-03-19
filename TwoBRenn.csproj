@@ -77,7 +77,8 @@
     <Compile Include="Engine\Core\Render\Camera.cs" />
     <Compile Include="Engine\Core\Render\CameraControllers\CameraController.cs" />
     <Compile Include="Engine\Core\Render\CameraControllers\OrbitCameraController.cs" />
-    <Compile Include="Engine\Core\Render\Mesh.cs" />
+    <Compile Include="Engine\Core\Render\Utils\BufferObject.cs" />
+    <Compile Include="Engine\Core\Render\Utils\Mesh.cs" />
     <Compile Include="Engine\Core\Render\RenderControl.cs" />
     <Compile Include="Engine\Core\Render\BaseShaderProgram.cs" />
     <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderAttribute.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Engine\Core\Render\Skybox.cs" />
     <Compile Include="Engine\Core\Render\Texture.cs" />
     <Compile Include="Engine\Core\Render\Time.cs" />
+    <Compile Include="Engine\Core\Render\Utils\VertexArrayObject.cs" />
     <Compile Include="Engine\Core\RennEngine.cs" />
     <Compile Include="Engine\Core\RennObject.cs" />
     <Compile Include="Engine\Core\Scene\SceneManager.cs" />
