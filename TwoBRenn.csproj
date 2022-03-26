@@ -159,6 +159,9 @@
     <Content Include="Textures\curb.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Textures\gravel.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\ground.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

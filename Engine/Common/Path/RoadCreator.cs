@@ -30,12 +30,12 @@ namespace TwoBRenn.Engine.Common.Path
         public Mesh ExitZone;
     }
 
-    public class RoadCreator
+    public static class RoadCreator
     {
         private class AdditionalZone
         {
             private float width = 0.01f;
-            private float targetWidth = 0;
+            private float targetWidth;
             private float velocity;
 
             public void SmoothWidthIteration(float smoothTime)
@@ -268,6 +268,51 @@ namespace TwoBRenn.Engine.Common.Path
             };
         }
 
+        public static RoadPart[] CreateMeshes(Vector3[] points, RoadCreatorSettings creatorSettings, int count = 10)
+        {
+            RoadPart fullRoad = CreateMesh(points, creatorSettings);
+            RoadPart[] roadSegments = new RoadPart[count];
+
+            uint[] roadTriangles = fullRoad.Road.Triangles;
+            int roadTrianglesPartCount = (roadTriangles.Length / 2 / count) * 2;
+            if (roadTrianglesPartCount % 6 != 0) roadTrianglesPartCount = (roadTrianglesPartCount / 4) * 4;
+
+            Vector3[] roadVertices = fullRoad.Road.Vertices;
+            int roadVerticesPartCount = roadTrianglesPartCount / 3;
+
+            Vector2[] roadUvs = fullRoad.Road.UVs;
+            int roadUvsPartCount = roadTrianglesPartCount / 3;
+
+            for (int i = 0; i < count; i++)
+            {
+                var roadMesh = new Mesh();
+                Vector3[] vertices = roadVertices.SubArray(i * roadVerticesPartCount,
+                    (i == count - 1) ? count * roadVerticesPartCount - i * roadVerticesPartCount : roadVerticesPartCount + 2);
+                Vector2[] uvs = roadUvs.SubArray(i * roadUvsPartCount,
+                    (i == count - 1) ? count * roadUvsPartCount - i * roadUvsPartCount : roadUvsPartCount + 2);
+                uint[] triangles = roadTriangles.SubArray(i * roadTrianglesPartCount,
+                    (i == count - 1) ? count * roadTrianglesPartCount - i * roadTrianglesPartCount : roadTrianglesPartCount);
+
+                if (i == count - 1 && creatorSettings.IsClosed)
+                {
+                    vertices = vertices.Concat(roadVertices.SubArray(0, 2)).ToArray();
+                    uvs = uvs.Concat(roadUvs.SubArray(0, 2)).ToArray();
+                }
+
+                for (int j = 0; j < triangles.Length; j++)
+                {
+                    triangles[j] -= (uint)(i * roadVerticesPartCount);
+                }
+                roadMesh.Vertices = vertices;
+                roadMesh.Triangles = triangles;
+                roadMesh.UVs = uvs;
+                roadSegments[i].Road = roadMesh;
+            }
+
+            roadSegments[0].Curb = fullRoad.Curb; // TODO: some curb separating as single object maybe
+            return roadSegments;
+        }
+
         // Gradually changes a value towards a desired goal over time (by Unity)
         public static float SmoothDamp(float current, float target, ref float currentVelocity, float smoothTime = 0.3f, float maxSpeed = float.PositiveInfinity)
         {
@@ -297,6 +342,13 @@ namespace TwoBRenn.Engine.Common.Path
             }
 
             return output;
+        }
+
+        private static T[] SubArray<T>(this T[] array, int offset, int length)
+        {
+            T[] result = new T[length];
+            Array.Copy(array, offset, result, 0, length);
+            return result;
         }
     }
 }

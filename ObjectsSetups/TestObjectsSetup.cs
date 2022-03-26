@@ -19,11 +19,12 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
         Texture groundTexture = new Texture(@"Textures\ground.jpg");
         Texture roadTexture = new Texture(@"Textures\road.jpg");
         Texture curbTexture = new Texture(@"Textures\curb.png");
+        Texture gravelTexture = new Texture(@"Textures\gravel.jpg");
 
         public TestObjectsSetup()
         {
             groundShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(2, 2));
-            roadShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 20));
+            roadShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 30));
             curbShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 60));
         }
 
@@ -66,19 +67,27 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
             path.IsClosed = true;
 
             RoadCreatorSettings roadCreatorSettings = new RoadCreatorSettings();
-            RoadPart roadPart = RoadCreator.CreateMesh(path.CalculateEvenlySpacedPoints(0.1f), roadCreatorSettings);
+            RoadPart[] parts = RoadCreator.CreateMeshes(path.CalculateEvenlySpacedPoints(0.1f), roadCreatorSettings, 10);
+            RennObject[] roadPartsObjects = new RennObject[10];
 
-            RennObject road = new RennObject();
-            MeshRenderer roadRenderer = road.AddComponent<MeshRenderer>();
-            roadRenderer.SetShaderProgram(roadShader);
-            roadRenderer.SetTriangleMesh(roadPart.Road);
-            roadRenderer.SetTexture(roadTexture);
-            objects.Add(road);
+            for (int i = 0; i < parts.Length; i++)
+            {
+                roadPartsObjects[i] = new RennObject();
+                MeshRenderer roadPartRenderer = roadPartsObjects[i].AddComponent<MeshRenderer>();
+                roadPartRenderer.SetShaderProgram(roadShader);
+                roadPartRenderer.SetTriangleMesh(parts[i].Road);
+                roadPartRenderer.SetTexture(roadTexture);
+                if (i == 3) roadPartRenderer.SetTexture(gravelTexture);
+                objects.Add(roadPartsObjects[i]);
+            }
+
+            roadPartsObjects[3].GetComponent<MeshRenderer>().SetTexture(gravelTexture);
+            roadPartsObjects[6].GetComponent<MeshRenderer>().SetTexture(gravelTexture);
 
             RennObject curb = new RennObject();
             MeshRenderer curbRenderer = curb.AddComponent<MeshRenderer>();
             curbRenderer.SetShaderProgram(curbShader);
-            curbRenderer.SetTriangleMesh(roadPart.Curb);
+            curbRenderer.SetTriangleMesh(parts[0].Curb);
             curbRenderer.SetTexture(curbTexture);
             objects.Add(curb);
 
