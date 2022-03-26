@@ -33,7 +33,7 @@ namespace TwoBRenn.Engine.Common.Path
 
                 if (value)
                 {
-                    if (points.Count + 1 % 3 == 0) points.RemoveAt(points.Count);
+                    if ((points.Count + 1) % 3 == 0) points.RemoveAt(points.Count - 1);
                     points.Add(points[points.Count - 1] * 2 - points[points.Count - 2]);
                     points.Add(points[0] * 2 - points[1]);
                 }
@@ -96,6 +96,7 @@ namespace TwoBRenn.Engine.Common.Path
                 points.Add(controlPointA);
                 points.Add(anchor);
                 points.Add(controlPointB);
+                MovePoint(points.Count - 1, controlPointB);
             }
         }
 

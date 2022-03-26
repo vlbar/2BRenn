@@ -19,7 +19,7 @@ namespace TwoBRenn.Engine.Core
             Matrix4 rotationZ = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation.Z));
             Matrix4 rotationMatrix = rotationY * rotationX * rotationZ;
 
-            Matrix4 translateMatrix = Matrix4.CreateTranslation(position.X, position.Y, -position.Z);
+            Matrix4 translateMatrix = Matrix4.CreateTranslation(position.X, position.Y, position.Z);
             Matrix4 scaleMatrix = Matrix4.CreateScale(scale);
 
             return scaleMatrix * rotationMatrix * translateMatrix;

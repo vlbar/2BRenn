@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using OpenTK;
 using TwoBRenn.Engine.Common.Path;
 using TwoBRenn.Engine.Components;
@@ -15,14 +14,17 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
         SimpleShader baseShader = new SimpleShader();
         SimpleShader groundShader = new SimpleShader();
         SimpleShader roadShader = new SimpleShader();
+        SimpleShader curbShader = new SimpleShader();
         Texture containerTexture = new Texture(@"Textures\container.png");
         Texture groundTexture = new Texture(@"Textures\ground.jpg");
         Texture roadTexture = new Texture(@"Textures\road.jpg");
+        Texture curbTexture = new Texture(@"Textures\curb.png");
 
         public TestObjectsSetup()
         {
             groundShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(2, 2));
-            roadShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 10));
+            roadShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 20));
+            curbShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 60));
         }
 
         public HashSet<RennObject> GetObjects()
@@ -49,24 +51,36 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
             cubeRenderer.SetTexture(containerTexture);
             objects.Add(cube);
 
-            Path path = new Path(new List<Vector3>()
-            {
-                new Vector3(-8, 0, -8),
-                new Vector3(-10, 0, 2),
-                new Vector3(-9, 0, 7),
-                new Vector3(-2, 0, 5),
-                new Vector3(1, 0, 10),
-                new Vector3(10, 0, 4),
-                new Vector3(9, 0, -5)
-            });
+            Path path = new Path();
+            path.AddManualSegment(new Vector3(18f, 0f, -12.5f), new Vector3(20f, 0f, -12.5f), new Vector3(25f, 0f, -12.5f));
+            path.AddManualSegment(new Vector3(28f, 0f, -12.5f), new Vector3(31f, 0f, -12.5f), new Vector3(34f, 0f, -12.5f));
+            path.AddManualSegment(new Vector3(38.5f, 0f, -6f), new Vector3(36.5f, 0f, -4.5f), new Vector3(33f, 0f, -2f));
+            path.AddManualSegment(new Vector3(31.5f, 0f, -5.5f), new Vector3(30.5f, 0f, -7f), new Vector3(29.5f, 0f, -8.5f));
+            path.AddManualSegment(new Vector3(28f, 0f, -10f), new Vector3(26f, 0f, -9f), new Vector3(24f, 0f, -8f));
+            path.AddManualSegment(new Vector3(25.5f, 0f, -6f), new Vector3(22f, 0f, -5.5f), new Vector3(18.5f, 0f, -5f));
+            path.AddManualSegment(new Vector3(17f, 0f, -5.5f), new Vector3(14.5f, 0f, -1.5f), new Vector3(13.5f, 0f, -0f));
+            path.AddManualSegment(new Vector3(8f, 0f, 0.5f), new Vector3(9f, 0f, -4f), new Vector3(10f, 0f, -7f));
+            path.AddManualSegment(new Vector3(10f, 0f, -8.5f), new Vector3(8f, 0f, -9f), new Vector3(4f, 0f, -10f));
+            path.AddManualSegment(new Vector3(-2f, 0f, -14f), new Vector3(1.5f, 0f, -17.5f), new Vector3(6f, 0f, -21.5f));
+            path.AddManualSegment(new Vector3(9.5f, 0f, -8.5f), new Vector3(11.5f, 0f, -10f), new Vector3(13.5f, 0f, -8.5f));
             path.IsClosed = true;
 
+            RoadCreatorSettings roadCreatorSettings = new RoadCreatorSettings();
+            RoadPart roadPart = RoadCreator.CreateMesh(path.CalculateEvenlySpacedPoints(0.1f), roadCreatorSettings);
+
             RennObject road = new RennObject();
-            MeshRenderer roadRenderer = cube.AddComponent<MeshRenderer>();
-            roadRenderer.SetTriangleMesh(RoadCreator.CreateMesh(path.CalculateEvenlySpacedPoints(0.1f), path.IsClosed, 1.2f));
+            MeshRenderer roadRenderer = road.AddComponent<MeshRenderer>();
             roadRenderer.SetShaderProgram(roadShader);
+            roadRenderer.SetTriangleMesh(roadPart.Road);
             roadRenderer.SetTexture(roadTexture);
             objects.Add(road);
+
+            RennObject curb = new RennObject();
+            MeshRenderer curbRenderer = curb.AddComponent<MeshRenderer>();
+            curbRenderer.SetShaderProgram(curbShader);
+            curbRenderer.SetTriangleMesh(roadPart.Curb);
+            curbRenderer.SetTexture(curbTexture);
+            objects.Add(curb);
 
             return objects;
         }

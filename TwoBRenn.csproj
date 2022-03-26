@@ -156,6 +156,9 @@
     <Folder Include="Engine\Utils\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Textures\curb.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\ground.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
