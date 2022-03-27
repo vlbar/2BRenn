@@ -1,18 +1,20 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL4;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using OpenTK;
+using OpenTK.Graphics.OpenGL4;
+using TwoBRenn.Engine.Render.Textures;
+using TwoBRenn.Engine.Render.Utils;
 
-namespace TwoBRenn.Engine.Core.Render
+namespace TwoBRenn.Engine.Render
 {
     class RenderControl
     {
         private GLControl glControl;
-        private Camera camera;
+        private Camera.Camera camera;
         public Skybox Skybox { get; set; }
 
         public Action OnSetup { get; set; }
@@ -27,7 +29,7 @@ namespace TwoBRenn.Engine.Core.Render
 
         public RenderControl()
         {
-            camera = Camera.GetInstance();
+            camera = Camera.Camera.GetInstance();
             time = Time.GetInstance();
         }
 

@@ -1,7 +1,8 @@
 ﻿using OpenTK;
 using OpenTK.Input;
+using TwoBRenn.Engine.Render.Utils;
 
-namespace TwoBRenn.Engine.Core.Render.CameraControllers
+namespace TwoBRenn.Engine.Render.Camera
 {
     class OrbitCameraController : CameraController
     {
@@ -45,22 +46,22 @@ namespace TwoBRenn.Engine.Core.Render.CameraControllers
 
             if (input.IsKeyDown(Key.W))
             {
-                targetPosition += forward * movementSpeed * Time.deltaTime;
+                targetPosition += forward * movementSpeed * Time.DeltaTime;
             }
 
             if (input.IsKeyDown(Key.S))
             {
-                targetPosition -= forward * movementSpeed * Time.deltaTime;
+                targetPosition -= forward * movementSpeed * Time.DeltaTime;
             }
 
             if (input.IsKeyDown(Key.A))
             {
-                targetPosition += right * movementSpeed * Time.deltaTime;
+                targetPosition += right * movementSpeed * Time.DeltaTime;
             }
 
             if (input.IsKeyDown(Key.D))
             {
-                targetPosition += -right * movementSpeed * Time.deltaTime;
+                targetPosition += -right * movementSpeed * Time.DeltaTime;
             }
         }
 
@@ -109,11 +110,11 @@ namespace TwoBRenn.Engine.Core.Render.CameraControllers
             {
                 if (wheelPrecise > lastMouseWheelPrecise)
                 {
-                    zoomAmount -= zoomSensitivity * Time.deltaTime;
+                    zoomAmount -= zoomSensitivity * Time.DeltaTime;
                 }
                 else if (wheelPrecise < lastMouseWheelPrecise)
                 {
-                    zoomAmount += zoomSensitivity * Time.deltaTime;
+                    zoomAmount += zoomSensitivity * Time.DeltaTime;
                 }
 
                 zoomAmount = MathHelper.Clamp(zoomAmount, zoomLimit.X, zoomLimit.Y);

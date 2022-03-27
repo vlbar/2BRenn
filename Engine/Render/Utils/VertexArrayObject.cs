@@ -1,6 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 
-namespace TwoBRenn.Engine.Core.Render
+namespace TwoBRenn.Engine.Render.Utils
 {
     public class VertexArrayObject
     {

@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace TwoBRenn.Engine.Core
+namespace TwoBRenn.Engine.Utils
 {
     class Transform
     {

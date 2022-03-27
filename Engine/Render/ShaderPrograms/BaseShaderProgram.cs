@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using TwoBRenn.Engine.Core.Render.ShaderPrograms;
 
-namespace TwoBRenn.Engine.Core.Render
+namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
     class BaseShaderProgram
     {

@@ -1,25 +1,26 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
+using TwoBRenn.Engine;
 using TwoBRenn.Engine.Common.Path;
 using TwoBRenn.Engine.Components;
-using TwoBRenn.Engine.Core.Render;
-using TwoBRenn.Engine.Core.Render.ShaderPrograms;
 using TwoBRenn.Engine.Interfaces;
-using TwoBRenn.ObjectsSetups;
+using TwoBRenn.Engine.Render.ShaderPrograms;
+using TwoBRenn.Engine.Render.Textures;
 
-namespace TwoBRenn.Engine.Core.Scene.Setups
+namespace TwoBRenn.ObjectsSetups
 {
     class TestObjectsSetup : IObjectsSetup
     {
-        SimpleShader baseShader = new SimpleShader();
-        SimpleShader groundShader = new SimpleShader();
-        SimpleShader roadShader = new SimpleShader();
-        SimpleShader curbShader = new SimpleShader();
-        Texture containerTexture = new Texture(@"Textures\container.png");
-        Texture groundTexture = new Texture(@"Textures\ground.jpg");
-        Texture roadTexture = new Texture(@"Textures\road.jpg");
-        Texture curbTexture = new Texture(@"Textures\curb.png");
-        Texture gravelTexture = new Texture(@"Textures\gravel.jpg");
+        private readonly Texture containerTexture = new Texture(@"Assets\Textures\container.png");
+        private readonly Texture groundTexture = new Texture(@"Assets\Textures\ground.jpg");
+        private readonly Texture roadTexture = new Texture(@"Assets\Textures\road.jpg");
+        private readonly Texture curbTexture = new Texture(@"Assets\Textures\curb.png");
+        private readonly Texture gravelTexture = new Texture(@"Assets\Textures\gravel.jpg");
+
+        private readonly SimpleShader baseShader = new SimpleShader();
+        private readonly SimpleShader groundShader = new SimpleShader();
+        private readonly SimpleShader roadShader = new SimpleShader();
+        private readonly SimpleShader curbShader = new SimpleShader();
 
         public TestObjectsSetup()
         {
@@ -77,7 +78,6 @@ namespace TwoBRenn.Engine.Core.Scene.Setups
                 roadPartRenderer.SetShaderProgram(roadShader);
                 roadPartRenderer.SetTriangleMesh(parts[i].Road);
                 roadPartRenderer.SetTexture(roadTexture);
-                if (i == 3) roadPartRenderer.SetTexture(gravelTexture);
                 objects.Add(roadPartsObjects[i]);
             }
 

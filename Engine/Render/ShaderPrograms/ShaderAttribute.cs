@@ -1,8 +1,8 @@
-﻿using OpenTK;
+﻿using System.Drawing;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using System.Drawing;
 
-namespace TwoBRenn.Engine.Core.Render.ShaderPrograms
+namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
     abstract class ShaderAttribute
     {

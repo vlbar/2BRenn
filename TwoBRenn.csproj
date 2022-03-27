@@ -73,29 +73,29 @@
     <Compile Include="Engine\Common\Path\RoadCreator.cs" />
     <Compile Include="Engine\Components\Component.cs" />
     <Compile Include="Engine\Components\MeshRenderer.cs" />
-    <Compile Include="Engine\Core\Interfaces\IComponent.cs" />
-    <Compile Include="Engine\Core\Render\Camera.cs" />
-    <Compile Include="Engine\Core\Render\CameraControllers\CameraController.cs" />
-    <Compile Include="Engine\Core\Render\CameraControllers\OrbitCameraController.cs" />
-    <Compile Include="Engine\Core\Render\Utils\BufferObject.cs" />
-    <Compile Include="Engine\Core\Render\Utils\Mesh.cs" />
-    <Compile Include="Engine\Core\Render\RenderControl.cs" />
-    <Compile Include="Engine\Core\Render\BaseShaderProgram.cs" />
-    <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderAttribute.cs" />
-    <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderDefinition.cs" />
-    <Compile Include="Engine\Core\Render\ShaderPrograms\SimpleShader.cs" />
-    <Compile Include="Engine\Core\Render\ShaderPrograms\SkyboxShader.cs" />
-    <Compile Include="Engine\Core\Render\Skybox.cs" />
-    <Compile Include="Engine\Core\Render\Texture.cs" />
-    <Compile Include="Engine\Core\Render\Time.cs" />
-    <Compile Include="Engine\Core\Render\Utils\VertexArrayObject.cs" />
-    <Compile Include="Engine\Core\RennEngine.cs" />
-    <Compile Include="Engine\Core\RennObject.cs" />
-    <Compile Include="Engine\Core\Scene\SceneManager.cs" />
-    <Compile Include="Engine\Core\Interfaces\IObjectsSetup.cs" />
+    <Compile Include="Engine\Interfaces\IComponent.cs" />
+    <Compile Include="Engine\Render\Camera\Camera.cs" />
+    <Compile Include="Engine\Render\Camera\CameraController.cs" />
+    <Compile Include="Engine\Render\Camera\OrbitCameraController.cs" />
+    <Compile Include="Engine\Render\Utils\BufferObject.cs" />
+    <Compile Include="Engine\Render\Utils\Mesh.cs" />
+    <Compile Include="Engine\Render\RenderControl.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\BaseShaderProgram.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\ShaderAttribute.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\ShaderDefinition.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\SimpleShader.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\SkyboxShader.cs" />
+    <Compile Include="Engine\Render\Textures\Skybox.cs" />
+    <Compile Include="Engine\Render\Textures\Texture.cs" />
+    <Compile Include="Engine\Render\Utils\Time.cs" />
+    <Compile Include="Engine\Render\Utils\VertexArrayObject.cs" />
+    <Compile Include="Engine\RennEngine.cs" />
+    <Compile Include="Engine\RennObject.cs" />
+    <Compile Include="Engine\Scene\SceneManager.cs" />
+    <Compile Include="Engine\Interfaces\IObjectsSetup.cs" />
     <Compile Include="ObjectsSetups\PrimitiveMeshFactory.cs" />
     <Compile Include="ObjectsSetups\TestObjectsSetup.cs" />
-    <Compile Include="Engine\Core\Transform.cs" />
+    <Compile Include="Engine\Utils\Transform.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,16 +118,16 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include=".gitignore" />
-    <None Include="Engine\Core\Render\Shaders\baseFragmentShader.frag">
+    <None Include="Engine\Render\Shaders\baseFragmentShader.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Engine\Core\Render\Shaders\baseVertexShader.vert">
+    <None Include="Engine\Render\Shaders\baseVertexShader.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Engine\Core\Render\Shaders\skyboxShader.frag">
+    <None Include="Engine\Render\Shaders\skyboxShader.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Engine\Core\Render\Shaders\skyboxShader.vert">
+    <None Include="Engine\Render\Shaders\skyboxShader.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="OpenTK.dll.config" />
@@ -152,41 +152,39 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Engine\Utils\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Textures\curb.png">
+    <Content Include="Assets\Textures\container.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\gravel.jpg">
+    <Content Include="Assets\Textures\curb.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\ground.jpg">
+    <Content Include="Assets\Textures\gravel.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\road.jpg">
+    <Content Include="Assets\Textures\ground.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Textures\skybox\back.png">
+    <Content Include="Assets\Textures\road.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Textures\skybox\bottom.png">
+    </Content>
+    <Content Include="Assets\Textures\skybox\back.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Textures\skybox\front.png">
+    </Content>
+    <Content Include="Assets\Textures\skybox\bottom.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Textures\skybox\left.png">
+    </Content>
+    <Content Include="Assets\Textures\skybox\front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Textures\skybox\right.png">
+    </Content>
+    <Content Include="Assets\Textures\skybox\left.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Textures\skybox\top.png">
+    </Content>
+    <Content Include="Assets\Textures\skybox\right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <Content Include="Textures\container.png">
+    </Content>
+    <Content Include="Assets\Textures\skybox\top.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

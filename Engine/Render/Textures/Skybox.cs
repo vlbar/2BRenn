@@ -1,9 +1,9 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
-using TwoBRenn.Engine.Core.Render.ShaderPrograms;
+using OpenTK.Graphics.OpenGL4;
+using TwoBRenn.Engine.Render.ShaderPrograms;
 
-namespace TwoBRenn.Engine.Core.Render
+namespace TwoBRenn.Engine.Render.Textures
 {
     class Skybox
     {
@@ -121,8 +121,8 @@ namespace TwoBRenn.Engine.Core.Render
         public void Use()
         {
             shaderProgram.ActiveProgram();
-            shaderProgram.SetMatrix4(SkyboxShader.VIEW, Camera.GetViewMatrix().ClearTranslation());
-            shaderProgram.SetMatrix4(SkyboxShader.PROJECTION, Camera.GetProjectionMatrix());
+            shaderProgram.SetMatrix4(SkyboxShader.VIEW, Camera.Camera.GetViewMatrix().ClearTranslation());
+            shaderProgram.SetMatrix4(SkyboxShader.PROJECTION, Camera.Camera.GetProjectionMatrix());
 
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.TextureCubeMap, cubemap);

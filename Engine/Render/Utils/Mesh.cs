@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace TwoBRenn.Engine.Core.Render
+namespace TwoBRenn.Engine.Render.Utils
 {
     public class Mesh
     {

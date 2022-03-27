@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using TwoBRenn.Engine.Core;
-using TwoBRenn.Engine.Core.Render;
+using TwoBRenn.Engine;
+using TwoBRenn.Engine.Render.Textures;
 
 namespace TwoBRenn
 {
@@ -25,12 +25,12 @@ namespace TwoBRenn
             };
 
             engine.RenderControl.Skybox = new Skybox(new string[] {
-                @"Textures\skybox\right.png",
-                @"Textures\skybox\left.png",
-                @"Textures\skybox\top.png",
-                @"Textures\skybox\bottom.png",
-                @"Textures\skybox\front.png",
-                @"Textures\skybox\back.png"
+                @"Assets\Textures\skybox\right.png",
+                @"Assets\Textures\skybox\left.png",
+                @"Assets\Textures\skybox\top.png",
+                @"Assets\Textures\skybox\bottom.png",
+                @"Assets\Textures\skybox\front.png",
+                @"Assets\Textures\skybox\back.png"
             });
         }
     }

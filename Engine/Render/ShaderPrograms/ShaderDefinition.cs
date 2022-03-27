@@ -1,6 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 
-namespace TwoBRenn.Engine.Core.Render.ShaderPrograms
+namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
     class ShaderDefinition
     {

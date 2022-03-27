@@ -1,6 +1,7 @@
-﻿using TwoBRenn.Engine.Core.Render;
+﻿using TwoBRenn.Engine.Render;
+using TwoBRenn.Engine.Scene;
 
-namespace TwoBRenn.Engine.Core
+namespace TwoBRenn.Engine
 {
     class RennEngine
     {

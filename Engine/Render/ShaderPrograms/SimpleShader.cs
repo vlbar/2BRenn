@@ -1,8 +1,8 @@
-﻿using OpenTK;
+﻿using System.Collections.Generic;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using System.Collections.Generic;
 
-namespace TwoBRenn.Engine.Core.Render.ShaderPrograms
+namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
     class SimpleShader : BaseShaderProgram
     {
@@ -12,8 +12,8 @@ namespace TwoBRenn.Engine.Core.Render.ShaderPrograms
 
         public SimpleShader() 
             : base(new List<ShaderDefinition>() { 
-                new ShaderDefinition(ShaderType.VertexShader, @"Engine/Core/Render/Shaders/baseVertexShader.vert"),
-                new ShaderDefinition(ShaderType.FragmentShader, @"Engine/Core/Render/Shaders/baseFragmentShader.frag")
+                new ShaderDefinition(ShaderType.VertexShader, @"Engine/Render/Shaders/baseVertexShader.vert"),
+                new ShaderDefinition(ShaderType.FragmentShader, @"Engine/Render/Shaders/baseFragmentShader.frag")
             })
         {
             SetDefaultShaderAttribute(BASE_COLOR, ShaderAttribute.Value(Vector4.One));

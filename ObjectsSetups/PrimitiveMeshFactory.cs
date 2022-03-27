@@ -1,5 +1,5 @@
 ﻿using OpenTK;
-using TwoBRenn.Engine.Core.Render;
+using TwoBRenn.Engine.Render.Utils;
 
 namespace TwoBRenn.ObjectsSetups
 {

@@ -1,10 +1,10 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
+using OpenTK.Graphics.OpenGL4;
 
-namespace TwoBRenn.Engine.Core.Render
+namespace TwoBRenn.Engine.Render.Textures
 {
-    class Texture
+    public class Texture
     {
         public int texture;
 

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using TwoBRenn.Engine.Core.Scene.Setups;
 using TwoBRenn.Engine.Interfaces;
+using TwoBRenn.ObjectsSetups;
 
-namespace TwoBRenn.Engine.Core
+namespace TwoBRenn.Engine.Scene
 {
     class SceneManager
     {

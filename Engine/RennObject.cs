@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using TwoBRenn.Engine.Components;
+using TwoBRenn.Engine.Utils;
 
-namespace TwoBRenn.Engine.Core
+namespace TwoBRenn.Engine
 {
     class RennObject
     {

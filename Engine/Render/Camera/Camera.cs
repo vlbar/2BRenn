@@ -1,8 +1,7 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using TwoBRenn.Engine.Core.Render.CameraControllers;
 
-namespace TwoBRenn.Engine.Core.Render
+namespace TwoBRenn.Engine.Render.Camera
 {
     class Camera
     {

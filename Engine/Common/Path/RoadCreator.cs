@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenTK;
-using TwoBRenn.Engine.Core.Render;
+using TwoBRenn.Engine.Render.Utils;
 
 namespace TwoBRenn.Engine.Common.Path
 {

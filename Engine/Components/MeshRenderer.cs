@@ -1,7 +1,9 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System.Collections.Generic;
-using TwoBRenn.Engine.Core.Render;
-using TwoBRenn.Engine.Core.Render.ShaderPrograms;
+using TwoBRenn.Engine.Render.Camera;
+using TwoBRenn.Engine.Render.ShaderPrograms;
+using TwoBRenn.Engine.Render.Textures;
+using TwoBRenn.Engine.Render.Utils;
 
 namespace TwoBRenn.Engine.Components
 {
