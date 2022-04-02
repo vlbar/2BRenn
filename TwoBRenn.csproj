@@ -93,7 +93,8 @@
     <Compile Include="Engine\RennObject.cs" />
     <Compile Include="Engine\Scene\SceneManager.cs" />
     <Compile Include="Engine\Interfaces\IObjectsSetup.cs" />
-    <Compile Include="ObjectsSetups\PrimitiveMeshFactory.cs" />
+    <Compile Include="ObjectsSetups\MeshFactories\SecurityStructuresMeshFactory.cs" />
+    <Compile Include="ObjectsSetups\MeshFactories\PrimitiveMeshFactory.cs" />
     <Compile Include="ObjectsSetups\TestObjectsSetup.cs" />
     <Compile Include="Engine\Utils\Transform.cs" />
     <Compile Include="MainForm.cs">
