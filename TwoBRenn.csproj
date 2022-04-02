@@ -93,6 +93,7 @@
     <Compile Include="Engine\RennObject.cs" />
     <Compile Include="Engine\Scene\SceneManager.cs" />
     <Compile Include="Engine\Interfaces\IObjectsSetup.cs" />
+    <Compile Include="ObjectsSetups\MeshFactories\EnvironmentMeshFactory.cs" />
     <Compile Include="ObjectsSetups\MeshFactories\SecurityStructuresMeshFactory.cs" />
     <Compile Include="ObjectsSetups\MeshFactories\PrimitiveMeshFactory.cs" />
     <Compile Include="ObjectsSetups\TestObjectsSetup.cs" />
@@ -159,6 +160,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\curb.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Environment\sponsors.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Environment\spruce.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\gravel.jpg">
