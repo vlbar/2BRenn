@@ -179,6 +179,9 @@
     <Content Include="Assets\Textures\Maps\forest-map.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Textures\plastic.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Textures\road.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using OpenTK;
 using TwoBRenn.Engine;
 using TwoBRenn.Engine.Common.ObjectsPlacers;
@@ -9,6 +10,7 @@ using TwoBRenn.Engine.Interfaces;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.Engine.Render.Utils;
+using TwoBRenn.Engine.Utils;
 
 namespace TwoBRenn.ObjectsSetups
 {
@@ -18,11 +20,15 @@ namespace TwoBRenn.ObjectsSetups
         private readonly Texture roadTexture = new Texture(@"Assets\Textures\road.jpg");
         private readonly Texture curbTexture = new Texture(@"Assets\Textures\curb.png");
         private readonly Texture gravelTexture = new Texture(@"Assets\Textures\gravel.jpg");
-        private readonly Texture treeTextureAtlas = new Texture(@"Assets\Textures\Environment\spruce.jpg");
+        private readonly Texture plasticTexture = new Texture(@"Assets\Textures\plastic.jpg");
+        private readonly Texture sponsorsTexture = new Texture(@"Assets\Textures\Environment\sponsors.jpg");
+        private readonly Texture treeTexture = new Texture(@"Assets\Textures\Environment\spruce.jpg");
+        private readonly SimpleShader simpleShader = new SimpleShader();
         private readonly SimpleShader groundShader = new SimpleShader();
         private readonly SimpleShader roadShader = new SimpleShader();
         private readonly SimpleShader curbShader = new SimpleShader();
         private readonly SimpleShader treeShader = new SimpleShader();
+        private readonly SimpleShader concreteShader = new SimpleShader();
 
         private readonly float[,] forestMap = ImageMap.GenerateMap(@"Assets\Textures\Maps\forest-map.png", 24);
 
@@ -32,6 +38,7 @@ namespace TwoBRenn.ObjectsSetups
             roadShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 30));
             curbShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 60));
             treeShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(5, 5));
+            concreteShader.SetDefaultShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(Color.DarkGray));
         }
 
         public HashSet<RennObject> GetObjects()
@@ -41,8 +48,185 @@ namespace TwoBRenn.ObjectsSetups
             AddGround(objects);
             AddRoad(objects);
             AddForest(objects);
+            AddBarriers(objects);
+            AddAd(objects);
+            AddStands(objects);
 
             return objects;
+        }
+
+        private void AddAd(HashSet<RennObject> objects)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                RennObject barrier = new RennObject();
+                barrier.Transform.SetPosition(-40f + i * 10, 0.1f, 3f);
+                barrier.Transform.SetRotation(0f, 90f, 0f);
+                barrier.Transform.SetScale(1f);
+                MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
+                barrierRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdFlag));
+                barrierRenderer.SetShaderProgram(simpleShader);
+                barrierRenderer.SetTexture(sponsorsTexture);
+                objects.Add(barrier);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                RennObject adFlag = new RennObject();
+                adFlag.Transform.SetPosition(-55f + i * 10, 0.1f, 57f - i * 0.5f);
+                adFlag.Transform.SetRotation(0f, 90f, 0f);
+                adFlag.Transform.SetScale(1f);
+                MeshRenderer adFlagRenderer = adFlag.AddComponent<MeshRenderer>();
+                adFlagRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdFlag));
+                adFlagRenderer.SetShaderProgram(simpleShader);
+                adFlagRenderer.SetTexture(sponsorsTexture);
+                objects.Add(adFlag);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                RennObject adStand = new RennObject();
+                adStand.Transform.SetPosition(-85f + i * 10, 0.1f, 0f - i * 3.5f);
+                adStand.Transform.SetRotation(0f, 0f, 0f);
+                adStand.Transform.SetScale(3f);
+                MeshRenderer adStandRenderer = adStand.AddComponent<MeshRenderer>();
+                adStandRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdStand));
+                adStandRenderer.SetShaderProgram(simpleShader);
+                adStandRenderer.SetTexture(sponsorsTexture);
+                objects.Add(adStand);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                RennObject adStand = new RennObject();
+                adStand.Transform.SetPosition(-150f + i * 9, 0.1f, -30f + i * 10.5f);
+                adStand.Transform.SetRotation(0f, 0f, 0f);
+                adStand.Transform.SetScale(3f);
+                MeshRenderer adStandRenderer = adStand.AddComponent<MeshRenderer>();
+                adStandRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdStand));
+                adStandRenderer.SetShaderProgram(simpleShader);
+                adStandRenderer.SetTexture(sponsorsTexture);
+                objects.Add(adStand);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                RennObject adPlane = new RennObject();
+                adPlane.Transform.SetPosition(-35f + i * 10, 0.1f, -7.5f);
+                adPlane.Transform.SetRotation(0f, 90f, 0f);
+                adPlane.Transform.SetScale(2f);
+                MeshRenderer adPlaneRenderer = adPlane.AddComponent<MeshRenderer>();
+                adPlaneRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdPlane));
+                adPlaneRenderer.SetShaderProgram(simpleShader);
+                adPlaneRenderer.SetTexture(sponsorsTexture);
+                objects.Add(adPlane);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                RennObject adPlane = new RennObject();
+                adPlane.Transform.SetPosition(-120f + i * 10, 0.1f, 95f);
+                adPlane.Transform.SetRotation(0f, -35f, 0f);
+                adPlane.Transform.SetScale(2f);
+                MeshRenderer adPlaneRenderer = adPlane.AddComponent<MeshRenderer>();
+                adPlaneRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdPlane));
+                adPlaneRenderer.SetShaderProgram(simpleShader);
+                adPlaneRenderer.SetTexture(sponsorsTexture);
+                objects.Add(adPlane);
+            }
+        }
+
+        private void AddStands(HashSet<RennObject> objects)
+        {
+            List<Transform> transforms = new List<Transform>();
+            Transform standTransform1 = new Transform();
+            standTransform1.SetPosition(-100, 0, -30);
+            standTransform1.SetRotation(0f, 45f, 0f);
+            standTransform1.SetScale(10f, 3f, 25f);
+            transforms.Add(standTransform1);
+
+            Transform standTransform2 = new Transform();
+            standTransform2.SetPosition(0, 0, -30);
+            standTransform2.SetScale(40f, 10f, 15f);
+            transforms.Add(standTransform2);
+
+            Transform standTransform3 = new Transform();
+            standTransform3.SetPosition(0, 0, 70);
+            standTransform3.SetScale(40f, 3f, 15f);
+            transforms.Add(standTransform3);
+
+            Transform standTransform4 = new Transform();
+            standTransform4.SetPosition(-150, 0, 60);
+            standTransform4.SetScale(15f, 3f, 40f);
+            transforms.Add(standTransform4);
+
+            Transform standTransform5 = new Transform();
+            standTransform5.SetPosition(-160, 0, -25);
+            standTransform5.SetScale(4f, 8f, 4f);
+            transforms.Add(standTransform5);
+
+            Transform standTransform6 = new Transform();
+            standTransform6.SetPosition(-50, 0, 30);
+            standTransform6.SetScale(9f, 8f, 9f);
+            transforms.Add(standTransform6);
+
+            foreach (var transform in transforms)
+            {
+                RennObject stand = new RennObject();
+                stand.Transform.SetPosition(transform.position);
+                stand.Transform.SetRotation(transform.rotation);
+                stand.Transform.SetScale(transform.scale);
+                MeshRenderer standRenderer = stand.AddComponent<MeshRenderer>();
+                standRenderer.SetTriangleMesh(PrimitiveMeshFactory.CreateCube());
+                standRenderer.SetShaderProgram(concreteShader);
+                standRenderer.SetTexture(plasticTexture);
+                objects.Add(stand);
+            }
+        }
+
+        private void AddBarriers(HashSet<RennObject> objects)
+        {
+            for (int i = 0; i < 40; i++)
+            {
+                RennObject barrier = new RennObject();
+                barrier.Transform.SetPosition(-40f + i * 2, 0.1f, -8f);
+                barrier.Transform.SetRotation(0f, 0f, 0f);
+                barrier.Transform.SetScale(1f);
+                MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
+                barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Barrier));
+                barrierRenderer.SetShaderProgram(simpleShader);
+                if (i % 2 == 1) barrierRenderer.SetShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(0.937F, 0.341F, 0.250F, 1f));
+                barrierRenderer.SetTexture(plasticTexture);
+                objects.Add(barrier);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                RennObject delinator = new RennObject();
+                delinator.Transform.SetPosition(-101f + i * 2, 0.1f, 21f + i * 1);
+                delinator.Transform.SetRotation(0f, 0f, 0f);
+                delinator.Transform.SetScale(0.4f);
+                MeshRenderer delinatorRenderer = delinator.AddComponent<MeshRenderer>();
+                delinatorRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Delineator));
+                delinatorRenderer.SetShaderProgram(simpleShader);
+                delinatorRenderer.SetShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(Color.LightGray));
+                delinatorRenderer.SetTexture(plasticTexture);
+                objects.Add(delinator);
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                RennObject delinator = new RennObject();
+                delinator.Transform.SetPosition(-107f + i * 0.2f, 0.1f, 27f + i * 2);
+                delinator.Transform.SetRotation(0f, 0f, 0f);
+                delinator.Transform.SetScale(0.4f);
+                MeshRenderer delinatorRenderer = delinator.AddComponent<MeshRenderer>();
+                delinatorRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Delineator));
+                delinatorRenderer.SetShaderProgram(simpleShader);
+                delinatorRenderer.SetShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(Color.LightGray));
+                delinatorRenderer.SetTexture(plasticTexture);
+                objects.Add(delinator);
+            }
         }
 
         private void AddGround(HashSet<RennObject> objects)
@@ -63,7 +247,6 @@ namespace TwoBRenn.ObjectsSetups
                     planeRenderer.SetTriangleMesh(PrimitiveMeshFactory.CreatePlane());
                     planeRenderer.SetShaderProgram(groundShader);
                     planeRenderer.SetTexture(groundTexture);
-                    objects.Add(plane);
                 }
             }
         }
@@ -93,8 +276,7 @@ namespace TwoBRenn.ObjectsSetups
                         MeshRenderer treeRenderer = tree.AddComponent<MeshRenderer>();
                         treeRenderer.SetTriangleMesh(pineMesh);
                         treeRenderer.SetShaderProgram(treeShader);
-                        treeRenderer.SetTexture(treeTextureAtlas);
-                        objects.Add(tree);
+                        treeRenderer.SetTexture(treeTexture);
                     }
                 }
             }
@@ -134,7 +316,6 @@ namespace TwoBRenn.ObjectsSetups
                 roadPartRenderer.SetShaderProgram(roadShader);
                 roadPartRenderer.SetTriangleMesh(parts[i].Road);
                 roadPartRenderer.SetTexture(roadTexture);
-                objects.Add(roadPartsObjects[i]);
             }
 
             roadPartsObjects[3].GetComponent<MeshRenderer>().SetTexture(gravelTexture);
@@ -146,7 +327,6 @@ namespace TwoBRenn.ObjectsSetups
             curbRenderer.SetShaderProgram(curbShader);
             curbRenderer.SetTriangleMesh(parts[0].Curb);
             curbRenderer.SetTexture(curbTexture);
-            objects.Add(curb);
 
             // tech roads
             RoadCreatorSettings techRoadCreatorSettings = new RoadCreatorSettings
@@ -165,7 +345,6 @@ namespace TwoBRenn.ObjectsSetups
             techRoadRenderer.SetShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 2));
             techRoadRenderer.SetTriangleMesh(techRoadPart1.Road);
             techRoadRenderer.SetTexture(gravelTexture);
-            objects.Add(techRoad1);
 
             Path techPath2 = new Path();
             techPath2.AddManualSegment(Vector3.Zero, new Vector3(31f, 0f, -12.5f), new Vector3(27f, 0f, -12.5f));
@@ -178,7 +357,6 @@ namespace TwoBRenn.ObjectsSetups
             techRoadRenderer2.SetShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 2));
             techRoadRenderer2.SetTriangleMesh(techRoadPart2.Road);
             techRoadRenderer2.SetTexture(gravelTexture);
-            objects.Add(techRoad2);
         }
     }
 }
