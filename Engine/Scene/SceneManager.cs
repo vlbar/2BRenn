@@ -11,7 +11,7 @@ namespace TwoBRenn.Engine.Scene
 
         public SceneManager()
         {
-            objectsSetups.Add(new TestObjectsSetup());
+            objectsSetups.Add(new AutodromeObjectsSetup());
 
             foreach (IObjectsSetup objectsSetup in objectsSetups)
             {

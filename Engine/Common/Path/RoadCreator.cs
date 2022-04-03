@@ -14,12 +14,12 @@ namespace TwoBRenn.Engine.Common.Path
         public int ExpansionResolution = 10;
 
         // road mesh
-        public float RoadWidth = 1f;
+        public float RoadWidth = 1.4f;
         public float ExpansionRoadWidth = 0.8f;
         public float ExpansionSmoothTime = 0.4f;
 
         // curb mesh
-        public float CurbWidth = 0.15f;
+        public float CurbWidth = 0.2f;
         public float MinCurbWidth = 0.02f;
     }
 
@@ -222,10 +222,10 @@ namespace TwoBRenn.Engine.Common.Path
                 vertices[vertexIndex] = points[i] + left * roadLeftHalfWidth;
                 vertices[vertexIndex + 1] = points[i] - left * roadRightHalfWidth;
 
-                if (leftCurb.CanStart(creatorSettings.MinCurbWidth)) leftCurb.AddVertices(points[i], left, roadLeftHalfWidth);
+                if (leftCurb.CanStart(creatorSettings.MinCurbWidth)) leftCurb.AddVertices(points[i], left, roadRightHalfWidth, true);
                 else leftCurb.CurbEnd();
 
-                if (rightCurb.CanStart(creatorSettings.MinCurbWidth)) rightCurb.AddVertices(points[i], left, roadRightHalfWidth, true);
+                if (rightCurb.CanStart(creatorSettings.MinCurbWidth)) rightCurb.AddVertices(points[i], left, roadLeftHalfWidth);
                 else rightCurb.CurbEnd();
 
                 float completionPercent = i / (float)(points.Length - 1);
