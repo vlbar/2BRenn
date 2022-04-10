@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TwoBRenn.Engine.Components
+﻿namespace TwoBRenn.Engine.Components
 {
     abstract class Component
     {
         public RennObject rennObject { get; set; }
-        public abstract void OnUpdate();
-        public abstract void OnUnload();
+
+        public virtual void OnStart() { }
+        public virtual void OnUpdate() { }
+        public virtual void OnLateUpdate() { }
+        public virtual void OnUnload() { }
     }
 }

@@ -6,8 +6,8 @@ namespace TwoBRenn.Engine.Scene
 {
     class SceneManager
     {
-        private HashSet<RennObject> sceneGraph = new HashSet<RennObject>();
-        private HashSet<IObjectsSetup> objectsSetups = new HashSet<IObjectsSetup>();
+        private readonly HashSet<RennObject> sceneGraph = new HashSet<RennObject>();
+        private readonly HashSet<IObjectsSetup> objectsSetups = new HashSet<IObjectsSetup>();
 
         public SceneManager()
         {
@@ -22,11 +22,27 @@ namespace TwoBRenn.Engine.Scene
             }
         }
 
+        public void OnStart()
+        {
+            foreach (RennObject rennObject in sceneGraph)
+            {
+                rennObject.OnStart();
+            }
+        }
+
         public void OnUpdate()
         {
             foreach (RennObject rennObject in sceneGraph)
             {
                 rennObject.OnUpdate();
+            }
+        }
+
+        public void OnLateUpdate()
+        {
+            foreach (RennObject rennObject in sceneGraph)
+            {
+                rennObject.OnLateUpdate();
             }
         }
     }

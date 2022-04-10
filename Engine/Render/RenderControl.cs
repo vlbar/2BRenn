@@ -19,6 +19,7 @@ namespace TwoBRenn.Engine.Render
 
         public Action OnSetup { get; set; }
         public Action OnRender { get; set; }
+        public Action OnRenderTransparent { get; set; }
 
         private Time time;
         private int maxFrameRate = 75;
@@ -51,6 +52,7 @@ namespace TwoBRenn.Engine.Render
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
             GL.CullFace(CullFaceMode.Front);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             OnSetup?.Invoke();
         }
 
@@ -94,6 +96,10 @@ namespace TwoBRenn.Engine.Render
             // render cycle
             OnRender?.Invoke();
             if (Skybox != null) Skybox.Use();
+
+            GL.Enable(EnableCap.Blend);
+            OnRenderTransparent?.Invoke();
+            GL.Disable(EnableCap.Blend);
 
             glControl.SwapBuffers();
         }

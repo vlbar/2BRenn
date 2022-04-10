@@ -13,12 +13,10 @@ namespace TwoBRenn.Engine
             RenderControl.OnSetup += delegate
             {
                 sceneManager = new SceneManager();
+                sceneManager.OnStart();
             };
-
-            RenderControl.OnRender += delegate
-            {
-                sceneManager.OnUpdate();
-            };
+            RenderControl.OnRenderTransparent += delegate { sceneManager.OnLateUpdate(); };
+            RenderControl.OnRender += delegate { sceneManager.OnUpdate(); };
         }
     }
 }

@@ -80,6 +80,7 @@ namespace TwoBRenn.Engine
         public void AddChild(RennObject child)
         {
             ChildObjects.Add(child);
+            Transform.SetChildTransforms(ChildObjects.Select(x => x.Transform));
             if (child.parent != this) child.SetParent(this);
         }
 
@@ -87,19 +88,51 @@ namespace TwoBRenn.Engine
         {
             child.SetParent(null);
             ChildObjects.Remove(child);
+            Transform.SetChildTransforms(ChildObjects.Select(x => x.Transform));
         }
 
         // OTHER
+        public void OnStart()
+        {
+            foreach (RennObject childObject in ChildObjects)
+            {
+                childObject.OnStart();
+            }
+            foreach (Component component in Components)
+            {
+                component.OnStart();
+            }
+        }
+
         public void OnUpdate()
         {
             foreach (RennObject childObject in ChildObjects)
             {
                 childObject.OnUpdate();
             }
-
             foreach (Component component in Components)
             {
                 component.OnUpdate();
+            }
+        }
+
+        public void OnLateUpdate()
+        {
+            foreach (RennObject childObject in ChildObjects)
+            {
+                childObject.OnLateUpdate();
+            }
+            foreach (Component component in Components)
+            {
+                component.OnLateUpdate();
+            }
+        }
+
+        ~RennObject()
+        {
+            foreach (Component component in Components)
+            {
+                component.OnUnload();
             }
         }
     }

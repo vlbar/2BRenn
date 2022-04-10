@@ -98,8 +98,8 @@ namespace TwoBRenn.Engine.Components
 
         public override void OnUnload()
         {
-            vertexBuffer.Delete();
-            elementBuffer.Delete();
+            //vertexBuffer.Delete();
+            //elementBuffer.Delete();
         }
     }
 }

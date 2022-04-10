@@ -1,4 +1,6 @@
-﻿using OpenTK;
+﻿using System.Collections.Generic;
+using System.Linq;
+using OpenTK;
 
 namespace TwoBRenn.Engine.Utils
 {
@@ -10,6 +12,7 @@ namespace TwoBRenn.Engine.Utils
 
         private Matrix4 globalModelMatrix = Matrix4.Identity;
         private Transform parentTransform;
+        private IEnumerable<Transform> childTransforms;
 
         // matrix
         private Matrix4 GetLocalModelMatrix()
@@ -31,6 +34,14 @@ namespace TwoBRenn.Engine.Utils
                 globalModelMatrix = GetLocalModelMatrix();
             else
                 globalModelMatrix = GetLocalModelMatrix() * parentTransform.GetGlobalModelMatrix();
+
+            if (childTransforms != null)
+            {
+                foreach (var childTransform in childTransforms)
+                {
+                    childTransform.UpdateGlobalModel();
+                }
+            }
         }
 
         public Matrix4 GetGlobalModelMatrix() => globalModelMatrix;
@@ -39,6 +50,11 @@ namespace TwoBRenn.Engine.Utils
         {
             parentTransform = transform;
             UpdateGlobalModel();
+        }
+
+        public void SetChildTransforms(IEnumerable<Transform> transforms)
+        {
+            childTransforms = transforms;
         }
 
         // transfrom change
