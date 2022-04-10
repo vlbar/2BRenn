@@ -8,7 +8,7 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
     {
         public abstract void Uniform(int location);
 
-        public static ShaderAttribute Value(Color color) => new ShaderAttribute_Vector4(new Vector4(color.R/255, color.G/255, color.B/255, color.A/255));
+        public static ShaderAttribute Value(Color color) => new ShaderAttribute_Vector4(new Vector4(color.R/255.0f, color.G/255.0f, color.B/255.0f, color.A/255.0f));
         public static ShaderAttribute Value(Vector4 vector) => new ShaderAttribute_Vector4(vector);
         public static ShaderAttribute Value(float x, float y, float z, float w) => new ShaderAttribute_Vector4(new Vector4(x, y, z, w));
 

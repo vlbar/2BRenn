@@ -69,15 +69,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\Common\ObjectsPlacers\ImageMap.cs" />
+    <Compile Include="Engine\Common\ParticleSystem\Particle.cs" />
     <Compile Include="Engine\Common\Path\Bezier.cs" />
     <Compile Include="Engine\Common\Path\Path.cs" />
     <Compile Include="Engine\Common\Path\RoadCreator.cs" />
     <Compile Include="Engine\Components\Component.cs" />
     <Compile Include="Engine\Components\MeshRenderer.cs" />
+    <Compile Include="Engine\Components\ParticleEmitter.cs" />
     <Compile Include="Engine\Interfaces\IComponent.cs" />
     <Compile Include="Engine\Render\Camera\Camera.cs" />
     <Compile Include="Engine\Render\Camera\CameraController.cs" />
     <Compile Include="Engine\Render\Camera\OrbitCameraController.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\ParticleShader.cs" />
     <Compile Include="Engine\Render\Utils\BufferObject.cs" />
     <Compile Include="Engine\Render\Utils\Mesh.cs" />
     <Compile Include="Engine\Render\RenderControl.cs" />
@@ -126,6 +129,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Engine\Render\Shaders\baseVertexShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\particleShader.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\particleShader.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Engine\Render\Shaders\skyboxShader.frag">
@@ -177,6 +186,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\Maps\forest-map.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Particles\smoke-puff.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\plastic.jpg">
