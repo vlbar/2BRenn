@@ -45,9 +45,9 @@ namespace TwoBRenn.Engine.Components
 
         private readonly VertexArrayObject vertexArray = new VertexArrayObject();
         private readonly BufferObject vertexBuffer = new BufferObject(BufferTarget.ArrayBuffer);
-        private readonly BufferObject rotationSizeBuffer = new BufferObject(BufferTarget.ArrayBuffer);
-        private readonly BufferObject offsetBuffer = new BufferObject(BufferTarget.ArrayBuffer);
-        private readonly BufferObject colorBuffer = new BufferObject(BufferTarget.ArrayBuffer);
+        private readonly BufferObject offsetBuffer = new BufferObject(BufferTarget.ArrayBuffer, BufferUsageHint.StreamDraw);
+        private readonly BufferObject rotationSizeBuffer = new BufferObject(BufferTarget.ArrayBuffer, BufferUsageHint.StreamDraw);
+        private readonly BufferObject colorBuffer = new BufferObject(BufferTarget.ArrayBuffer, BufferUsageHint.StreamDraw);
 
         private readonly float[] particleVerticesPos = {
             -0.5f, -0.5f, 0.0f, 0.0f,
@@ -74,24 +74,20 @@ namespace TwoBRenn.Engine.Components
 
             vertexArray.Bind();
 
-            vertexBuffer.Bind();
             vertexBuffer.SetData(particleVerticesPos);
-            vertexArray.SetPointer(positionLocation, 4, 0);
+            vertexArray.SetDataPointer(positionLocation, 4);
             vertexArray.SetDivisor(positionLocation, 0);
 
-            rotationSizeBuffer.Bind();
-            rotationSizeBuffer.SetData(particlesRotateSize, BufferUsageHint.StreamDraw);
-            vertexArray.SetPointer(rotateSizeLocation, 2, 2 * sizeof(float));
+            rotationSizeBuffer.SetData(particlesRotateSize);
+            vertexArray.SetDataPointer(rotateSizeLocation, 2);
             vertexArray.SetDivisor(rotateSizeLocation, 1);
 
-            offsetBuffer.Bind();
-            offsetBuffer.SetData(particlesOffset, BufferUsageHint.StreamDraw);
-            vertexArray.SetPointer(offsetLocation, 3, 3 * sizeof(float));
+            offsetBuffer.SetData(particlesOffset);
+            vertexArray.SetDataPointer(offsetLocation, 3);
             vertexArray.SetDivisor(offsetLocation, 1);
 
-            colorBuffer.Bind();
-            colorBuffer.SetData(particlesColor, BufferUsageHint.StreamDraw);
-            vertexArray.SetPointer(colorLocation, 4, 4 * sizeof(byte), 0, true, VertexAttribPointerType.UnsignedByte);
+            colorBuffer.SetData(particlesColor);
+            vertexArray.SetDataPointer(colorLocation, 4, 0, 0, true, VertexAttribPointerType.UnsignedByte);
             vertexArray.SetDivisor(colorLocation, 1);
 
             vertexArray.Unbind();
@@ -99,7 +95,7 @@ namespace TwoBRenn.Engine.Components
 
         public override void OnUpdate()
         {
-            if(IsPlay) EmitParticles();
+            if (IsPlay) EmitParticles();
             CalculateParticles();
         }
 
@@ -113,15 +109,11 @@ namespace TwoBRenn.Engine.Components
 
             Texture?.Use();
 
-            vertexArray.Bind();
-            rotationSizeBuffer.Bind();
-            rotationSizeBuffer.SetData(particlesRotateSize, BufferUsageHint.StreamDraw);
-            offsetBuffer.Bind();
-            offsetBuffer.SetData(particlesOffset, BufferUsageHint.StreamDraw);
-            colorBuffer.Bind();
-            colorBuffer.SetData(particlesColor, BufferUsageHint.StreamDraw);
+            offsetBuffer.SetData(particlesOffset);
+            rotationSizeBuffer.SetData(particlesRotateSize);
+            colorBuffer.SetData(particlesColor);
+            vertexArray.DrawArrayInstanced(4, MaxParticles, PrimitiveType.TriangleStrip);
 
-            GL.DrawArraysInstanced(PrimitiveType.TriangleStrip, 0, 4, MaxParticles);
             ShaderProgram.DeactiveProgram();
 
             GL.DepthMask(true);
@@ -192,7 +184,7 @@ namespace TwoBRenn.Engine.Components
             lastUsedParticle = 0;
             return -1;
         }
-        
+
         private void SpawnParticle(int index)
         {
             float lifeTime = RandomFloat(LifeTime.X, LifeTime.Y);

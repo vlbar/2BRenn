@@ -1,5 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
@@ -13,11 +14,13 @@ namespace TwoBRenn.Engine.Components
         private BaseShaderProgram shaderProgram;
         private Texture texture;
         private Dictionary<string, ShaderAttribute> attributes;
-        private bool isDetachedAttributes = false;
+        private bool isDetachedAttributes;
 
         private VertexArrayObject vertexArray = new VertexArrayObject();
         private BufferObject vertexBuffer = new BufferObject(BufferTarget.ArrayBuffer);
         private BufferObject elementBuffer = new BufferObject(BufferTarget.ElementArrayBuffer);
+
+        private int subDataOffset;
 
         public void SetShaderProgram(BaseShaderProgram shaderProgram)
         {
@@ -50,16 +53,13 @@ namespace TwoBRenn.Engine.Components
 
             vertexArray.Bind();
 
-            vertexBuffer.Bind();
-            vertexBuffer.SetSubDataSize(mesh.DataArraySize);
-            vertexBuffer.SetSubData(mesh.VerticesArray, 3, positionLocation);
-            vertexBuffer.SetSubData(mesh.UVsArray, 2, texCoordsLocation);
+            vertexBuffer.InitializeData(mesh.DataArraySize);
+            SetData(mesh.VerticesArray, 3, positionLocation);
+            SetData(mesh.UVsArray, 2, texCoordsLocation);
 
-            elementBuffer.Bind();
             elementBuffer.SetData(mesh.Triangles);
 
             vertexArray.Unbind();
-            elementBuffer.Unbind();
         }
 
         public void SetShaderAttribute(string name, ShaderAttribute value)
@@ -90,9 +90,9 @@ namespace TwoBRenn.Engine.Components
             shaderProgram.SetMatrix4(BaseShaderProgram.VIEW, Camera.GetViewMatrix());
             shaderProgram.SetMatrix4(BaseShaderProgram.PROJECTION, Camera.GetProjectionMatrix());
 
-            if (texture != null) texture.Use();
-            vertexArray.Bind();
-            GL.DrawElements(PrimitiveType.Triangles, mesh.Triangles.Length, DrawElementsType.UnsignedInt, 0);
+            texture?.Use();
+            vertexArray.Draw(mesh.Triangles.Length);
+
             shaderProgram.DeactiveProgram();
         }
 
@@ -100,6 +100,15 @@ namespace TwoBRenn.Engine.Components
         {
             //vertexBuffer.Delete();
             //elementBuffer.Delete();
+        }
+
+        private void SetData<T>(T[] data, int size, int location) where T : struct
+        {
+            if (data == null || data.Length == 0) return;
+            int length = data.Length * Marshal.SizeOf(data[0]);
+            vertexBuffer.SetSubData(data, subDataOffset);
+            vertexArray.SetDataPointer(location, size, 0, subDataOffset);
+            subDataOffset += length;
         }
     }
 }
