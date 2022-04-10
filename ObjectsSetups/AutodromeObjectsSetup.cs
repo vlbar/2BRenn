@@ -21,14 +21,18 @@ namespace TwoBRenn.ObjectsSetups
         private readonly Texture curbTexture = new Texture(@"Assets\Textures\curb.png");
         private readonly Texture gravelTexture = new Texture(@"Assets\Textures\gravel.jpg");
         private readonly Texture plasticTexture = new Texture(@"Assets\Textures\plastic.jpg");
+        private readonly Texture carTexture = new Texture(@"Assets\Textures\Car\car.jpg");
+        private readonly Texture wheelTexture = new Texture(@"Assets\Textures\Car\wheel.jpg");
         private readonly Texture sponsorsTexture = new Texture(@"Assets\Textures\Environment\sponsors.jpg");
         private readonly Texture treeTexture = new Texture(@"Assets\Textures\Environment\spruce.jpg");
+        private readonly Texture smokeTexture = new Texture(@"Assets\Textures\Particles\smoke-puff.png");
         private readonly SimpleShader simpleShader = new SimpleShader();
         private readonly SimpleShader groundShader = new SimpleShader();
         private readonly SimpleShader roadShader = new SimpleShader();
         private readonly SimpleShader curbShader = new SimpleShader();
         private readonly SimpleShader treeShader = new SimpleShader();
         private readonly SimpleShader concreteShader = new SimpleShader();
+        private readonly ParticleShader particleShader = new ParticleShader();
 
         private readonly float[,] forestMap = ImageMap.GenerateMap(@"Assets\Textures\Maps\forest-map.png", 24);
 
@@ -51,6 +55,7 @@ namespace TwoBRenn.ObjectsSetups
             AddBarriers(objects);
             AddAd(objects);
             AddStands(objects);
+            AddTrainCart(objects);
 
             return objects;
         }
@@ -357,6 +362,86 @@ namespace TwoBRenn.ObjectsSetups
             techRoadRenderer2.SetShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 2));
             techRoadRenderer2.SetTriangleMesh(techRoadPart2.Road);
             techRoadRenderer2.SetTexture(gravelTexture);
+        }
+
+        private void AddTrainCart(HashSet<RennObject> objects)
+        {
+            Path path = new Path();
+            path.AddManualSegment(Vector3.Zero, new Vector3(35f, 0f, 0.5f), new Vector3(55f, 0f, 0.5f));
+            path.AddManualSegment(new Vector3(80f, 0f, 30f), new Vector3(80f, 0f, 40f), new Vector3(80f, 0f, 60f));
+            path.AddManualSegment(new Vector3(50f, 0f, 60f), new Vector3(40f, 0f, 50f), new Vector3(30f, 0f, 40f));
+            path.IsClosed = true;
+
+            RennObject car = new RennObject();
+            car.Transform.SetScale(0.4f);
+            MeshRenderer carRenderer = car.AddComponent<MeshRenderer>();
+            carRenderer.SetShaderProgram(simpleShader);
+            carRenderer.SetTriangleMesh(CarsMeshFactory.CreateCar(CarType.SportCar));
+            carRenderer.SetTexture(carTexture);
+            PathFollow carPathFollow = car.AddComponent<PathFollow>();
+            carPathFollow.Path = path;
+            carPathFollow.MoveSpeed = 0.34f;
+            objects.Add(car);
+
+            List<Transform> wheelTransforms = new List<Transform>();
+            Transform frontRight = new Transform();
+            frontRight.SetPosition(3.8f, 1.3f, 2.5f);
+            frontRight.SetRotation(0, 180, 0);
+            wheelTransforms.Add(frontRight);
+
+            Transform frontLeft = new Transform();
+            frontLeft.SetPosition(3.8f, 1.3f, -2.5f);
+            frontLeft.SetRotation(0, 0, 0);
+            wheelTransforms.Add(frontLeft);
+
+            Transform backRight = new Transform();
+            backRight.SetPosition(-4.2f, 1.3f, 2.5f);
+            backRight.SetRotation(0, 180, 0);
+            wheelTransforms.Add(backRight);
+
+            Transform backLeft = new Transform();
+            backLeft.SetPosition(-4.2f, 1.3f, -2.5f);
+            backLeft.SetRotation(0, 0, 0);
+            wheelTransforms.Add(backLeft);
+
+            foreach (var transform in wheelTransforms)
+            {
+                RennObject wheelHolder = new RennObject();
+                wheelHolder.Transform.SetPosition(transform.position);
+                wheelHolder.SetParent(car);
+                wheelHolder.AddComponent<LoopRotation>().Speed = -1000;
+
+                RennObject wheel = new RennObject();
+                wheel.Transform.SetRotation(transform.rotation);
+                wheel.SetParent(wheelHolder);
+                MeshRenderer wheelRenderer = wheel.AddComponent<MeshRenderer>();
+                wheelRenderer.SetShaderProgram(simpleShader);
+                wheelRenderer.SetTriangleMesh(CarsMeshFactory.CreateCar(CarType.Wheel));
+                wheelRenderer.SetTexture(wheelTexture);
+            }
+
+            RennObject carSmoke = new RennObject();
+            carSmoke.Transform.SetPosition(-4, 0, 0f);
+            carSmoke.SetParent(car);
+
+            ParticleEmitter emitter = carSmoke.AddComponent<ParticleEmitter>();
+            emitter.IsPlay = false;
+            emitter.ShaderProgram = particleShader;
+            emitter.Texture = smokeTexture;
+
+            emitter.MaxParticles = 100;
+            emitter.EmitRate = 20f;
+            emitter.EmitRange = Vector3.UnitX * 1f + Vector3.UnitZ * 1f;
+            emitter.StartSize = new Vector2(3.0f, 4.5f);
+            emitter.SizeVelocity = new Vector2(3f, 4f);
+            emitter.StartRotation = new Vector2(-180, 180);
+            emitter.RotationVelocity = new Vector2(-30, 30);
+            emitter.Velocity = Vector3.UnitY * 0.5f;
+            emitter.VelocitySpread = new Vector3(0, 0.3f, 0);
+            emitter.ColorVelocity = new Vector4(0, 0, 0, -150f);
+            emitter.LifeTime = new Vector2(2f, 2f);
+
+            carPathFollow.DriftParticle = emitter;
         }
     }
 }

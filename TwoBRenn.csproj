@@ -74,8 +74,10 @@
     <Compile Include="Engine\Common\Path\Path.cs" />
     <Compile Include="Engine\Common\Path\RoadCreator.cs" />
     <Compile Include="Engine\Components\Component.cs" />
+    <Compile Include="Engine\Components\LoopRotation.cs" />
     <Compile Include="Engine\Components\MeshRenderer.cs" />
     <Compile Include="Engine\Components\ParticleEmitter.cs" />
+    <Compile Include="Engine\Components\PathFollow.cs" />
     <Compile Include="Engine\Interfaces\IComponent.cs" />
     <Compile Include="Engine\Render\Camera\Camera.cs" />
     <Compile Include="Engine\Render\Camera\CameraController.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Engine\Scene\SceneManager.cs" />
     <Compile Include="Engine\Interfaces\IObjectsSetup.cs" />
     <Compile Include="ObjectsSetups\AutodromeObjectsSetup.cs" />
+    <Compile Include="ObjectsSetups\MeshFactories\CarsMeshFactory.cs" />
     <Compile Include="ObjectsSetups\MeshFactories\EnvironmentMeshFactory.cs" />
     <Compile Include="ObjectsSetups\MeshFactories\SecurityStructuresMeshFactory.cs" />
     <Compile Include="ObjectsSetups\MeshFactories\PrimitiveMeshFactory.cs" />
@@ -167,6 +170,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Assets\Textures\Car\car.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Car\wheel.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Textures\container.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
