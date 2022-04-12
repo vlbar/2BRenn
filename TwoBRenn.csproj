@@ -74,6 +74,7 @@
     <Compile Include="Engine\Common\Path\Path.cs" />
     <Compile Include="Engine\Common\Path\RoadCreator.cs" />
     <Compile Include="Engine\Components\Component.cs" />
+    <Compile Include="Engine\Components\InstanceRenderer.cs" />
     <Compile Include="Engine\Components\LoopRotation.cs" />
     <Compile Include="Engine\Components\MeshRenderer.cs" />
     <Compile Include="Engine\Components\ParticleEmitter.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Engine\Render\Camera\Camera.cs" />
     <Compile Include="Engine\Render\Camera\CameraController.cs" />
     <Compile Include="Engine\Render\Camera\OrbitCameraController.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\InstanceShader.cs" />
     <Compile Include="Engine\Render\ShaderPrograms\ParticleShader.cs" />
     <Compile Include="Engine\Render\Utils\BufferObject.cs" />
     <Compile Include="Engine\Render\Utils\Mesh.cs" />
@@ -132,6 +134,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Engine\Render\Shaders\baseVertexShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\instanceShader.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Engine\Render\Shaders\particleShader.frag">

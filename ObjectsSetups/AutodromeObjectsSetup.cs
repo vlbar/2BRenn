@@ -33,6 +33,7 @@ namespace TwoBRenn.ObjectsSetups
         private readonly SimpleShader treeShader = new SimpleShader();
         private readonly SimpleShader concreteShader = new SimpleShader();
         private readonly ParticleShader particleShader = new ParticleShader();
+        private readonly InstanceShader instanceShader = new InstanceShader();
 
         private readonly float[,] forestMap = ImageMap.GenerateMap(@"Assets\Textures\Maps\forest-map.png", 24);
 
@@ -262,7 +263,8 @@ namespace TwoBRenn.ObjectsSetups
             forest.Transform.SetPosition(-240f, 0f, -170f);
             forest.Transform.SetRotation(0, 0, 0);
             forest.Transform.SetScale(9f);
-            objects.Add(forest);
+            InstanceRenderer forestInstanceRenderer = forest.AddComponent<InstanceRenderer>();
+            List<Transform> instanceTransforms = new List<Transform>();
 
             Random random = new Random();
             Mesh pineMesh = EnvironmentMeshFactory.CreateMesh(EnvironmentType.Spruce);
@@ -271,20 +273,25 @@ namespace TwoBRenn.ObjectsSetups
                 for (int j = 0; j < forestMap.GetLength(1); j++)
                 {
                     float value = forestMap[i, j];
-                    if (value < 0.1f && random.NextDouble() > 0.9f)
+                    if (value < 0.5f)
                     {
                         RennObject tree = new RennObject();
                         tree.SetParent(forest);
                         tree.Transform.SetPosition(i + (float)random.NextDouble(), 0f, j + (float)random.NextDouble());
                         tree.Transform.SetRotation(0f, random.Next(180), 0f);
-                        tree.Transform.SetScale(0.1f + (0.1f - value));
-                        MeshRenderer treeRenderer = tree.AddComponent<MeshRenderer>();
-                        treeRenderer.SetTriangleMesh(pineMesh);
-                        treeRenderer.SetShaderProgram(treeShader);
-                        treeRenderer.SetTexture(treeTexture);
+                        float scale = (0.08f + (0.5f - value) * 0.2f) * (1 + random.Next(60) * 0.01f - 0.3f);
+                        tree.Transform.SetScale(scale);
+                        instanceTransforms.Add(tree.Transform);
                     }
                 }
             }
+
+            forestInstanceRenderer.InstanceTransforms = instanceTransforms;
+            forestInstanceRenderer.Mesh = pineMesh;
+            forestInstanceRenderer.Shader = instanceShader;
+            forestInstanceRenderer.Texture = treeTexture;
+
+            objects.Add(forest);
         }
 
         private void AddRoad(HashSet<RennObject> objects)
