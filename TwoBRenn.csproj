@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Common\Managers\InputManager.cs" />
     <Compile Include="Engine\Common\ObjectsPlacers\ImageMap.cs" />
     <Compile Include="Engine\Common\ParticleSystem\Particle.cs" />
     <Compile Include="Engine\Common\Path\Bezier.cs" />

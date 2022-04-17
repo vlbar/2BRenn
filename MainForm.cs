@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Forms;
 using TwoBRenn.Engine;
 using TwoBRenn.Engine.Render.Textures;
+using TwoBRenn.ObjectsSetups;
 
 namespace TwoBRenn
 {
     public partial class MainForm : Form
     {
-        private RennEngine engine = new RennEngine();
+        private readonly RennEngine engine = new RennEngine();
 
         public MainForm()
         {
@@ -18,6 +17,9 @@ namespace TwoBRenn
 
         private void glControl_Load(object sender, EventArgs e)
         {
+            engine.GlControl = glControl;
+            engine.Form = this;
+
             engine.RenderControl.SetupGlControl(glControl);
             engine.RenderControl.OnRender += delegate
             {

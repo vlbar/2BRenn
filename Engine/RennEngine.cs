@@ -1,10 +1,16 @@
-﻿using TwoBRenn.Engine.Render;
+﻿using System.Windows.Forms;
+using OpenTK;
+using TwoBRenn.Engine.Common.Managers;
+using TwoBRenn.Engine.Render;
 using TwoBRenn.Engine.Scene;
 
 namespace TwoBRenn.Engine
 {
     class RennEngine
     {
+        public Form Form { set; get; }
+        public GLControl GlControl { set; get; }
+
         private SceneManager sceneManager;
         public RenderControl RenderControl { get; } = new RenderControl();
 
@@ -14,6 +20,9 @@ namespace TwoBRenn.Engine
             {
                 sceneManager = new SceneManager();
                 sceneManager.OnStart();
+
+                InputManager.GlControl = GlControl;
+                InputManager.Form = Form;
             };
             RenderControl.OnRenderTransparent += delegate { sceneManager.OnLateUpdate(); };
             RenderControl.OnRender += delegate { sceneManager.OnUpdate(); };
