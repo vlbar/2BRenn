@@ -17,13 +17,13 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
 
     class ShaderAttribute_Vector4 : ShaderAttribute
     {
-        Vector4 vector;
+        public Vector4 Vector;
         public ShaderAttribute_Vector4(Vector4 vector)
         {
-            this.vector = vector;
+            Vector = vector;
         }
 
-        public override void Uniform(int location) => GL.Uniform4(location, vector);
+        public override void Uniform(int location) => GL.Uniform4(location, Vector);
     }
 
     class ShaderAttribute_Vector2 : ShaderAttribute

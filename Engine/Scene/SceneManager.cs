@@ -45,5 +45,10 @@ namespace TwoBRenn.Engine.Scene
                 rennObject.OnLateUpdate();
             }
         }
+
+        public void AddObjectToScene(RennObject rennObject)
+        {
+            sceneGraph.Add(rennObject);
+        }
     }
 }

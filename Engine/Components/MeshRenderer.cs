@@ -13,7 +13,7 @@ namespace TwoBRenn.Engine.Components
         private Mesh mesh;
         private BaseShaderProgram shaderProgram;
         private Texture texture;
-        private Dictionary<string, ShaderAttribute> attributes;
+        private Dictionary<string, ShaderAttribute> attributes = new Dictionary<string, ShaderAttribute>();
         private bool isDetachedAttributes;
 
         private VertexArrayObject vertexArray = new VertexArrayObject();
@@ -81,6 +81,8 @@ namespace TwoBRenn.Engine.Components
         {
             this.attributes = attributes;
         }
+
+        public Dictionary<string, ShaderAttribute> GetShaderAttributes() => attributes;
 
         public override void OnUpdate()
         {

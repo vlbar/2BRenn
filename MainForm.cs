@@ -34,6 +34,9 @@ namespace TwoBRenn
                 @"Assets\Textures\skybox\front.png",
                 @"Assets\Textures\skybox\back.png"
             });
+
+            SecurityStructPlacerSetup securityStructPlacer = new SecurityStructPlacerSetup();
+            engine.ObjectPlacer.ObjectsCreators = securityStructPlacer.GetObjectCreators();
         }
     }
 }

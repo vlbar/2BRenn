@@ -69,11 +69,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\Common\Managers\InputManager.cs" />
+    <Compile Include="Engine\Common\ObjectControl\ObjectPlacer.cs" />
     <Compile Include="Engine\Common\ObjectsPlacers\ImageMap.cs" />
     <Compile Include="Engine\Common\ParticleSystem\Particle.cs" />
     <Compile Include="Engine\Common\Path\Bezier.cs" />
     <Compile Include="Engine\Common\Path\Path.cs" />
     <Compile Include="Engine\Common\Path\RoadCreator.cs" />
+    <Compile Include="Engine\Common\RayCasting\Raycast.cs" />
     <Compile Include="Engine\Components\Component.cs" />
     <Compile Include="Engine\Components\InstanceRenderer.cs" />
     <Compile Include="Engine\Components\LoopRotation.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="ObjectsSetups\MeshFactories\EnvironmentMeshFactory.cs" />
     <Compile Include="ObjectsSetups\MeshFactories\SecurityStructuresMeshFactory.cs" />
     <Compile Include="ObjectsSetups\MeshFactories\PrimitiveMeshFactory.cs" />
+    <Compile Include="ObjectsSetups\SecurityStructPlacerSetup.cs" />
     <Compile Include="ObjectsSetups\TestObjectsSetup.cs" />
     <Compile Include="Engine\Utils\Transform.cs" />
     <Compile Include="MainForm.cs">

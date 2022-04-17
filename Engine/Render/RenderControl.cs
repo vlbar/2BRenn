@@ -6,6 +6,8 @@ using System.Threading;
 using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Input;
+using TwoBRenn.Engine.Common.Managers;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.Engine.Render.Utils;
 
@@ -52,6 +54,7 @@ namespace TwoBRenn.Engine.Render
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
             GL.CullFace(CullFaceMode.Front);
+            GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             OnSetup?.Invoke();
         }
@@ -99,7 +102,6 @@ namespace TwoBRenn.Engine.Render
 
             GL.Enable(EnableCap.Blend);
             OnRenderTransparent?.Invoke();
-            GL.Disable(EnableCap.Blend);
 
             glControl.SwapBuffers();
         }
@@ -130,6 +132,12 @@ namespace TwoBRenn.Engine.Render
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($"{fps} FPS");
+
+            Quaternion q = Camera.Camera.GetViewMatrix().Inverted().ExtractRotation();
+            stringBuilder.AppendLine($"XYZL {MathHelper.RadiansToDegrees(q.X):0.0} {MathHelper.RadiansToDegrees(q.Y):0.0} {MathHelper.RadiansToDegrees(q.Z):0.0}");
+
+            MouseState mouse = Mouse.GetState();
+            stringBuilder.AppendLine($"MOUSE {mouse.X} {mouse.Y}");
 
             return stringBuilder.ToString();
         }
