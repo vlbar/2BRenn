@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Input;
-using TwoBRenn.Engine.Render.Camera;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 
 namespace TwoBRenn.Engine.Common.Managers
@@ -52,31 +51,6 @@ namespace TwoBRenn.Engine.Common.Managers
 
         public static bool IsMouseButtonDown(MouseButton button) => MouseButtonStates[(int)button].IsPressed;
         public static bool IsMouseButtonUp(MouseButton button) => !MouseButtonStates[(int)button].IsPressed;
-
-        public static Vector3 MousePositionToWorldDirection()
-        {
-            // viewport coordinate system
-            Vector2 mouse = MouseRelativePosition;
-            Vector2 size = new Vector2(GlControl.Width, GlControl.Height);
-
-            // normalized device coordinates
-            var x = 2f * mouse.X / size.X - 1f;
-            var y = 1f - 2f * mouse.Y / size.Y;
-            var z = 1f;
-            var rayNormalizedDeviceCoordinates = new Vector3(x, y, z);
-
-            // 4D homogeneous clip coordinates
-            var rayClip = new Vector4(rayNormalizedDeviceCoordinates.X, rayNormalizedDeviceCoordinates.Y, -1f, 1f);
-
-            // 4D eye (camera) coordinates
-            var rayEye = Camera.GetProjectionMatrix().Inverted() * rayClip;
-            rayEye = new Vector4(rayEye.X, rayEye.Y, -1f, 0f);
-
-            // 4D world coordinates
-            var rayWorldCoordinates = (Camera.GetViewMatrix() * rayEye).Xyz;
-            rayWorldCoordinates.Normalize();
-            return rayWorldCoordinates;
-        }
 
         private static void OnMouseButtonUp(object sender, MouseEventArgs e)
         {

@@ -1,5 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using TwoBRenn.Engine.Common.RayCasting;
 
 namespace TwoBRenn.Engine.Render.Camera
 {
@@ -60,5 +61,37 @@ namespace TwoBRenn.Engine.Render.Camera
         public static Matrix4 GetViewMatrix() => view;
         public static Matrix4 GetProjectionMatrix() => projection;
         public void SetViewMatrix(Matrix4 _view) => view = _view;
+
+        public static Ray ScreenPointToRay(Vector2 screenPosition)
+        {
+            float width = RennEngine.Instance.GlControl.Width;
+            float height = RennEngine.Instance.GlControl.Height;
+
+            // viewport coordinate system
+            Vector2 size = new Vector2(width, height);
+
+            // normalized device coordinates
+            var x = 2f * screenPosition.X / size.X - 1f;
+            var y = 1f - 2f * screenPosition.Y / size.Y;
+            var z = 1f;
+            var rayNormalizedDeviceCoordinates = new Vector3(x, y, z);
+
+            // 4D homogeneous clip coordinates
+            var rayClip = new Vector4(rayNormalizedDeviceCoordinates.X, rayNormalizedDeviceCoordinates.Y, -1f, 1f);
+
+            // 4D eye (camera) coordinates
+            var rayEye = GetProjectionMatrix().Inverted() * rayClip;
+            rayEye = new Vector4(rayEye.X, rayEye.Y, -1f, 0f);
+
+            // 4D world coordinates
+            var rayWorldCoordinates = (GetViewMatrix() * rayEye).Xyz;
+            rayWorldCoordinates.Normalize();
+
+            return new Ray
+            {
+                Origin = GetViewMatrix().Inverted().ExtractTranslation(),
+                Direction = rayWorldCoordinates
+            };
+        }
     }
 }

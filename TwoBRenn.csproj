@@ -75,7 +75,9 @@
     <Compile Include="Engine\Common\Path\Bezier.cs" />
     <Compile Include="Engine\Common\Path\Path.cs" />
     <Compile Include="Engine\Common\Path\RoadCreator.cs" />
+    <Compile Include="Engine\Common\RayCasting\Ray.cs" />
     <Compile Include="Engine\Common\RayCasting\Raycast.cs" />
+    <Compile Include="Engine\Common\RayCasting\RaycastHit.cs" />
     <Compile Include="Engine\Components\Component.cs" />
     <Compile Include="Engine\Components\InstanceRenderer.cs" />
     <Compile Include="Engine\Components\LoopRotation.cs" />

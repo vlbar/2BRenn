@@ -27,6 +27,7 @@ namespace TwoBRenn.Engine.Common.ObjectControl
                 ObjectToPlace.GetComponent<MeshRenderer>().SetShaderAttribute(SimpleShader.BASE_COLOR,
                     ShaderAttribute.Value(baseColorAttribute.Vector.X, baseColorAttribute.Vector.Y,
                         baseColorAttribute.Vector.Z, 0.6f));
+                ObjectToPlace.Transform.SetPosition(Vector3.UnitY * -5.0f);
                 
                 SceneManager.AddObjectToScene(ObjectToPlace);
             }
@@ -47,11 +48,8 @@ namespace TwoBRenn.Engine.Common.ObjectControl
                     return;
                 }
 
-                Vector3 camPos = Camera.GetViewMatrix().Inverted().ExtractTranslation();
-                Vector3 pos = InputManager.MousePositionToWorldDirection();
-                Vector3? inter = Raycast.IntersectionWithPlane(camPos, pos, Vector4.UnitY);
-
-                ObjectToPlace.Transform.SetPosition(inter ?? Vector3.Zero);
+                RaycastHit inter = Raycast.IntersectionWithPlane(Camera.ScreenPointToRay(InputManager.MouseRelativePosition), Vector4.UnitY);
+                ObjectToPlace.Transform.SetPosition(inter.Point ?? Vector3.UnitY * -5.0f);
             }
         }
     }
