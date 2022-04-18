@@ -22,14 +22,6 @@ namespace TwoBRenn.Engine.Scene
             }
         }
 
-        public void OnStart()
-        {
-            foreach (RennObject rennObject in sceneGraph)
-            {
-                rennObject.OnStart();
-            }
-        }
-
         public void OnUpdate()
         {
             foreach (RennObject rennObject in sceneGraph)

@@ -92,18 +92,6 @@ namespace TwoBRenn.Engine
         }
 
         // OTHER
-        public void OnStart()
-        {
-            foreach (RennObject childObject in ChildObjects)
-            {
-                childObject.OnStart();
-            }
-            foreach (Component component in Components)
-            {
-                component.OnStart();
-            }
-        }
-
         public void OnUpdate()
         {
             foreach (RennObject childObject in ChildObjects)
@@ -112,7 +100,7 @@ namespace TwoBRenn.Engine
             }
             foreach (Component component in Components)
             {
-                component.OnUpdate();
+                component.UpdateComponent();
             }
         }
 

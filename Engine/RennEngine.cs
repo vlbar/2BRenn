@@ -9,6 +9,9 @@ namespace TwoBRenn.Engine
 {
     class RennEngine
     {
+        private static RennEngine _instance;
+        public static RennEngine Instance => _instance ?? (_instance = new RennEngine());
+
         public Form Form { set; get; }
         public GLControl GlControl { set; get; }
 
@@ -22,7 +25,6 @@ namespace TwoBRenn.Engine
             {
                 sceneManager = new SceneManager();
                 ObjectPlacer.SceneManager = sceneManager;
-                sceneManager.OnStart();
 
                 InputManager.GlControl = GlControl;
                 InputManager.Form = Form;
