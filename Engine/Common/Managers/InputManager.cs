@@ -1,95 +1,136 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Input;
+using TwoBRenn.Engine.Interfaces;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 
 namespace TwoBRenn.Engine.Common.Managers
 {
-    public enum MouseButton
-    {
-        Left = 0,
-        Middle = 1,
-        Right = 2
-    }
-
     class MouseButtonState
     {
         public bool IsPressed;
+        public bool IsDown;
+        public bool IsUp;
     }
 
-    static class InputManager
+    class InputManager : IUpdatableEnginePart
     {
-        public static Form Form { set; get; }
+        private static InputManager _instance;
+        public static InputManager Instance => _instance ?? (_instance = new InputManager());
 
-        private static GLControl _glControl;
+        // forms
+        private Form form;
+        private GLControl glControl;
+
+        // mouse
         private static MouseState _mouseState = Mouse.GetState();
+        private Dictionary<MouseButtons, MouseButtonState> mouseStateDictionary;
+        private readonly Dictionary<MouseButtons, MouseButtonState> mouseStateDictionaryBuffer =
+            new Dictionary<MouseButtons, MouseButtonState>();
 
-        private static readonly MouseButtonState[] MouseButtonStates = { new MouseButtonState(), new MouseButtonState(), new MouseButtonState() };
-
-        public static GLControl GlControl
+        public void Setup(GLControl control, Form mainForm)
         {
-            set
+            glControl = control;
+            form = mainForm;
+
+            mouseStateDictionary = new Dictionary<MouseButtons, MouseButtonState>
             {
-                _glControl = value;
-                _glControl.MouseDown += OnMouseButtonDown;
-                _glControl.MouseUp += OnMouseButtonUp;
+                { MouseButtons.Left, new MouseButtonState()},
+                { MouseButtons.Middle, new MouseButtonState()},
+                { MouseButtons.Right, new MouseButtonState()}
+            };
+
+            foreach (var key in mouseStateDictionary.Keys)
+            {
+                mouseStateDictionaryBuffer.Add(key, new MouseButtonState());
             }
-            get => _glControl;
+
+            glControl.MouseDown += OnMouseButtonDown;
         }
 
+        public void OnUpdate()
+        {
+            UpdateMouseState();
+        }
+
+        private void UpdateMouseState()
+        {
+            foreach (var button in mouseStateDictionary.Keys)
+            {
+                mouseStateDictionary[button].IsDown = false;
+                mouseStateDictionary[button].IsUp = false;
+
+                if (mouseStateDictionaryBuffer[button].IsDown)
+                {
+                    mouseStateDictionaryBuffer[button].IsDown = false;
+                    mouseStateDictionary[button].IsDown = true;
+                    mouseStateDictionary[button].IsPressed = true;
+                }
+
+                if (mouseStateDictionaryBuffer[button].IsUp)
+                {
+                    mouseStateDictionaryBuffer[button].IsUp = false;
+                    mouseStateDictionary[button].IsUp = true;
+                    mouseStateDictionary[button].IsPressed = false;
+                }
+
+                if (!Control.MouseButtons.HasFlag(button) && mouseStateDictionary[button].IsPressed)
+                {
+                    mouseStateDictionary[button].IsUp = true;
+                    mouseStateDictionary[button].IsPressed = false;
+                }
+            }
+        }
+
+        // static methods
         public static Vector2 MouseAbsolutePosition => new Vector2(_mouseState.X, _mouseState.Y);
 
         public static Vector2 MouseRelativePosition
         {
             get
             {
-                Point point = GlControl.PointToClient(Control.MousePosition);
+                Point point = Instance.glControl.PointToClient(Control.MousePosition);
                 return new Vector2(point.X, point.Y);
             }
         }
 
-        public static bool IsMouseButtonDown(MouseButton button) => MouseButtonStates[(int)button].IsPressed;
-        public static bool IsMouseButtonUp(MouseButton button) => !MouseButtonStates[(int)button].IsPressed;
-
-        private static void OnMouseButtonUp(object sender, MouseEventArgs e)
+        public static bool IsMouseButtonPressed(MouseButtons button)
         {
-            MouseButtons mouseButton = e.Button;
-            MouseButtonState buttonState;
-            switch (mouseButton)
+            if (Instance.mouseStateDictionary.TryGetValue(button, out var value))
             {
-                case MouseButtons.Left:
-                    buttonState = MouseButtonStates[(int)MouseButton.Left];
-                    break;
-                case MouseButtons.Middle:
-                    buttonState = MouseButtonStates[(int)MouseButton.Middle];
-                    break;
-                case MouseButtons.Right:
-                    buttonState = MouseButtonStates[(int)MouseButton.Right];
-                    break;
-                default:
-                    return;
+                return value.IsPressed;
             }
-            
-            buttonState.IsPressed = false;
+            return false;
         }
 
-        private static void OnMouseButtonDown(object sender, MouseEventArgs e)
+        public static bool IsMouseButtonDown(MouseButtons button)
         {
-            MouseButtons mouseButton = e.Button;
-            MouseButtonState buttonState = null;
-            switch (mouseButton)
+            if (Instance.mouseStateDictionary.TryGetValue(button, out var value))
             {
-                case MouseButtons.Left:
-                    buttonState = MouseButtonStates[(int)MouseButton.Left];
-                    break;
-                case MouseButtons.Middle:
-                    buttonState = MouseButtonStates[(int)MouseButton.Middle];
-                    break;
+                return value.IsDown;
             }
+            return false;
+        }
 
-            if (buttonState == null) return;
-            buttonState.IsPressed = true;
+        public static bool IsMouseButtonUp(MouseButtons button)
+        {
+            if (Instance.mouseStateDictionary.TryGetValue(button, out var value))
+            {
+                return value.IsUp;
+            }
+            return false;
+        }
+
+        // event handlers
+        private void OnMouseButtonDown(object sender, MouseEventArgs e)
+        {
+            if (Instance.mouseStateDictionaryBuffer.TryGetValue(e.Button, out var value))
+            {
+                value.IsDown = true;
+            }
         }
     }
 }

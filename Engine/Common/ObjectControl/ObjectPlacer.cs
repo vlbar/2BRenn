@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using OpenTK;
 using TwoBRenn.Engine.Common.Managers;
 using TwoBRenn.Engine.Common.RayCasting;
@@ -38,7 +39,7 @@ namespace TwoBRenn.Engine.Common.ObjectControl
         {
             if (ObjectToPlace != null)
             {
-                if (InputManager.IsMouseButtonDown(MouseButton.Left))
+                if (InputManager.IsMouseButtonDown(MouseButtons.Left))
                 {
                     ShaderAttribute_Vector4 baseColorAttribute =
                         (ShaderAttribute_Vector4)ObjectToPlace.GetComponent<MeshRenderer>().GetShaderAttributes()[

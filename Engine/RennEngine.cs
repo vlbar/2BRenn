@@ -24,6 +24,7 @@ namespace TwoBRenn.Engine
         // parts
         private Camera camera;
         private SceneManager sceneManager;
+        private InputManager inputManager;
         public ObjectPlacer ObjectPlacer = new ObjectPlacer();
         public RenderControl RenderControl { get; } = new RenderControl();
 
@@ -45,13 +46,12 @@ namespace TwoBRenn.Engine
             GlControl = glControl;
             Form = form;
             camera = Camera.GetInstance();
+            inputManager = InputManager.Instance;
 
             sceneManager = new SceneManager();
             ObjectPlacer.SceneManager = sceneManager;
             RenderControl.SetupGlControl(glControl);
-
-            InputManager.GlControl = GlControl;
-            InputManager.Form = Form;
+            inputManager.Setup(glControl, form);
 
             preciseTimer = new Stopwatch();
             Application.Idle += Application_Idle;
@@ -78,6 +78,7 @@ namespace TwoBRenn.Engine
 
         private void UpdateOtherParts()
         {
+            inputManager.OnUpdate();
             camera.OnUpdate();
             ObjectPlacer.OnUpdate();
         }
