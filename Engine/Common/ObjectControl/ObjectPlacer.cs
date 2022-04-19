@@ -4,13 +4,14 @@ using OpenTK;
 using TwoBRenn.Engine.Common.Managers;
 using TwoBRenn.Engine.Common.RayCasting;
 using TwoBRenn.Engine.Components;
+using TwoBRenn.Engine.Interfaces;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Scene;
 
 namespace TwoBRenn.Engine.Common.ObjectControl
 {
-    class ObjectPlacer
+    class ObjectPlacer : IUpdatableEnginePart
     {
         public List<Func<RennObject>> ObjectsCreators = new List<Func<RennObject>>();
         public SceneManager SceneManager;

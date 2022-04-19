@@ -1,10 +1,11 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using TwoBRenn.Engine.Common.RayCasting;
+using TwoBRenn.Engine.Interfaces;
 
 namespace TwoBRenn.Engine.Render.Camera
 {
-    class Camera
+    class Camera : IUpdatableEnginePart
     {
         private static Camera instance;
         public CameraController Controller { get; set; }

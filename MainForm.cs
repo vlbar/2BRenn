@@ -8,7 +8,7 @@ namespace TwoBRenn
 {
     public partial class MainForm : Form
     {
-        private readonly RennEngine engine = new RennEngine();
+        private readonly RennEngine engine = RennEngine.Instance;
 
         public MainForm()
         {
@@ -17,15 +17,7 @@ namespace TwoBRenn
 
         private void glControl_Load(object sender, EventArgs e)
         {
-            engine.GlControl = glControl;
-            engine.Form = this;
-
-            engine.RenderControl.SetupGlControl(glControl);
-            engine.RenderControl.OnRender += delegate
-            {
-                debugInfoLabel.Text = engine.RenderControl.GetDynamicDebugInfo();
-            };
-
+            engine.Setup(glControl, this);
             engine.RenderControl.Skybox = new Skybox(new string[] {
                 @"Assets\Textures\skybox\right.png",
                 @"Assets\Textures\skybox\left.png",

@@ -4,7 +4,7 @@ using TwoBRenn.ObjectsSetups;
 
 namespace TwoBRenn.Engine.Scene
 {
-    class SceneManager
+    class SceneManager : IUpdatableEnginePart
     {
         private readonly HashSet<RennObject> sceneGraph = new HashSet<RennObject>();
         private readonly HashSet<IObjectsSetup> objectsSetups = new HashSet<IObjectsSetup>();

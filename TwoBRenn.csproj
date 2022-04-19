@@ -85,6 +85,7 @@
     <Compile Include="Engine\Components\ParticleEmitter.cs" />
     <Compile Include="Engine\Components\PathFollow.cs" />
     <Compile Include="Engine\Interfaces\IComponent.cs" />
+    <Compile Include="Engine\Interfaces\IUpdatableEnginePart.cs" />
     <Compile Include="Engine\Render\Camera\Camera.cs" />
     <Compile Include="Engine\Render\Camera\CameraController.cs" />
     <Compile Include="Engine\Render\Camera\OrbitCameraController.cs" />
