@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\Common\Managers\InputManager.cs" />
+    <Compile Include="Engine\Common\Managers\PhysicsManager.cs" />
     <Compile Include="Engine\Common\ObjectControl\ObjectPlacer.cs" />
     <Compile Include="Engine\Common\ObjectsPlacers\ImageMap.cs" />
     <Compile Include="Engine\Common\ParticleSystem\Particle.cs" />
@@ -78,6 +79,8 @@
     <Compile Include="Engine\Common\RayCasting\Ray.cs" />
     <Compile Include="Engine\Common\RayCasting\Raycast.cs" />
     <Compile Include="Engine\Common\RayCasting\RaycastHit.cs" />
+    <Compile Include="Engine\Components\BoxCollider.cs" />
+    <Compile Include="Engine\Components\Collider.cs" />
     <Compile Include="Engine\Components\Component.cs" />
     <Compile Include="Engine\Components\InstanceRenderer.cs" />
     <Compile Include="Engine\Components\LoopRotation.cs" />
