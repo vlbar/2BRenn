@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Engine\Common\Managers\InputManager.cs" />
     <Compile Include="Engine\Common\Managers\PhysicsManager.cs" />
+    <Compile Include="Engine\Common\ObjectControl\ObjectPicker.cs" />
     <Compile Include="Engine\Common\ObjectControl\ObjectPlacer.cs" />
     <Compile Include="Engine\Common\ObjectsPlacers\ImageMap.cs" />
     <Compile Include="Engine\Common\ParticleSystem\Particle.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Engine\Components\MeshRenderer.cs" />
     <Compile Include="Engine\Components\ParticleEmitter.cs" />
     <Compile Include="Engine\Components\PathFollow.cs" />
+    <Compile Include="Engine\Components\Selectable.cs" />
     <Compile Include="Engine\Interfaces\IComponent.cs" />
     <Compile Include="Engine\Interfaces\IUpdatableEnginePart.cs" />
     <Compile Include="Engine\Render\Camera\Camera.cs" />

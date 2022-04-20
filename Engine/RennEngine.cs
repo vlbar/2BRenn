@@ -27,6 +27,7 @@ namespace TwoBRenn.Engine
         private InputManager inputManager;
         private PhysicsManager physicsManager;
         public ObjectPlacer ObjectPlacer = new ObjectPlacer();
+        public ObjectPicker ObjectPicker = new ObjectPicker();
         public RenderControl RenderControl { get; } = new RenderControl();
 
         // cycle time
@@ -83,6 +84,7 @@ namespace TwoBRenn.Engine
             inputManager.OnUpdate();
             camera.OnUpdate();
             ObjectPlacer.OnUpdate();
+            ObjectPicker.OnUpdate();
         }
 
         private double GetElapsedTime()

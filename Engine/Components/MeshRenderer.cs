@@ -1,6 +1,8 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using System;
+using OpenTK.Graphics.OpenGL4;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using OpenTK;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
@@ -10,7 +12,7 @@ namespace TwoBRenn.Engine.Components
 {
     class MeshRenderer : Component
     {
-        private Mesh mesh;
+        public Mesh Mesh;
         private BaseShaderProgram shaderProgram;
         private Texture texture;
         private Dictionary<string, ShaderAttribute> attributes = new Dictionary<string, ShaderAttribute>();
@@ -26,7 +28,6 @@ namespace TwoBRenn.Engine.Components
         {
             attributes = shaderProgram.GetDefaultShaderAttributes();
             this.shaderProgram = shaderProgram;
-            if (mesh != null) BindVertex();
         }
 
         public void SetTexture(Texture texture)
@@ -36,13 +37,12 @@ namespace TwoBRenn.Engine.Components
 
         public void SetTriangleMesh(Mesh mesh)
         {
-            this.mesh = mesh;
-            if (shaderProgram != null) BindVertex();
+            Mesh = mesh;
         }
 
         private void BindVertex()
         {
-            if (mesh?.Vertices == null) return;
+            if (Mesh?.Vertices == null) return;
 
             vertexArray = new VertexArrayObject();
             vertexBuffer = new BufferObject(BufferTarget.ArrayBuffer);
@@ -53,11 +53,11 @@ namespace TwoBRenn.Engine.Components
 
             vertexArray.Bind();
 
-            vertexBuffer.InitializeData(mesh.DataArraySize);
-            SetData(mesh.VerticesArray, 3, positionLocation);
-            SetData(mesh.UVsArray, 2, texCoordsLocation);
+            vertexBuffer.InitializeData(Mesh.DataArraySize);
+            SetData(Mesh.VerticesArray, 3, positionLocation);
+            SetData(Mesh.UVsArray, 2, texCoordsLocation);
 
-            elementBuffer.SetData(mesh.Triangles);
+            elementBuffer.SetData(Mesh.Triangles);
 
             vertexArray.Unbind();
         }
@@ -84,16 +84,35 @@ namespace TwoBRenn.Engine.Components
 
         public Dictionary<string, ShaderAttribute> GetShaderAttributes() => attributes;
 
+        public Vector4 GetVector4Attribute(string name)
+        {
+            try
+            {
+                ShaderAttribute_Vector4 vectorAttribute = (ShaderAttribute_Vector4)attributes[name];
+                return new Vector4(vectorAttribute.Vector.X, vectorAttribute.Vector.Y, vectorAttribute.Vector.Z,
+                    vectorAttribute.Vector.W);
+            }
+            catch (Exception)
+            {
+                return Vector4.Zero;
+            }
+        }
+
+        public override void OnStart()
+        {
+            if (Mesh != null && shaderProgram != null) BindVertex();
+        }
+
         public override void OnUpdate()
         {
-            if (mesh?.Vertices == null) return;
+            if (Mesh?.Vertices == null) return;
             shaderProgram.ActiveProgram(attributes);
             shaderProgram.SetMatrix4(BaseShaderProgram.MODEL, rennObject.Transform.GetGlobalModelMatrix());
             shaderProgram.SetMatrix4(BaseShaderProgram.VIEW, Camera.GetViewMatrix());
             shaderProgram.SetMatrix4(BaseShaderProgram.PROJECTION, Camera.GetProjectionMatrix());
 
             texture?.Use();
-            vertexArray.Draw(mesh.Triangles.Length);
+            vertexArray.Draw(Mesh.Triangles.Length);
 
             shaderProgram.DeactiveProgram();
         }
