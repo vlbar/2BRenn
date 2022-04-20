@@ -26,6 +26,7 @@ namespace TwoBRenn.Engine
         private SceneManager sceneManager;
         private InputManager inputManager;
         private PhysicsManager physicsManager;
+        public DebugManager DebugManager;
         public ObjectPlacer ObjectPlacer = new ObjectPlacer();
         public ObjectPicker ObjectPicker = new ObjectPicker();
         public RenderControl RenderControl { get; } = new RenderControl();
@@ -50,6 +51,7 @@ namespace TwoBRenn.Engine
             camera = Camera.GetInstance();
             inputManager = InputManager.Instance;
             physicsManager = PhysicsManager.Instance;
+            DebugManager = DebugManager.Instance;
 
             sceneManager = new SceneManager();
             ObjectPlacer.SceneManager = sceneManager;

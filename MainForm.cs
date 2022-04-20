@@ -29,6 +29,16 @@ namespace TwoBRenn
 
             SecurityStructPlacerSetup securityStructPlacer = new SecurityStructPlacerSetup();
             engine.ObjectPlacer.ObjectsCreators = securityStructPlacer.GetObjectCreators();
+
+            Timer logTimer = new Timer();
+            logTimer.Interval = 50;
+            logTimer.Tick += delegate { DisplayLogs(); };
+            logTimer.Enabled = true;
+        }
+
+        private void DisplayLogs()
+        {
+            debugInfoLabel.Text = engine.DebugManager.GetDynamicDebugInfo();
         }
     }
 }
