@@ -65,8 +65,7 @@ namespace TwoBRenn.Engine.Components
         {
             if (MinBound != null && MaxBound != null)
             {
-                Vector3[] bounds = CalculateBoundsWithModel((Vector3)MinBound, (Vector3)MaxBound);
-                return Raycast.IntersectionWithBox(ray, bounds[0], bounds[1]);
+                return Raycast.IntersectionWithBox(ray, (Vector3)MinBound, (Vector3)MaxBound, rennObject.Transform.GetGlobalModelMatrix());
             }
             return new RaycastHit();
         }
