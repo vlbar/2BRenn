@@ -7,6 +7,7 @@ using TwoBRenn.Engine.Common.ObjectsPlacers;
 using TwoBRenn.Engine.Common.Path;
 using TwoBRenn.Engine.Components;
 using TwoBRenn.Engine.Interfaces;
+using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.Engine.Render.Utils;
@@ -57,6 +58,7 @@ namespace TwoBRenn.ObjectsSetups
             AddAd(objects);
             AddStands(objects);
             AddTrainCart(objects);
+            AddMovableCar(objects);
 
             return objects;
         }
@@ -195,7 +197,7 @@ namespace TwoBRenn.ObjectsSetups
             for (int i = 0; i < 40; i++)
             {
                 RennObject barrier = new RennObject();
-                barrier.Transform.SetPosition(-40f + i * 2, 0.1f, -8f);
+                barrier.Transform.SetPosition(-40f + i * 2.1f, 0.1f, -8f);
                 barrier.Transform.SetRotation(0f, 0f, 0f);
                 barrier.Transform.SetScale(1f);
                 MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
@@ -331,7 +333,11 @@ namespace TwoBRenn.ObjectsSetups
             }
 
             roadPartsObjects[3].GetComponent<MeshRenderer>().SetTexture(gravelTexture);
+            roadPartsObjects[3].AddComponent<BoxCollider>();
+            roadPartsObjects[3].AddComponent<Selectable>();
             roadPartsObjects[6].GetComponent<MeshRenderer>().SetTexture(gravelTexture);
+            roadPartsObjects[6].AddComponent<BoxCollider>();
+            roadPartsObjects[6].AddComponent<Selectable>();
 
             RennObject curb = new RennObject();
             curb.SetParent(road);
@@ -449,6 +455,103 @@ namespace TwoBRenn.ObjectsSetups
             emitter.LifeTime = new Vector2(2f, 2f);
 
             carPathFollow.DriftParticle = emitter;
+        }
+
+        private void AddMovableCar(HashSet<RennObject> objects)
+        {
+            RennObject car = new RennObject();
+            car.Transform.SetPosition(0, 0, 0);
+            car.Transform.SetRotation(0, -90, 0);
+            CarController carController = car.AddComponent<CarController>();
+
+            // cockpit
+            RennObject cockpitRotate = new RennObject();
+            cockpitRotate.SetParent(car);
+            carController.Cockpit = cockpitRotate;
+
+            RennObject cockpit = new RennObject();
+            cockpit.SetParent(cockpitRotate);
+            cockpit.Transform.SetPosition(0, 0, 2);
+            cockpit.Transform.SetRotation(0, -90, 0);
+            cockpit.Transform.SetScale(0.4f);
+            MeshRenderer cockpitRenderer = cockpit.AddComponent<MeshRenderer>();
+            cockpitRenderer.SetShaderProgram(simpleShader);
+            cockpitRenderer.SetTriangleMesh(CarsMeshFactory.CreateCar(CarType.SportCar));
+            cockpitRenderer.SetTexture(carTexture);
+
+            RennObject cameraTarget = new RennObject();
+            cameraTarget.SetParent(cockpit);
+            cameraTarget.Transform.SetPosition(0, 4, 0);
+            Camera.GetInstance().Controller.Target = cameraTarget.Transform;
+
+            // wheels
+            List<RennObject> wheels = new List<RennObject>();
+            List<Transform> wheelTransforms = new List<Transform>();
+
+            Transform frontRight = new Transform();
+            frontRight.SetPosition(3.8f, 1.3f, 2.5f);
+            frontRight.SetRotation(0, 180, 0);
+            wheelTransforms.Add(frontRight);
+
+            Transform frontLeft = new Transform();
+            frontLeft.SetPosition(3.8f, 1.3f, -2.5f);
+            frontLeft.SetRotation(0, 0, 0);
+            wheelTransforms.Add(frontLeft);
+
+            Transform backRight = new Transform();
+            backRight.SetPosition(-4.2f, 1.3f, 2.5f);
+            backRight.SetRotation(0, 180, 0);
+            wheelTransforms.Add(backRight);
+
+            Transform backLeft = new Transform();
+            backLeft.SetPosition(-4.2f, 1.3f, -2.5f);
+            backLeft.SetRotation(0, 0, 0);
+            wheelTransforms.Add(backLeft);
+
+            foreach (var transform in wheelTransforms)
+            {
+                RennObject wheel = new RennObject();
+                wheel.SetParent(cockpit);
+                wheel.Transform.SetPosition(transform.position.X, transform.position.Y, transform.position.Z);
+
+                RennObject wheelRotate = new RennObject();
+                wheelRotate.SetParent(wheel);
+
+                RennObject wheelModel = new RennObject();
+                wheelModel.SetParent(wheelRotate);
+                wheelModel.Transform.SetRotation(0, transform.rotation.Y, 0);
+                MeshRenderer wheelRenderer = wheelModel.AddComponent<MeshRenderer>();
+                wheelRenderer.SetShaderProgram(simpleShader);
+                wheelRenderer.SetTriangleMesh(CarsMeshFactory.CreateCar(CarType.Wheel));
+                wheelRenderer.SetTexture(wheelTexture);
+                wheels.Add(wheel);
+            }
+            carController.ForwardWheels = new[] { wheels[0], wheels[1] };
+            carController.BackwardWheels = new[] { wheels[2], wheels[3] };
+
+            RennObject carSmoke = new RennObject();
+            carSmoke.Transform.SetPosition(0, 0, -1f);
+            carSmoke.SetParent(cockpitRotate);
+
+            ParticleEmitter emitter = carSmoke.AddComponent<ParticleEmitter>();
+            emitter.ShaderProgram = particleShader;
+            emitter.Texture = smokeTexture;
+
+            emitter.MaxParticles = 100;
+            emitter.EmitRate = 30f;
+            emitter.EmitRange = Vector3.UnitX * 1f + Vector3.UnitZ * 1f;
+            emitter.StartSize = new Vector2(3.0f, 4.5f);
+            emitter.SizeVelocity = new Vector2(3f, 4f);
+            emitter.StartRotation = new Vector2(-180, 180);
+            emitter.RotationVelocity = new Vector2(-30, 30);
+            emitter.Velocity = Vector3.UnitY * 0.5f;
+            emitter.VelocitySpread = new Vector3(0, 0.3f, 0);
+            emitter.ColorVelocity = new Vector4(0, 0, 0, -150f);
+            emitter.LifeTime = new Vector2(2f, 2f);
+
+            carController.SmokeParticle = emitter;
+
+            objects.Add(car);
         }
     }
 }
