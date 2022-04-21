@@ -78,22 +78,26 @@ namespace TwoBRenn.Engine.Components
 
         private Vector3[] CalculateBoundsWithModel(Vector3 minBound, Vector3 maxBound)
         {
-            Vector3[] resultVectors = { minBound, maxBound };
+            Vector3[] resultVectors = null;
             Vector3[] boundVertex = new Vector3[8];
-            boundVertex[0] = minBound;
+            boundVertex[0] = new Vector3(minBound.X, minBound.Y, minBound.Z);
             boundVertex[1] = new Vector3(maxBound.X, minBound.Y, minBound.Z);
             boundVertex[2] = new Vector3(maxBound.X, minBound.Y, maxBound.Z);
             boundVertex[3] = new Vector3(minBound.X, minBound.Y, maxBound.Z);
 
-            boundVertex[4] = maxBound;
+            boundVertex[4] = new Vector3(maxBound.X, maxBound.Y, maxBound.Z);
             boundVertex[5] = new Vector3(minBound.X, maxBound.Y, maxBound.Z);
             boundVertex[6] = new Vector3(minBound.X, maxBound.Y, minBound.Z);
             boundVertex[7] = new Vector3(maxBound.X, maxBound.Y, minBound.Z);
 
             for (int i = 0; i < 8; i++)
             {
-                Vector4 position = new Vector4(boundVertex[i], 1);
-                Vector4 modelPosition = position * rennObject.Transform.GetGlobalModelMatrix();
+                Vector4 modelPosition = new Vector4(boundVertex[i], 1) * rennObject.Transform.GetGlobalModelMatrix();
+
+                if (resultVectors == null)
+                {
+                    resultVectors = new[] { modelPosition.Xyz, modelPosition.Xyz };
+                }
 
                 SetMinThat(ref resultVectors[0].X, modelPosition.X);
                 SetMinThat(ref resultVectors[0].Y, modelPosition.Y);
@@ -103,7 +107,7 @@ namespace TwoBRenn.Engine.Components
                 SetMaxThat(ref resultVectors[1].Y, modelPosition.Y);
                 SetMaxThat(ref resultVectors[1].Z, modelPosition.Z);
             }
-
+            
             return resultVectors;
         }
     }
