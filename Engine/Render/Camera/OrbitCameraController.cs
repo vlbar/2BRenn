@@ -6,12 +6,12 @@ namespace TwoBRenn.Engine.Render.Camera
 {
     class OrbitCameraController : CameraController
     {
-        private float movementSpeed = 1.5f;
-        private float rotationSensitivity = 0.5f;
-        private float zoomSensitivity = 15f;
+        public float MovementSpeed = 5.5f;
+        public float RotationSensitivity = 0.2f;
+        public float ZoomSensitivity = 15f;
 
-        private Vector2 pitchLimit = new Vector2(-90, 90);
-        private Vector2 zoomLimit = new Vector2(2, 10);
+        public Vector2 PitchLimit = new Vector2(-10, 90);
+        public Vector2 ZoomLimit = new Vector2(2, 15);
 
         private Vector3 targetPosition;
         private float yaw;
@@ -44,24 +44,31 @@ namespace TwoBRenn.Engine.Render.Camera
         {
             KeyboardState input = Keyboard.GetState();
 
-            if (input.IsKeyDown(Key.W))
+            if (Target == null)
             {
-                targetPosition += forward * movementSpeed * Time.DeltaTime;
-            }
+                if (input.IsKeyDown(Key.W))
+                {
+                    targetPosition += forward * MovementSpeed * Time.DeltaTime;
+                }
 
-            if (input.IsKeyDown(Key.S))
-            {
-                targetPosition -= forward * movementSpeed * Time.DeltaTime;
-            }
+                if (input.IsKeyDown(Key.S))
+                {
+                    targetPosition -= forward * MovementSpeed * Time.DeltaTime;
+                }
 
-            if (input.IsKeyDown(Key.A))
-            {
-                targetPosition += right * movementSpeed * Time.DeltaTime;
-            }
+                if (input.IsKeyDown(Key.A))
+                {
+                    targetPosition += right * MovementSpeed * Time.DeltaTime;
+                }
 
-            if (input.IsKeyDown(Key.D))
+                if (input.IsKeyDown(Key.D))
+                {
+                    targetPosition += -right * MovementSpeed * Time.DeltaTime;
+                }
+            }
+            else
             {
-                targetPosition += -right * movementSpeed * Time.DeltaTime;
+                targetPosition = -Target.GetGlobalModelMatrix().ExtractTranslation();
             }
         }
 
@@ -69,7 +76,7 @@ namespace TwoBRenn.Engine.Render.Camera
         {
             MouseState mouse = Mouse.GetState();
 
-            bool isDragMode = mouse.IsButtonDown(MouseButton.Middle);
+            bool isDragMode = mouse.IsButtonDown(MouseButton.Middle) || Target != null;
             if (isDragMode)
             {
                 if (isFirstMouseMove)
@@ -83,9 +90,9 @@ namespace TwoBRenn.Engine.Render.Camera
                     var deltaY = mouse.Y - lastMousePosition.Y;
                     lastMousePosition = new Vector2(mouse.X, mouse.Y);
 
-                    yaw += deltaX * rotationSensitivity;
-                    pitch += deltaY * rotationSensitivity;
-                    pitch = MathHelper.Clamp(pitch + deltaY * rotationSensitivity, pitchLimit.X, pitchLimit.Y);
+                    yaw += deltaX * RotationSensitivity;
+                    pitch += deltaY * RotationSensitivity;
+                    pitch = MathHelper.Clamp(pitch + deltaY * RotationSensitivity, PitchLimit.X, PitchLimit.Y);
                 }
                 UpdateVectors();
             }
@@ -110,14 +117,14 @@ namespace TwoBRenn.Engine.Render.Camera
             {
                 if (wheelPrecise > lastMouseWheelPrecise)
                 {
-                    zoomAmount -= zoomSensitivity * Time.DeltaTime;
+                    zoomAmount -= ZoomSensitivity * Time.DeltaTime;
                 }
                 else if (wheelPrecise < lastMouseWheelPrecise)
                 {
-                    zoomAmount += zoomSensitivity * Time.DeltaTime;
+                    zoomAmount += ZoomSensitivity * Time.DeltaTime;
                 }
 
-                zoomAmount = MathHelper.Clamp(zoomAmount, zoomLimit.X, zoomLimit.Y);
+                zoomAmount = MathHelper.Clamp(zoomAmount, ZoomLimit.X, ZoomLimit.Y);
                 lastMouseWheelPrecise = wheelPrecise;
             }
         }
