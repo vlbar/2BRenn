@@ -54,7 +54,7 @@ namespace TwoBRenn.ObjectsSetups
             AddGround(objects);
             AddRoad(objects);
             AddForest(objects);
-            AddBarriers(objects);
+            AddBarriers(objects); 
             AddAd(objects);
             AddStands(objects);
             AddTrainCart(objects);
@@ -71,6 +71,8 @@ namespace TwoBRenn.ObjectsSetups
                 barrier.Transform.SetPosition(-40f + i * 10, 0.1f, 3f);
                 barrier.Transform.SetRotation(0f, 90f, 0f);
                 barrier.Transform.SetScale(1f);
+                barrier.AddComponent<Rigidbody>();
+                barrier.AddComponent<BoxCollider>();
                 MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
                 barrierRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdFlag));
                 barrierRenderer.SetShaderProgram(simpleShader);
@@ -84,6 +86,8 @@ namespace TwoBRenn.ObjectsSetups
                 adFlag.Transform.SetPosition(-55f + i * 10, 0.1f, 57f - i * 0.5f);
                 adFlag.Transform.SetRotation(0f, 90f, 0f);
                 adFlag.Transform.SetScale(1f);
+                adFlag.AddComponent<Rigidbody>();
+                adFlag.AddComponent<BoxCollider>();
                 MeshRenderer adFlagRenderer = adFlag.AddComponent<MeshRenderer>();
                 adFlagRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdFlag));
                 adFlagRenderer.SetShaderProgram(simpleShader);
@@ -97,6 +101,8 @@ namespace TwoBRenn.ObjectsSetups
                 adStand.Transform.SetPosition(-85f + i * 10, 0.1f, 0f - i * 3.5f);
                 adStand.Transform.SetRotation(0f, 0f, 0f);
                 adStand.Transform.SetScale(3f);
+                adStand.AddComponent<Rigidbody>();
+                adStand.AddComponent<BoxCollider>();
                 MeshRenderer adStandRenderer = adStand.AddComponent<MeshRenderer>();
                 adStandRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdStand));
                 adStandRenderer.SetShaderProgram(simpleShader);
@@ -110,6 +116,8 @@ namespace TwoBRenn.ObjectsSetups
                 adStand.Transform.SetPosition(-150f + i * 9, 0.1f, -30f + i * 10.5f);
                 adStand.Transform.SetRotation(0f, 0f, 0f);
                 adStand.Transform.SetScale(3f);
+                adStand.AddComponent<Rigidbody>();
+                adStand.AddComponent<BoxCollider>();
                 MeshRenderer adStandRenderer = adStand.AddComponent<MeshRenderer>();
                 adStandRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdStand));
                 adStandRenderer.SetShaderProgram(simpleShader);
@@ -184,6 +192,7 @@ namespace TwoBRenn.ObjectsSetups
                 stand.Transform.SetPosition(transform.position);
                 stand.Transform.SetRotation(transform.rotation);
                 stand.Transform.SetScale(transform.scale);
+                stand.AddComponent<BoxCollider>();
                 MeshRenderer standRenderer = stand.AddComponent<MeshRenderer>();
                 standRenderer.SetTriangleMesh(PrimitiveMeshFactory.CreateCube());
                 standRenderer.SetShaderProgram(concreteShader);
@@ -200,6 +209,7 @@ namespace TwoBRenn.ObjectsSetups
                 barrier.Transform.SetPosition(-40f + i * 2.1f, 0.1f, -8f);
                 barrier.Transform.SetRotation(0f, 0f, 0f);
                 barrier.Transform.SetScale(1f);
+                barrier.AddComponent<BoxCollider>();
                 MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
                 barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Barrier));
                 barrierRenderer.SetShaderProgram(simpleShader);
@@ -461,7 +471,11 @@ namespace TwoBRenn.ObjectsSetups
         {
             RennObject car = new RennObject();
             car.Transform.SetPosition(0, 0, 0);
-            car.Transform.SetRotation(0, -90, 0);
+            car.Transform.SetRotation(0, 90, 0);
+            car.AddComponent<Rigidbody>();
+            BoxCollider carCollider = car.AddComponent<BoxCollider>();
+            carCollider.MaxBound = new Vector3(0.9f, 3, 4.5f);
+            carCollider.MinBound = new Vector3(-0.9f, 0, -0.8f);
             CarController carController = car.AddComponent<CarController>();
 
             // cockpit

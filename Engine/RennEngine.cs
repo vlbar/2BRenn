@@ -87,6 +87,7 @@ namespace TwoBRenn.Engine
             camera.OnUpdate();
             ObjectPlacer.OnUpdate();
             ObjectPicker.OnUpdate();
+            physicsManager.OnUpdate();
         }
 
         private double GetElapsedTime()

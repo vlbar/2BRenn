@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using OpenTK;
 using OpenTK.Input;
 using TwoBRenn.Engine.Common.Managers;
@@ -10,21 +9,23 @@ namespace TwoBRenn.Engine.Components
 {
     class CarController : Component
     {
-        public float ForwardSpeed = 6;
-        public float ReverseSpeed = 4;
+        private Rigidbody rigidbody;
+
+        public float ForwardSpeed = 8;
+        public float ReverseSpeed = 5;
         public float BreakStrength = 12;
         public float LossSpeed = 2.2f;
-        public float TurnStrength = 75;
+        public float TurnStrength = 80;
         public float TurnSpeed = 2;
         public float LossSpeedByTurn = 1.5f;
-        public float MaxSpeed = 23;
+        public float MaxSpeed = 18;
         public float MinSpeed = -4;
         public Vector3 Forward = Vector3.UnitZ;
 
+        public float MagnitudeSpeed;
         public float CurrentSpeed;
         public float CurrentTurn;
         private float targetTurn;
-        private Vector3 position;
         private Vector3 rotation;
 
         public RennObject Cockpit;
@@ -39,6 +40,8 @@ namespace TwoBRenn.Engine.Components
         private float driftFactor;
         private float driftInfluence;
         private bool handBreak;
+
+        private Vector3 lastPosition;
 
         public override void OnStart()
         {
@@ -61,7 +64,7 @@ namespace TwoBRenn.Engine.Components
             }
 
             wheelsToMoveRotate = wheelsChild.ToArray();
-
+            rigidbody = rennObject.GetComponent<Rigidbody>();
         }
 
         public override void OnUpdate()
@@ -71,6 +74,17 @@ namespace TwoBRenn.Engine.Components
             Rotate();
             FakeDrift();
             RotateWheels();
+            MeasureSpeed();
+        }
+
+        private void MeasureSpeed()
+        {
+            Vector3 currentPosition = rennObject.Transform.GetGlobalModelMatrix().ExtractTranslation();
+            MagnitudeSpeed = Vector3.Distance(currentPosition, lastPosition) / Math.Max(Time.DeltaTime, 0.001f);
+            lastPosition = rennObject.Transform.GetGlobalModelMatrix().ExtractTranslation();
+            MagnitudeSpeed *= CurrentSpeed < 0 ? -1 : 1;
+            DebugManager.Debug(1, MagnitudeSpeed.ToString());
+            DebugManager.Debug(2, CurrentSpeed.ToString());
         }
 
         private void FakeDrift()
@@ -83,20 +97,19 @@ namespace TwoBRenn.Engine.Components
 
             Cockpit.Transform.SetRotation(new Vector3(0, cockpitRotate * 12, 0));
             SmokeParticle.IsPlay = driftFactor > 0 || CurrentSpeed > 5 && handBreak;
-            DebugManager.Debug(2, cockpitRotate.ToString(CultureInfo.InvariantCulture));
         }
 
         private void RotateWheels()
         {
-            wheelRotateForward += (float)(CurrentSpeed * Math.PI);
-            for (int i = 0; i < wheelsToMoveRotate.Length; i++)
+            wheelRotateForward += (float)(MagnitudeSpeed * Math.PI);
+            foreach (var t in wheelsToMoveRotate)
             {
-                wheelsToMoveRotate[i].Transform.SetRotation(0, 0, -wheelRotateForward);
+                t.Transform.SetRotation(0, 0, -wheelRotateForward);
             }
 
-            for (int i = 0; i < ForwardWheels.Length; i++)
+            foreach (var t in ForwardWheels)
             {
-                ForwardWheels[i].Transform.SetRotation(0, CurrentTurn * 30, 0);
+                t.Transform.SetRotation(0, CurrentTurn * 30, 0);
             }
         }
 
@@ -116,7 +129,7 @@ namespace TwoBRenn.Engine.Components
                 CurrentSpeed -= ReverseSpeed * Time.DeltaTime;
             }
 
-            if (input.IsKeyDown(Key.Space))
+            if (input.IsKeyDown(Key.Space) || CurrentSpeed > ReverseSpeed && MagnitudeSpeed < 2f)
             {
                 handBreak = true;
                 CurrentSpeed = Stabilize(CurrentSpeed, BreakStrength);
@@ -127,8 +140,7 @@ namespace TwoBRenn.Engine.Components
             }
 
             CurrentSpeed = MathHelper.Clamp(CurrentSpeed, MinSpeed, MaxSpeed);
-            position += Forward * CurrentSpeed * Time.DeltaTime;
-            rennObject.Transform.SetPosition(position);
+            rigidbody.Force = Forward * CurrentSpeed * 0.02f;
         }
 
         private void Rotate()
@@ -199,7 +211,7 @@ namespace TwoBRenn.Engine.Components
                 return 1;
             }
             
-            return 1 - ((absSpeed - point3) / MaxSpeed);
+            return 1 - (absSpeed - point3) / MaxSpeed;
         }
     }
 }
