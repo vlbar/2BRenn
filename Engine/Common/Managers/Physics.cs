@@ -6,10 +6,10 @@ using TwoBRenn.Engine.Components;
 
 namespace TwoBRenn.Engine.Common.Managers
 {
-    class PhysicsManager
+    class Physics
     {
-        private static PhysicsManager _instance;
-        public static PhysicsManager Instance => _instance ?? (_instance = new PhysicsManager());
+        private static Physics _instance;
+        public static Physics Instance => _instance ?? (_instance = new Physics());
 
         public List<ICollider> Colliders = new List<ICollider>();
         public List<Rigidbody> Rigidbodies = new List<Rigidbody>();

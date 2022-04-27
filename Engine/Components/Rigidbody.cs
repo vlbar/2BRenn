@@ -13,7 +13,7 @@ namespace TwoBRenn.Engine.Components
 
         public override void OnStart()
         {
-            PhysicsManager.AddRigidbody(this);
+            Physics.AddRigidbody(this);
             Collider = rennObject.GetComponent<BoxCollider>();
             Collider.IsDynamic = true;
         }

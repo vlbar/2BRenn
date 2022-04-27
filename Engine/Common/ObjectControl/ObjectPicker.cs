@@ -10,15 +10,15 @@ namespace TwoBRenn.Engine.Common.ObjectControl
 
         public void OnUpdate()
         {
-            if (InputManager.IsMouseButtonDown(MouseButtons.Left))
+            if (Input.IsMouseButtonDown(MouseButtons.Left))
             {
-                if (PhysicsManager.Raycast(Camera.ScreenPointToRay(InputManager.MouseRelativePosition), out var hit))
+                if (Physics.Raycast(Camera.ScreenPointToRay(Input.MouseRelativePosition), out var hit))
                 {
                     CurrentObject = hit.HitObject;
                 }
             }
 
-            if (InputManager.IsMouseButtonDown(MouseButtons.Right))
+            if (Input.IsMouseButtonDown(MouseButtons.Right))
             {
                 CurrentObject = null;
             }

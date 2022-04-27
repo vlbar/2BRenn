@@ -36,7 +36,7 @@ namespace TwoBRenn.Engine.Components
             }
 
             ComputeObb();
-            PhysicsManager.AddCollider(this);
+            Physics.AddCollider(this);
         }
 
         private void GetBoundsOfMesh(Mesh mesh)

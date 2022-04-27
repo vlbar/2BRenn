@@ -39,7 +39,7 @@ namespace TwoBRenn.Engine.Common.ObjectControl
         {
             if (ObjectToPlace != null)
             {
-                if (InputManager.IsMouseButtonDown(MouseButtons.Left))
+                if (Input.IsMouseButtonDown(MouseButtons.Left))
                 {
                     ShaderAttribute_Vector4 baseColorAttribute =
                         (ShaderAttribute_Vector4)ObjectToPlace.GetComponent<MeshRenderer>().GetShaderAttributes()[
@@ -50,7 +50,7 @@ namespace TwoBRenn.Engine.Common.ObjectControl
                     return;
                 }
 
-                RaycastHit inter = Raycast.IntersectionWithPlane(Camera.ScreenPointToRay(InputManager.MouseRelativePosition), Vector4.UnitY);
+                RaycastHit inter = Raycast.IntersectionWithPlane(Camera.ScreenPointToRay(Input.MouseRelativePosition), Vector4.UnitY);
                 ObjectToPlace.Transform.SetPosition(inter.Point ?? Vector3.UnitY * -5.0f);
             }
         }

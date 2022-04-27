@@ -69,8 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\Common\Managers\DebugManager.cs" />
-    <Compile Include="Engine\Common\Managers\InputManager.cs" />
-    <Compile Include="Engine\Common\Managers\PhysicsManager.cs" />
+    <Compile Include="Engine\Common\Managers\Input.cs" />
+    <Compile Include="Engine\Common\Managers\Physics.cs" />
     <Compile Include="Engine\Common\ObjectControl\ObjectPicker.cs" />
     <Compile Include="Engine\Common\ObjectControl\ObjectPlacer.cs" />
     <Compile Include="Engine\Common\ObjectsPlacers\ImageMap.cs" />

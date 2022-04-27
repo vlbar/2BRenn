@@ -25,8 +25,8 @@ namespace TwoBRenn.Engine
         // parts
         private Camera camera;
         private SceneManager sceneManager;
-        private InputManager inputManager;
-        private PhysicsManager physicsManager;
+        private Input inputManager;
+        private Physics physicsManager;
         public DebugManager DebugManager;
         public ObjectPlacer ObjectPlacer = new ObjectPlacer();
         public ObjectPicker ObjectPicker = new ObjectPicker();
@@ -50,8 +50,8 @@ namespace TwoBRenn.Engine
             GlControl = glControl;
             Form = form;
             camera = Camera.GetInstance();
-            inputManager = InputManager.Instance;
-            physicsManager = PhysicsManager.Instance;
+            inputManager = Input.Instance;
+            physicsManager = Physics.Instance;
             DebugManager = DebugManager.Instance;
 
             sceneManager = new SceneManager();

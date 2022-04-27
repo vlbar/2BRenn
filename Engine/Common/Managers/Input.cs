@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using OpenTK;
@@ -16,10 +15,10 @@ namespace TwoBRenn.Engine.Common.Managers
         public bool IsUp;
     }
 
-    class InputManager : IUpdatableEnginePart
+    class Input : IUpdatableEnginePart
     {
-        private static InputManager _instance;
-        public static InputManager Instance => _instance ?? (_instance = new InputManager());
+        private static Input _instance;
+        public static Input Instance => _instance ?? (_instance = new Input());
 
         // forms
         private Form form;
