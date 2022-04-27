@@ -40,7 +40,7 @@ namespace TwoBRenn.ObjectsSetups
 
         public AutodromeObjectsSetup()
         {
-            groundShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(2, 2));
+            groundShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(100, 100));
             roadShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 30));
             curbShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 60));
             treeShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(5, 5));
@@ -249,24 +249,14 @@ namespace TwoBRenn.ObjectsSetups
 
         private void AddGround(HashSet<RennObject> objects)
         {
-            RennObject ground = new RennObject();
-            ground.Transform.SetPosition(-240f, 0f, -170f);
-            objects.Add(ground);
-
-            for (int i = 0; i < 38; i++)
-            {
-                for (int j = 0; j < 38; j++)
-                {
-                    RennObject plane = new RennObject();
-                    plane.SetParent(ground);
-                    plane.Transform.SetPosition(i * 10, 0f, j * 10);
-                    plane.Transform.SetScale(10f);
-                    MeshRenderer planeRenderer = plane.AddComponent<MeshRenderer>();
-                    planeRenderer.SetTriangleMesh(PrimitiveMeshFactory.CreatePlane());
-                    planeRenderer.SetShaderProgram(groundShader);
-                    planeRenderer.SetTexture(groundTexture);
-                }
-            }
+            RennObject plane = new RennObject();
+            plane.Transform.SetPosition(-50, 0f, 20);
+            plane.Transform.SetScale(380f);
+            MeshRenderer planeRenderer = plane.AddComponent<MeshRenderer>();
+            planeRenderer.SetTriangleMesh(PrimitiveMeshFactory.CreatePlane());
+            planeRenderer.SetShaderProgram(groundShader);
+            planeRenderer.SetTexture(groundTexture);
+            objects.Add(plane);
         }
 
         private void AddForest(HashSet<RennObject> objects)

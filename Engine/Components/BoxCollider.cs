@@ -24,7 +24,7 @@ namespace TwoBRenn.Engine.Components
             if (MinBound == Vector3.Zero || MaxBound == Vector3.Zero)
             {
                 meshRenderer = rennObject.GetComponent<MeshRenderer>();
-                if (meshRenderer != null && meshRenderer.Mesh.Vertices.Length > 0)
+                if (meshRenderer != null && meshRenderer.Mesh.VerticesArray.Length > 0)
                 {
                     GetBoundsOfMesh(meshRenderer.Mesh);
                 }

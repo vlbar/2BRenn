@@ -22,7 +22,7 @@ namespace TwoBRenn.Engine.Render
         public void SetupGlControl(GLControl glControl)
         {
             this.glControl = glControl;
-            glControl.VSync = false;
+            glControl.VSync = true;
 
             SetupViewport();
             glControl.Resize += delegate

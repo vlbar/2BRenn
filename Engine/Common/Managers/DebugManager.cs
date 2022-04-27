@@ -19,7 +19,6 @@ namespace TwoBRenn.Engine.Common.Managers
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($"{rennEngine.Fps} fps");
 
-            Quaternion q = Camera.GetViewMatrix().Inverted().ExtractRotation();
             Vector3 position = Camera.GetViewMatrix().Inverted().ExtractTranslation();
             stringBuilder.AppendLine($"XYZ: {position.X:0.00} / {position.Y:0.00} / {position.Z:0.00}");
 

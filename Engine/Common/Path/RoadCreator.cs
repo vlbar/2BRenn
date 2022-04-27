@@ -65,7 +65,6 @@ namespace TwoBRenn.Engine.Common.Path
 
             public void SmoothWidthIteration(float smoothTime)
             {
-                Console.Write(width);
                 width = SmoothDamp(width, targetWidth, ref velocity, smoothTime);
             }
 

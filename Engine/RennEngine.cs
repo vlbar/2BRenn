@@ -9,6 +9,7 @@ using TwoBRenn.Engine.Render;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.Utils;
 using TwoBRenn.Engine.Scene;
+using Timer = System.Windows.Forms.Timer;
 
 namespace TwoBRenn.Engine
 {
@@ -59,8 +60,10 @@ namespace TwoBRenn.Engine
             inputManager.Setup(glControl, form);
 
             preciseTimer = new Stopwatch();
-            Application.Idle += Application_Idle;
-            GlControl.Paint += GlControl_Paint;
+            Timer renderTimer = new Timer();
+            renderTimer.Interval = 1000 / maxFrameRate;
+            renderTimer.Tick += delegate { UpdateCycle(); };
+            renderTimer.Start();
         }
 
         private void UpdateCycle()
@@ -110,19 +113,6 @@ namespace TwoBRenn.Engine
                 accumulator -= 1000;
                 frameCount = 0;
             }
-        }
-
-        private void Application_Idle(object sender, EventArgs e)
-        {
-            while (GlControl.IsIdle)
-            {
-                UpdateCycle();
-            }
-        }
-
-        private void GlControl_Paint(object sender, PaintEventArgs e)
-        {
-            UpdateCycle();
         }
     }
 }
