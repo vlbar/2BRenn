@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using OpenTK;
 using TwoBRenn.Engine.Common.RayCasting;
 using TwoBRenn.Engine.Components;
+using TwoBRenn.Engine.Components.Physic;
 
 namespace TwoBRenn.Engine.Common.Managers
 {

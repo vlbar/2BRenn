@@ -3,9 +3,11 @@ using OpenTK;
 using TwoBRenn.Engine;
 using TwoBRenn.Engine.Common.Path;
 using TwoBRenn.Engine.Components;
+using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Interfaces;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
+using TwoBRenn.ObjectsSetups.MeshFactories;
 
 namespace TwoBRenn.ObjectsSetups
 {

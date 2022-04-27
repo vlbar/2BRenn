@@ -1,7 +1,7 @@
 ﻿using OpenTK;
 using TwoBRenn.Engine.Render.Utils;
 
-namespace TwoBRenn.Engine.Components
+namespace TwoBRenn.Engine.Components.Common
 {
     class LoopRotation : Component
     {

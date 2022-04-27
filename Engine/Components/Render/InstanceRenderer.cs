@@ -8,7 +8,7 @@ using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.Engine.Render.Utils;
 using TwoBRenn.Engine.Utils;
 
-namespace TwoBRenn.Engine.Components
+namespace TwoBRenn.Engine.Components.Render
 {
     class InstanceRenderer : Component
     {

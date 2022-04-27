@@ -2,7 +2,7 @@
 using TwoBRenn.Engine.Common.Managers;
 using TwoBRenn.Engine.Render.Utils;
 
-namespace TwoBRenn.Engine.Components
+namespace TwoBRenn.Engine.Components.Physic
 {
     class Rigidbody : Component
     {

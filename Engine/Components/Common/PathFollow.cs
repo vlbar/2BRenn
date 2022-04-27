@@ -1,9 +1,10 @@
 ﻿using System;
 using OpenTK;
 using TwoBRenn.Engine.Common.Path;
+using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Render.Utils;
 
-namespace TwoBRenn.Engine.Components
+namespace TwoBRenn.Engine.Components.Common
 {
     class PathFollow : Component
     {

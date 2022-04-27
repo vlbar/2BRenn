@@ -6,12 +6,16 @@ using TwoBRenn.Engine;
 using TwoBRenn.Engine.Common.ObjectsPlacers;
 using TwoBRenn.Engine.Common.Path;
 using TwoBRenn.Engine.Components;
+using TwoBRenn.Engine.Components.Common;
+using TwoBRenn.Engine.Components.Physic;
+using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Interfaces;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.Engine.Render.Utils;
 using TwoBRenn.Engine.Utils;
+using TwoBRenn.ObjectsSetups.MeshFactories;
 
 namespace TwoBRenn.ObjectsSetups
 {

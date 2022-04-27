@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Input;
 using TwoBRenn.Engine.Common.Managers;
+using TwoBRenn.Engine.Components.Physic;
+using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Render.Utils;
 
-namespace TwoBRenn.Engine.Components
+namespace TwoBRenn.Engine.Components.Common
 {
     class CarController : Component
     {

@@ -1,7 +1,7 @@
 ﻿using OpenTK;
 using TwoBRenn.Engine.Common.RayCasting;
 
-namespace TwoBRenn.Engine.Components
+namespace TwoBRenn.Engine.Components.Physic
 {
     interface ICollider
     {

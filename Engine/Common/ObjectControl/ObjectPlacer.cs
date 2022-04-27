@@ -5,6 +5,7 @@ using OpenTK;
 using TwoBRenn.Engine.Common.Managers;
 using TwoBRenn.Engine.Common.RayCasting;
 using TwoBRenn.Engine.Components;
+using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Interfaces;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;

@@ -1,7 +1,7 @@
 ﻿using OpenTK;
 using TwoBRenn.Engine.Render.Utils;
 
-namespace TwoBRenn.ObjectsSetups
+namespace TwoBRenn.ObjectsSetups.MeshFactories
 {
     public enum StructureType
     {

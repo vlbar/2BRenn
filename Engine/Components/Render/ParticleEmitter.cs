@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using TwoBRenn.Engine.Common.ParticleSystem;
@@ -9,7 +8,7 @@ using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.Engine.Render.Utils;
 
-namespace TwoBRenn.Engine.Components
+namespace TwoBRenn.Engine.Components.Render
 {
     class ParticleEmitter : Component
     {

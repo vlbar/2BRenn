@@ -1,14 +1,14 @@
 ﻿using System;
-using OpenTK.Graphics.OpenGL4;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using OpenTK;
+using OpenTK.Graphics.OpenGL4;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.Engine.Render.Utils;
 
-namespace TwoBRenn.Engine.Components
+namespace TwoBRenn.Engine.Components.Render
 {
     class MeshRenderer : Component
     {
