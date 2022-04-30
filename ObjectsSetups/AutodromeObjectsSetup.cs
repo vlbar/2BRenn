@@ -43,7 +43,7 @@ namespace TwoBRenn.ObjectsSetups
 
         public AutodromeObjectsSetup()
         {
-            groundShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(100, 100));
+            groundShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(50, 50));
             roadShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 30));
             curbShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 60));
             treeShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(5, 5));
@@ -325,7 +325,7 @@ namespace TwoBRenn.ObjectsSetups
             path.IsClosed = true;
 
             RennObject road = new RennObject();
-            road.Transform.SetPosition(-180f, 0.2f, 85f);
+            road.Transform.SetPosition(-180f, 0.1f, 85f);
             road.Transform.SetScale(7f);
             objects.Add(road);
 
@@ -368,6 +368,7 @@ namespace TwoBRenn.ObjectsSetups
             techPath1.AddManualSegment(new Vector3(13.5f, 0f, -12f), new Vector3(13.5f, 0f, -10f), Vector3.Zero);
             RoadPart techRoadPart1 = RoadCreator.CreateMesh(techPath1.CalculateEvenlySpacedPoints(0.5f), techRoadCreatorSettings);
             RennObject techRoad1 = new RennObject();
+            techRoad1.Transform.SetPosition(0, -0.01f, 0f);
             techRoad1.SetParent(road);
             MeshRenderer techRoadRenderer = techRoad1.AddComponent<MeshRenderer>();
             techRoadRenderer.SetShaderProgram(roadShader);
@@ -380,6 +381,7 @@ namespace TwoBRenn.ObjectsSetups
             techPath2.AddManualSegment(new Vector3(29.5f, 0f, -8.5f), new Vector3(30.5f, 0f, -7f), new Vector3(31.5f, 0f, -5.5f));
             RoadPart techRoadPart2 = RoadCreator.CreateMesh(techPath2.CalculateEvenlySpacedPoints(0.5f), techRoadCreatorSettings);
             RennObject techRoad2 = new RennObject();
+            techRoad2.Transform.SetPosition(0, -0.01f, 0);
             techRoad2.SetParent(road);
             MeshRenderer techRoadRenderer2 = techRoad2.AddComponent<MeshRenderer>();
             techRoadRenderer2.SetShaderProgram(roadShader);
@@ -471,7 +473,7 @@ namespace TwoBRenn.ObjectsSetups
         private void AddMovableCar(HashSet<RennObject> objects)
         {
             RennObject car = new RennObject();
-            car.Transform.SetPosition(0, 0, 0);
+            car.Transform.SetPosition(0, -0.1f, 0);
             car.Transform.SetRotation(0, -90, 0);
             car.AddComponent<Rigidbody>();
             BoxCollider carCollider = car.AddComponent<BoxCollider>();
