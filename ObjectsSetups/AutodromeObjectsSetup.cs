@@ -5,7 +5,6 @@ using OpenTK;
 using TwoBRenn.Engine;
 using TwoBRenn.Engine.Common.ObjectsPlacers;
 using TwoBRenn.Engine.Common.Path;
-using TwoBRenn.Engine.Components;
 using TwoBRenn.Engine.Components.Common;
 using TwoBRenn.Engine.Components.Physic;
 using TwoBRenn.Engine.Components.Render;
@@ -71,17 +70,17 @@ namespace TwoBRenn.ObjectsSetups
         {
             for (int i = 0; i < 6; i++)
             {
-                RennObject barrier = new RennObject();
-                barrier.Transform.SetPosition(-40f + i * 10, 0.1f, 3f);
-                barrier.Transform.SetRotation(0f, 90f, 0f);
-                barrier.Transform.SetScale(1f);
-                barrier.AddComponent<Rigidbody>();
-                barrier.AddComponent<BoxCollider>();
-                MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
+                RennObject adFlag = new RennObject();
+                adFlag.Transform.SetPosition(-40f + i * 10, 0.1f, 3f);
+                adFlag.Transform.SetRotation(0f, 90f, 0f);
+                adFlag.Transform.SetScale(1f);
+                adFlag.AddComponent<BoxCollider>();
+                adFlag.AddComponent<FallingPillar>();
+                MeshRenderer barrierRenderer = adFlag.AddComponent<MeshRenderer>();
                 barrierRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdFlag));
                 barrierRenderer.SetShaderProgram(simpleShader);
                 barrierRenderer.SetTexture(sponsorsTexture);
-                objects.Add(barrier);
+                objects.Add(adFlag);
             }
 
             for (int i = 0; i < 5; i++)
@@ -90,8 +89,8 @@ namespace TwoBRenn.ObjectsSetups
                 adFlag.Transform.SetPosition(-55f + i * 10, 0.1f, 57f - i * 0.5f);
                 adFlag.Transform.SetRotation(0f, 90f, 0f);
                 adFlag.Transform.SetScale(1f);
-                adFlag.AddComponent<Rigidbody>();
                 adFlag.AddComponent<BoxCollider>();
+                adFlag.AddComponent<FallingPillar>();
                 MeshRenderer adFlagRenderer = adFlag.AddComponent<MeshRenderer>();
                 adFlagRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdFlag));
                 adFlagRenderer.SetShaderProgram(simpleShader);
@@ -148,6 +147,10 @@ namespace TwoBRenn.ObjectsSetups
                 adPlane.Transform.SetPosition(-120f + i * 10, 0.1f, 95f);
                 adPlane.Transform.SetRotation(0f, -35f, 0f);
                 adPlane.Transform.SetScale(2f);
+                adPlane.AddComponent<BoxCollider>();
+                FallingPillar fallingAd = adPlane.AddComponent<FallingPillar>();
+                fallingAd.BlockAxis = Vector3.UnitX;
+                fallingAd.FallenY = 0;
                 MeshRenderer adPlaneRenderer = adPlane.AddComponent<MeshRenderer>();
                 adPlaneRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdPlane));
                 adPlaneRenderer.SetShaderProgram(simpleShader);
@@ -228,6 +231,8 @@ namespace TwoBRenn.ObjectsSetups
                 delinator.Transform.SetPosition(-101f + i * 2, 0.1f, 21f + i * 1);
                 delinator.Transform.SetRotation(0f, 0f, 0f);
                 delinator.Transform.SetScale(0.4f);
+                delinator.AddComponent<BoxCollider>();
+                delinator.AddComponent<FallingPillar>();
                 MeshRenderer delinatorRenderer = delinator.AddComponent<MeshRenderer>();
                 delinatorRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Delineator));
                 delinatorRenderer.SetShaderProgram(simpleShader);
@@ -242,6 +247,8 @@ namespace TwoBRenn.ObjectsSetups
                 delinator.Transform.SetPosition(-107f + i * 0.2f, 0.1f, 27f + i * 2);
                 delinator.Transform.SetRotation(0f, 0f, 0f);
                 delinator.Transform.SetScale(0.4f);
+                delinator.AddComponent<BoxCollider>();
+                delinator.AddComponent<FallingPillar>();
                 MeshRenderer delinatorRenderer = delinator.AddComponent<MeshRenderer>();
                 delinatorRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Delineator));
                 delinatorRenderer.SetShaderProgram(simpleShader);
@@ -461,7 +468,7 @@ namespace TwoBRenn.ObjectsSetups
             carPathFollow.DriftParticle = emitter;
         }
 
-        private void AddMovableCar(HashSet<RennObject> objects)
+private void AddMovableCar(HashSet<RennObject> objects)
         {
             RennObject car = new RennObject();
             car.Transform.SetPosition(0, 0, 0);

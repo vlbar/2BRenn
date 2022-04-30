@@ -19,6 +19,8 @@ namespace TwoBRenn.Engine.Components.Physic
         private Vector3 halfSize;
 
         public bool IsDynamic { get; set; }
+        public bool IsTrigger { get; set; }
+        public Action<IntersectionResult> OnCollisionEnter { get; set; }
 
         public override void OnStart()
         {

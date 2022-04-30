@@ -83,8 +83,10 @@
     <Compile Include="Engine\Common\RayCasting\RaycastHit.cs" />
     <Compile Include="Engine\Components\Physic\BoxCollider.cs" />
     <Compile Include="Engine\Components\Common\CarController.cs" />
+    <Compile Include="Engine\Components\Physic\FallingPillar.cs" />
     <Compile Include="Engine\Components\Physic\ICollider.cs" />
     <Compile Include="Engine\Components\Component.cs" />
+    <Compile Include="Engine\Components\Physic\IntersectionResult.cs" />
     <Compile Include="Engine\Components\Render\InstanceRenderer.cs" />
     <Compile Include="Engine\Components\Common\LoopRotation.cs" />
     <Compile Include="Engine\Components\Render\MeshRenderer.cs" />

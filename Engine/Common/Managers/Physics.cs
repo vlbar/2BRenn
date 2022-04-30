@@ -57,18 +57,33 @@ namespace TwoBRenn.Engine.Common.Managers
                 ICollider colliderA = rigidbody.Collider;
                 foreach (var colliderB in Colliders)
                 {
+                    IntersectionResult intersectionResult = new IntersectionResult();
                     for (int i = 0; i < 64; i++)
                     {
                         if (Intersection(colliderA, colliderB, out var normal))
                         {
-                            normal.Y = 0;
-                            if (rigidbody.Force != Vector3.Zero) normal = rigidbody.Force.Normalized();
-                            rigidbody.rennObject.Transform.Translate(-normal * 0.02f);
+                            intersectionResult.Normal = normal;
+                            if (!colliderB.IsTrigger)
+                            {
+                                normal.Y = 0;
+                                if (rigidbody.Force != Vector3.Zero) normal = rigidbody.Force.Normalized();
+                                rigidbody.rennObject.Transform.Translate(-normal * 0.02f);
+                            }
                         }
                         else
                         {
                             break;
                         }
+                    }
+
+                    if (intersectionResult.Normal != Vector3.Zero)
+                    {
+                        intersectionResult.ColliderA = colliderA;
+                        intersectionResult.ColliderB = colliderB;
+                        intersectionResult.Force = rigidbody.Force;
+
+                        colliderA.OnCollisionEnter?.Invoke(intersectionResult);
+                        colliderB.OnCollisionEnter?.Invoke(intersectionResult);
                     }
                 }
             }
