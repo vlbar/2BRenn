@@ -6,16 +6,23 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
+    public class DirectionalLightStruct
+    {
+        public string ColorAttribute = "directionalLight.color";
+        public string IntensityAttribute = "directionalLight.intensity";
+    }
+
     class BaseShaderProgram
     {
-        public static string MODEL = "model";
-        public static string VIEW = "view";
-        public static string PROJECTION = "projection";
-
-        private int programId = 0;
+        public static string ModelAttribute = "model";
+        public static string ViewAttribute = "view";
+        public static string ProjectionAttribute = "projection";
+        public static DirectionalLightStruct DirectionalLight = new DirectionalLightStruct();
+         
+        private readonly int programId = 0;
         private List<int> shaders = new List<int>();
 
-        public Dictionary<string, ShaderAttribute> defaultAttributes = new Dictionary<string, ShaderAttribute>();
+        public Dictionary<string, ShaderAttribute> DefaultAttributes = new Dictionary<string, ShaderAttribute>();
 
         public BaseShaderProgram(List<ShaderDefinition> shaderDefinitions)
         {
@@ -46,7 +53,7 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
         // program
         public void ActiveProgram()
         {
-            ActiveProgram(defaultAttributes);
+            ActiveProgram(DefaultAttributes);
         }
 
         public void ActiveProgram(Dictionary<string, ShaderAttribute> attributes)
@@ -71,21 +78,21 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
 
         public Dictionary<string, ShaderAttribute> GetDefaultShaderAttributes()
         {
-            return defaultAttributes;
+            return DefaultAttributes;
         }
 
         public void SetDefaultShaderAttribute(string name, ShaderAttribute value)
         {
-            if (defaultAttributes.ContainsKey(name))
+            if (DefaultAttributes.ContainsKey(name))
             {
-                defaultAttributes.Remove(name);
+                DefaultAttributes.Remove(name);
             }
-            defaultAttributes.Add(name, value);
+            DefaultAttributes.Add(name, value);
         }
 
         public void SetDefaultShaderAttributes(Dictionary<string, ShaderAttribute> attributes)
         {
-            defaultAttributes = attributes;
+            DefaultAttributes = attributes;
         }
 
         private void UniformAttributes(Dictionary<string, ShaderAttribute> attributes)
@@ -102,7 +109,17 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
             GL.UniformMatrix4(GetUniformLocation(name), true, ref data);
         }
 
+        public void SetVector3(string name, Vector3 vector)
+        {
+            GL.Uniform3(GetUniformLocation(name), vector);
+        }
+
         public void SetInt(string name, int value)
+        {
+            GL.Uniform1(GetUniformLocation(name), value);
+        }
+
+        public void SetFloat(string name, float value)
         {
             GL.Uniform1(GetUniformLocation(name), value);
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using TwoBRenn.Engine.Common.Managers;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
@@ -107,9 +108,10 @@ namespace TwoBRenn.Engine.Components.Render
         {
             if (Mesh?.Vertices == null) return;
             shaderProgram.ActiveProgram(attributes);
-            shaderProgram.SetMatrix4(BaseShaderProgram.MODEL, rennObject.Transform.GetGlobalModelMatrix());
-            shaderProgram.SetMatrix4(BaseShaderProgram.VIEW, Camera.GetViewMatrix());
-            shaderProgram.SetMatrix4(BaseShaderProgram.PROJECTION, Camera.GetProjectionMatrix());
+            shaderProgram.SetMatrix4(BaseShaderProgram.ModelAttribute, rennObject.Transform.GetGlobalModelMatrix());
+            shaderProgram.SetMatrix4(BaseShaderProgram.ViewAttribute, Camera.GetViewMatrix());
+            shaderProgram.SetMatrix4(BaseShaderProgram.ProjectionAttribute, Camera.GetProjectionMatrix());
+            Lighting.FillShaderProgram(shaderProgram);
 
             texture?.Use();
             vertexArray.Draw(Mesh.Triangles.Length);

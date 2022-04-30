@@ -121,8 +121,8 @@ namespace TwoBRenn.Engine.Render.Textures
         public void Use()
         {
             shaderProgram.ActiveProgram();
-            shaderProgram.SetMatrix4(SkyboxShader.VIEW, Camera.Camera.GetViewMatrix().ClearTranslation());
-            shaderProgram.SetMatrix4(SkyboxShader.PROJECTION, Camera.Camera.GetProjectionMatrix());
+            shaderProgram.SetMatrix4(SkyboxShader.ViewAttribute, Camera.Camera.GetViewMatrix().ClearTranslation());
+            shaderProgram.SetMatrix4(SkyboxShader.ProjectionAttribute, Camera.Camera.GetProjectionMatrix());
 
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.TextureCubeMap, cubemap);

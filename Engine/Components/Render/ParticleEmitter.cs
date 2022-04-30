@@ -103,8 +103,8 @@ namespace TwoBRenn.Engine.Components.Render
             GL.DepthMask(false);
 
             ShaderProgram.ActiveProgram();
-            ShaderProgram.SetMatrix4(BaseShaderProgram.VIEW, Camera.GetViewMatrix());
-            ShaderProgram.SetMatrix4(BaseShaderProgram.PROJECTION, Camera.GetProjectionMatrix());
+            ShaderProgram.SetMatrix4(BaseShaderProgram.ViewAttribute, Camera.GetViewMatrix());
+            ShaderProgram.SetMatrix4(BaseShaderProgram.ProjectionAttribute, Camera.GetProjectionMatrix());
 
             Texture?.Use();
 

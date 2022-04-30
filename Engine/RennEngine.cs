@@ -27,6 +27,7 @@ namespace TwoBRenn.Engine
         private SceneManager sceneManager;
         private Input inputManager;
         private Physics physicsManager;
+        public Lighting LightingManager;
         public DebugManager DebugManager;
         public ObjectPlacer ObjectPlacer = new ObjectPlacer();
         public ObjectPicker ObjectPicker = new ObjectPicker();
@@ -53,11 +54,13 @@ namespace TwoBRenn.Engine
             inputManager = Input.Instance;
             physicsManager = Physics.Instance;
             DebugManager = DebugManager.Instance;
+            LightingManager = Lighting.Instance;
 
             sceneManager = new SceneManager();
             ObjectPlacer.SceneManager = sceneManager;
             RenderControl.SetupGlControl(glControl);
             inputManager.Setup(glControl, form);
+            LightingManager.Setup();
 
             preciseTimer = new Stopwatch();
             Timer renderTimer = new Timer();

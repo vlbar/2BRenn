@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using TwoBRenn.Engine.Common.Managers;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
@@ -72,6 +73,7 @@ namespace TwoBRenn.Engine.Components.Render
             Shader.ActiveProgram();
             Shader.SetMatrix4(InstanceShader.ViewUniform, Camera.GetViewMatrix());
             Shader.SetMatrix4(InstanceShader.ProjectionUniform, Camera.GetProjectionMatrix());
+            Lighting.FillShaderProgram(Shader);
 
             Texture?.Use();
             vertexArray.DrawInstanced(Mesh.Triangles.Length, InstanceTransforms.Count);
