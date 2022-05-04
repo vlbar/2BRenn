@@ -6,12 +6,8 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
     class InstanceShader : BaseShaderProgram
     {
-        public const string VertexPositionAttribute = "aVertexPos";
-        public const string TextureCoordinatesAttribute = "aTexCoords";
         public static readonly string[] ModelMatrixAttribute = { "aModelMatrix0", "aModelMatrix1", "aModelMatrix2", "aModelMatrix3" };
 
-        public const string ViewUniform = "view";
-        public const string ProjectionUniform = "projection";
         public const string BaseColorUniform = "baseColor";
         public const string OffsetUniform = "offset";
         public const string TilingUniform = "tiling";

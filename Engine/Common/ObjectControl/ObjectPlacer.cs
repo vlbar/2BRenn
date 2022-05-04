@@ -26,8 +26,8 @@ namespace TwoBRenn.Engine.Common.ObjectControl
                 ObjectToPlace = ObjectsCreators[index]();
                 ShaderAttribute_Vector4 baseColorAttribute =
                     (ShaderAttribute_Vector4)ObjectToPlace.GetComponent<MeshRenderer>().GetShaderAttributes()[
-                        SimpleShader.BASE_COLOR];
-                ObjectToPlace.GetComponent<MeshRenderer>().SetShaderAttribute(SimpleShader.BASE_COLOR,
+                        SimpleShader.BaseColorUniform];
+                ObjectToPlace.GetComponent<MeshRenderer>().SetShaderAttribute(SimpleShader.BaseColorUniform,
                     ShaderAttribute.Value(baseColorAttribute.Vector.X, baseColorAttribute.Vector.Y,
                         baseColorAttribute.Vector.Z, 0.6f));
                 ObjectToPlace.Transform.SetPosition(Vector3.UnitY * -5.0f);
@@ -44,7 +44,7 @@ namespace TwoBRenn.Engine.Common.ObjectControl
                 {
                     ShaderAttribute_Vector4 baseColorAttribute =
                         (ShaderAttribute_Vector4)ObjectToPlace.GetComponent<MeshRenderer>().GetShaderAttributes()[
-                            SimpleShader.BASE_COLOR];
+                            SimpleShader.BaseColorUniform];
                     baseColorAttribute.Vector.W = 1f;
 
                     ObjectToPlace = null;

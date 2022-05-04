@@ -2,7 +2,7 @@
 
 namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
-    class ShaderDefinition
+    struct ShaderDefinition
     {
         public ShaderType Type { get; set; }
         public string Path { get; set; }

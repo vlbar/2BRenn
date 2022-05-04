@@ -33,7 +33,7 @@ namespace TwoBRenn.Engine.Components.Common
         {
             objectPicker = RennEngine.Instance.ObjectPicker;
             meshRenderer = rennObject.GetComponent<MeshRenderer>();
-            defaultColor = meshRenderer.GetVector4Attribute(SimpleShader.BASE_COLOR);
+            defaultColor = meshRenderer.GetVector4Attribute(SimpleShader.BaseColorUniform);
             blinkAnimation = BlinkDuration;
         }
 
@@ -47,7 +47,7 @@ namespace TwoBRenn.Engine.Components.Common
             {
                 isSelected = false;
                 blinkAnimation = BlinkDuration;
-                meshRenderer.SetShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(defaultColor));
+                meshRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(defaultColor));
             }
 
             if (isSelected)
@@ -61,13 +61,13 @@ namespace TwoBRenn.Engine.Components.Common
                     float y = defaultColor.Y / 2 + defaultColor.Y / 2 * color;
                     float z = defaultColor.Z / 2 + defaultColor.Z / 2 * color;
 
-                    meshRenderer.SetShaderAttribute(SimpleShader.BASE_COLOR,
+                    meshRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform,
                         ShaderAttribute.Value(x, y, z, 1f));
                 }
                 else
                 {
                     float value = 0.5f + color / 2;
-                    meshRenderer.SetShaderAttribute(SimpleShader.BASE_COLOR,
+                    meshRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform,
                         ShaderAttribute.Value(value, value, value, 1f));
                 }
             }

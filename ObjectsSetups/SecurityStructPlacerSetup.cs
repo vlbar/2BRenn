@@ -19,7 +19,7 @@ namespace TwoBRenn.ObjectsSetups
 
         public SecurityStructPlacerSetup()
         {
-            OrangePlasticShader.SetDefaultShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(Color.Coral));
+            OrangePlasticShader.SetDefaultShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(Color.Coral));
         }
 
         public List<Func<RennObject>> GetObjectCreators()

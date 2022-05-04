@@ -26,9 +26,9 @@ namespace TwoBRenn.ObjectsSetups
 
         public TestObjectsSetup()
         {
-            groundShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(2, 2));
-            roadShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 30));
-            curbShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 60));
+            groundShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(2, 2));
+            roadShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(1, 30));
+            curbShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(1, 60));
         }
 
         public HashSet<RennObject> GetObjects()

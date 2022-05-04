@@ -64,7 +64,7 @@ namespace TwoBRenn.Engine.Render.Textures
 
             // shader configuration
             shaderProgram.ActiveProgram();
-            shaderProgram.SetInt(SkyboxShader.SKYBOX, 0);
+            shaderProgram.SetInt(SkyboxShader.SkyboxUniform, 0);
             shaderProgram.DeactiveProgram();
         }
 
@@ -121,8 +121,8 @@ namespace TwoBRenn.Engine.Render.Textures
         public void Use()
         {
             shaderProgram.ActiveProgram();
-            shaderProgram.SetMatrix4(SkyboxShader.ViewAttribute, Camera.Camera.GetViewMatrix().ClearTranslation());
-            shaderProgram.SetMatrix4(SkyboxShader.ProjectionAttribute, Camera.Camera.GetProjectionMatrix());
+            shaderProgram.SetMatrix4(BaseShaderProgram.ViewUniform, Camera.Camera.GetViewMatrix().ClearTranslation());
+            shaderProgram.SetMatrix4(BaseShaderProgram.ProjectionUniform, Camera.Camera.GetProjectionMatrix());
 
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.TextureCubeMap, cubemap);

@@ -6,9 +6,9 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
     class SimpleShader : BaseShaderProgram
     {
-        public static string BASE_COLOR = "baseColor";
-        public static string OFFSET = "offset";
-        public static string TILING = "tiling";
+        public static string BaseColorUniform = "baseColor";
+        public static string OffsetUniform = "offset";
+        public static string TilingUniform = "tiling";
 
         public SimpleShader() 
             : base(new List<ShaderDefinition>() { 
@@ -16,8 +16,8 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
                 new ShaderDefinition(ShaderType.FragmentShader, @"Engine/Render/Shaders/baseFragmentShader.frag")
             })
         {
-            SetDefaultShaderAttribute(BASE_COLOR, ShaderAttribute.Value(Vector4.One));
-            SetDefaultShaderAttribute(TILING, ShaderAttribute.Value(1f, 1f));
+            SetDefaultShaderAttribute(BaseColorUniform, ShaderAttribute.Value(Vector4.One));
+            SetDefaultShaderAttribute(TilingUniform, ShaderAttribute.Value(1f, 1f));
         }
     }
 }

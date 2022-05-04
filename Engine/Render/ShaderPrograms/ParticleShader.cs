@@ -6,7 +6,6 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
     class ParticleShader : BaseShaderProgram
     {
-        public const string VertexPositionAttribute = "aVertexPos";
         public const string RotationSizeAttribute = "aRotationSize";
         public const string OffsetAttribute = "aOffset";
         public const string BaseColorAttribute = "aBaseColor";

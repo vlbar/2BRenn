@@ -5,7 +5,7 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
     class SkyboxShader : BaseShaderProgram
     {
-        public static string SKYBOX = "skybox";
+        public static string SkyboxUniform = "skybox";
 
         public SkyboxShader()
             : base(new List<ShaderDefinition>() {

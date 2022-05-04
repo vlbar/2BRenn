@@ -8,19 +8,21 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
     public class DirectionalLightStruct
     {
-        public string ColorAttribute = "directionalLight.color";
-        public string IntensityAttribute = "directionalLight.intensity";
+        public string ColorUniform = "directionalLight.color";
+        public string IntensityUniform = "directionalLight.intensity";
     }
 
     class BaseShaderProgram
     {
-        public static string ModelAttribute = "model";
-        public static string ViewAttribute = "view";
-        public static string ProjectionAttribute = "projection";
-        public static DirectionalLightStruct DirectionalLight = new DirectionalLightStruct();
-         
+        public static string VertexPositionAttribute = "aVertexPos";
+        public static string TextureCoordinatesAttribute = "aTexCoords";
+        public static string ModelUniform = "model";
+        public static string ViewUniform = "view";
+        public static string ProjectionUniform = "projection";
+        public static DirectionalLightStruct DirectionalLightUniform = new DirectionalLightStruct();
+
         private readonly int programId = 0;
-        private List<int> shaders = new List<int>();
+        private readonly List<int> shaders = new List<int>();
 
         public Dictionary<string, ShaderAttribute> DefaultAttributes = new Dictionary<string, ShaderAttribute>();
 

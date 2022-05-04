@@ -49,8 +49,8 @@ namespace TwoBRenn.Engine.Components.Render
             vertexBuffer = new BufferObject(BufferTarget.ArrayBuffer);
             elementBuffer = new BufferObject(BufferTarget.ElementArrayBuffer);
 
-            int positionLocation = shaderProgram.GetAttributeLocation("aVertexPos");
-            int texCoordsLocation = shaderProgram.GetAttributeLocation("aTexCoords");
+            int positionLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.VertexPositionAttribute);
+            int texCoordsLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.TextureCoordinatesAttribute);
 
             vertexArray.Bind();
 
@@ -110,9 +110,9 @@ namespace TwoBRenn.Engine.Components.Render
         {
             if (Mesh?.Vertices == null) return;
             shaderProgram.ActiveProgram(attributes);
-            shaderProgram.SetMatrix4(BaseShaderProgram.ModelAttribute, rennObject.Transform.GetGlobalModelMatrix());
-            shaderProgram.SetMatrix4(BaseShaderProgram.ViewAttribute, Camera.GetViewMatrix());
-            shaderProgram.SetMatrix4(BaseShaderProgram.ProjectionAttribute, Camera.GetProjectionMatrix());
+            shaderProgram.SetMatrix4(BaseShaderProgram.ModelUniform, rennObject.Transform.GetGlobalModelMatrix());
+            shaderProgram.SetMatrix4(BaseShaderProgram.ViewUniform, Camera.GetViewMatrix());
+            shaderProgram.SetMatrix4(BaseShaderProgram.ProjectionUniform, Camera.GetProjectionMatrix());
             Lighting.FillShaderProgram(shaderProgram);
 
             texture?.Use();
