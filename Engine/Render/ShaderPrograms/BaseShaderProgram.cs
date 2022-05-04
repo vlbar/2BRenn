@@ -106,7 +106,7 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
 
         public void SetMatrix4(string name, Matrix4 data)
         {
-            GL.UniformMatrix4(GetUniformLocation(name), true, ref data);
+            GL.UniformMatrix4(GetUniformLocation(name), false, ref data);
         }
 
         public void SetVector3(string name, Vector3 vector)

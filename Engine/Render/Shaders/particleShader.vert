@@ -25,19 +25,19 @@ void main() {
 					      0.0, 0.0, 1.0, aOffset.z,
 					      0.0, 0.0, 0.0, 1.0);
 
-	mat4 modelView = translate * view;
+	mat4 model = translate * transpose(view);
   
-	modelView[0][0] = 1.0; 
-	modelView[0][1] = 0.0; 
-	modelView[0][2] = 0.0; 
+	model[0][0] = 1.0; 
+	model[0][1] = 0.0; 
+	model[0][2] = 0.0; 
 
-	modelView[1][0] = 0.0; 
-	modelView[1][1] = 1.0; 
-	modelView[1][2] = 0.0; 
+	model[1][0] = 0.0; 
+	model[1][1] = 1.0; 
+	model[1][2] = 0.0; 
 
-	modelView[2][0] = 0.0; 
-	modelView[2][1] = 0.0; 
-	modelView[2][2] = 1.0;
+	model[2][0] = 0.0; 
+	model[2][1] = 0.0; 
+	model[2][2] = 1.0;
 
-	gl_Position = vec4(vec3(aVertexPos.xy, 0.0) * aRotationSize.y, 1.0) * rotationZ * modelView * projection;
+	gl_Position = vec4(vec3(aVertexPos.xy, 0.0) * aRotationSize.y, 1.0) * rotationZ * model * transpose(projection);
 }

@@ -51,10 +51,10 @@ namespace TwoBRenn.Engine.Components.Render
             for (int i = 0; i < InstanceTransforms.Count; i++)
             {
                 Matrix4 modelMatrix = InstanceTransforms[i].GetGlobalModelMatrix();
-                transformList.AddRange(Vector4ToArray(modelMatrix.Column0));
-                transformList.AddRange(Vector4ToArray(modelMatrix.Column1));
-                transformList.AddRange(Vector4ToArray(modelMatrix.Column2));
-                transformList.AddRange(Vector4ToArray(modelMatrix.Column3));
+                transformList.AddRange(Vector4ToArray(modelMatrix.Row0));
+                transformList.AddRange(Vector4ToArray(modelMatrix.Row1));
+                transformList.AddRange(Vector4ToArray(modelMatrix.Row2));
+                transformList.AddRange(Vector4ToArray(modelMatrix.Row3));
             }
             transformsArray = transformList.ToArray();
 
