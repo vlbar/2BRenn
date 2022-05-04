@@ -6,81 +6,28 @@ namespace TwoBRenn.Engine.Render.Utils
     {
         private float[] vertices;
         private float[] uvs;
-        private float[] colors;
         private uint[] triangles;
+
+        private Vector3[] verticesVectors;
+        private Vector2[] uvsVectors;
 
         public Vector3[] Vertices
         {
-            get
-            {
-                if (vertices == null) return null;
-                Vector3[] vectoredVertices = new Vector3[vertices.Length / 3];
-                for (int i = 0; i < vertices.Length / 3; i++)
-                {
-                    vectoredVertices[i] = new Vector3(vertices[i * 3 + 0], vertices[i * 3 + 1], vertices[i * 3 + 2]);
-                }
-
-                return vectoredVertices;
-            }
+            get => GetVectoredDataOrDecompose(vertices, ref verticesVectors);
             set
             {
-                vertices = new float[value.Length * 3];
-                for (int i = 0; i < value.Length; i++)
-                {
-                    vertices[i * 3 + 0] = value[i].X;
-                    vertices[i * 3 + 1] = value[i].Y;
-                    vertices[i * 3 + 2] = value[i].Z;
-                }
+                verticesVectors = value;
+                vertices = DecomposeVectors(value);
             }
         }
-
+        
         public Vector2[] UVs
         {
-            get
-            {
-                if (uvs == null) return null;
-                Vector2[] vectoredUVs = new Vector2[uvs.Length / 2];
-                for (var i = 0; i < uvs.Length / 2; i++)
-                {
-                    vectoredUVs[i] = new Vector2(uvs[i * 2 + 0], uvs[i * 2 + 1]);
-                }
-
-                return vectoredUVs;
-            }
+            get => GetVectoredDataOrDecompose(uvs, ref uvsVectors);
             set
             {
-                uvs = new float[value.Length * 2];
-                for (var i = 0; i < value.Length; i++)
-                {
-                    uvs[i * 2 + 0] = value[i].X;
-                    uvs[i * 2 + 1] = value[i].Y;
-                }
-            }
-        }
-
-        public Vector4[] Colors
-        {
-            get
-            {
-                if (colors == null) return null;
-                Vector4[] vectoredColors = new Vector4[colors.Length / 4];
-                for (int i = 0; i < vertices.Length / 4; i++)
-                {
-                    vectoredColors[i] = new Vector4(vertices[i * 4 + 0], vertices[i * 4 + 1], vertices[i * 4 + 2], vertices[i * 4 + 3]);
-                }
-
-                return vectoredColors;
-            }
-            set
-            {
-                colors = new float[value.Length * 4];
-                for (var i = 0; i < value.Length; i++)
-                {
-                    colors[i * 4 + 0] = value[i].X;
-                    colors[i * 4 + 1] = value[i].Y;
-                    colors[i * 4 + 2] = value[i].Z;
-                    colors[i * 4 + 3] = value[i].W;
-                }
+                uvsVectors = value;
+                uvs = DecomposeVectors(value);
             }
         }
 
@@ -92,8 +39,108 @@ namespace TwoBRenn.Engine.Render.Utils
 
         public float[] VerticesArray => vertices;
         public float[] UVsArray => uvs;
-        public float[] ColorsArray => colors;
+        
+        public float[] CalcNormals()
+        {
+            Vector3[] verticesPos = Vertices;
+            Vector3[] calculatedNormals = new Vector3[verticesPos.Length];
 
-        public int DataArraySize => ((vertices?.Length ?? 0) + (uvs?.Length ?? 0) + (colors?.Length ?? 0)) * sizeof(float);
+            for (int i = 0; i < triangles.Length; i += 3)
+            {
+                uint index0 = triangles[i + 0];
+                uint index1 = triangles[i + 1];
+                uint index2 = triangles[i + 2];
+
+                Vector3 vector1 = verticesPos[index1] - verticesPos[index0];
+                Vector3 vector2 = verticesPos[index2] - verticesPos[index0];
+                Vector3 normal = Vector3.Cross(vector1, vector2);
+                normal.Normalize();
+
+                calculatedNormals[index0] += normal;
+                calculatedNormals[index1] += normal;
+                calculatedNormals[index2] += normal;
+            }
+
+            for (int i = 0; i < verticesPos.Length; i++)
+            {
+                calculatedNormals[i] = -calculatedNormals[i].Normalized();
+            }
+
+            return DecomposeVectors(calculatedNormals);
+        }
+
+        public static int GetMeshDataSize(float[] values, int location)
+        {
+            if (location == -1) return 0;
+            return values.Length * sizeof(float);
+        }
+
+
+        // == PART OF VECTORS CRINGE ==
+        // data getters
+        private static Vector3[] GetVectoredDataOrDecompose(float[] values, ref Vector3[] vectors)
+        {
+            if (values == null) return null;
+            if (vectors != null) return vectors;
+            vectors = GenerateVectors3(values);
+            return vectors;
+        }
+
+        private static Vector2[] GetVectoredDataOrDecompose(float[] values, ref Vector2[] vectors)
+        {
+            if (values == null) return null;
+            if (vectors != null) return vectors;
+            vectors = GenerateVectors2(values);
+            return vectors;
+        }
+
+        // decompose
+        private static float[] DecomposeVectors(Vector2[] vectors)
+        {
+            float[] floatArray = new float[vectors.Length * 2];
+            for (int i = 0; i < vectors.Length; i++)
+            {
+                floatArray[i * 2 + 0] = vectors[i].X;
+                floatArray[i * 2 + 1] = vectors[i].Y;
+            }
+
+            return floatArray;
+        }
+
+        private static float[] DecomposeVectors(Vector3[] vectors)
+        {
+            float[] floatArray = new float[vectors.Length * 3];
+            for (int i = 0; i < vectors.Length; i++)
+            {
+                floatArray[i * 3 + 0] = vectors[i].X;
+                floatArray[i * 3 + 1] = vectors[i].Y;
+                floatArray[i * 3 + 2] = vectors[i].Z;
+            }
+
+            return floatArray;
+        }
+
+        // generate vector
+        private static Vector3[] GenerateVectors3(float[] values)
+        {
+            Vector3[] vectors = new Vector3[values.Length / 3];
+            for (int i = 0; i < values.Length / 3; i++)
+            {
+                vectors[i] = new Vector3(values[i * 3 + 0], values[i * 3 + 1], values[i * 3 + 2]);
+            }
+
+            return vectors;
+        }
+
+        private static Vector2[] GenerateVectors2(float[] values)
+        {
+            Vector2[] vectors = new Vector2[values.Length / 2];
+            for (int i = 0; i < values.Length / 2; i++)
+            {
+                vectors[i] = new Vector2(values[i * 2 + 0], values[i * 2 + 1]);
+            }
+
+            return vectors;
+        }
     }
 }

@@ -54,7 +54,9 @@ namespace TwoBRenn.Engine.Components.Render
 
             vertexArray.Bind();
 
-            vertexBuffer.InitializeData(Mesh.DataArraySize);
+            vertexBuffer.InitializeData(
+                Mesh.GetMeshDataSize(Mesh.VerticesArray, positionLocation) +
+                Mesh.GetMeshDataSize(Mesh.UVsArray, texCoordsLocation));
             SetData(Mesh.VerticesArray, 3, positionLocation);
             SetData(Mesh.UVsArray, 2, texCoordsLocation);
 
@@ -127,7 +129,7 @@ namespace TwoBRenn.Engine.Components.Render
 
         private void SetData<T>(T[] data, int size, int location) where T : struct
         {
-            if (data == null || data.Length == 0) return;
+            if (data == null || data.Length == 0 || location == -1) return;
             int length = data.Length * Marshal.SizeOf(data[0]);
             vertexBuffer.SetSubData(data, subDataOffset);
             vertexArray.SetDataPointer(location, size, 0, subDataOffset);

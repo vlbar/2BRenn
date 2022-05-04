@@ -37,7 +37,9 @@ namespace TwoBRenn.Engine.Components.Render
 
             vertexArray.Bind();
 
-            vertexBuffer.InitializeData(Mesh.DataArraySize);
+            vertexBuffer.InitializeData(
+                Mesh.GetMeshDataSize(Mesh.VerticesArray, positionLocation) +
+                Mesh.GetMeshDataSize(Mesh.UVsArray, texCoordsLocation));
             SetData(Mesh.VerticesArray, 3, positionLocation);
             vertexArray.SetDivisor(positionLocation, 0);
             SetData(Mesh.UVsArray, 2, texCoordsLocation);
