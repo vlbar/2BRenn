@@ -18,27 +18,16 @@ namespace TwoBRenn.Engine.Components.Physic
         private Vector3 origin;
         private Vector3 halfSize;
 
+        // circle
+        private float radius;
+
         public bool IsDynamic { get; set; }
         public bool IsTrigger { get; set; }
         public Action<IntersectionResult> OnCollisionEnter { get; set; }
 
         public override void OnStart()
         {
-            if (MinBound == Vector3.Zero || MaxBound == Vector3.Zero)
-            {
-                meshRenderer = rennObject.GetComponent<MeshRenderer>();
-                if (meshRenderer != null && meshRenderer.Mesh.VerticesArray.Length > 0)
-                {
-                    GetBoundsOfMesh(meshRenderer.Mesh);
-                }
-                else
-                {
-                    MinBound = -Vector3.One;
-                    MaxBound = Vector3.One;
-                }
-            }
-
-            ComputeObb();
+            ComputeCollisionUtils();
             Physics.AddCollider(this);
         }
 
@@ -82,7 +71,7 @@ namespace TwoBRenn.Engine.Components.Physic
             normal = Vector3.Zero;
             if (collider is BoxCollider boxCollider)
             {
-                if (IntersectionWithBox(boxCollider, out var normalSource))
+                if (IntersectBoxAsCircle(boxCollider) && IntersectionWithBox(boxCollider, out var normalSource))
                 {
                     normal = normalSource;
                     return true;
@@ -239,16 +228,10 @@ namespace TwoBRenn.Engine.Components.Physic
 
         private bool IntersectBoxAsCircle(BoxCollider collider)
         {
-            Vector3[] modeledBoundsA = collider.GetModeledBounds();
-            Vector3[] modeledBoundsB = GetModeledBounds();
-            Vector2 centerA = (modeledBoundsA[0].Xz + modeledBoundsA[1].Xz) * 0.5f;
-            Vector2 centerB = (modeledBoundsB[0].Xz + modeledBoundsB[1].Xz) * 0.5f;
+            Vector2 centerA = GetGlobalCenter().Xz;
+            Vector2 centerB = collider.GetGlobalCenter().Xz;
             float squaredDistance = Vector2.DistanceSquared(centerA, centerB);
-            float radiusA = Math.Max((modeledBoundsA[0].X - modeledBoundsA[1].X) * 0.75f,
-                (modeledBoundsA[0].Y - modeledBoundsA[1].Y) * 0.75f);
-            float radiusB = Math.Max((modeledBoundsB[0].X - modeledBoundsB[1].X) * 0.75f,
-                (modeledBoundsB[0].Y - modeledBoundsB[1].Y) * 0.75f);
-            float squaredRadius = (radiusA + radiusB) * (radiusA + radiusB);
+            float squaredRadius = (radius + collider.radius) * (radius + collider.radius);
             return squaredDistance <= squaredRadius;
         }
 
@@ -257,20 +240,29 @@ namespace TwoBRenn.Engine.Components.Physic
             return rennObject;
         }
 
-        public Vector3[] GetModeledBounds()
+        private void ComputeCollisionUtils()
         {
-            Vector3 minBoundModeled = (new Vector4(MinBound, 1) * rennObject.Transform.GetGlobalModelMatrix()).Xyz;
-            Vector3 maxBoundModeled = (new Vector4(MaxBound, 1) * rennObject.Transform.GetGlobalModelMatrix()).Xyz;
-            return new[] { minBoundModeled, maxBoundModeled };
-        }
+            if (MinBound == Vector3.Zero || MaxBound == Vector3.Zero)
+            {
+                meshRenderer = rennObject.GetComponent<MeshRenderer>();
+                if (meshRenderer != null && meshRenderer.Mesh.VerticesArray.Length > 0)
+                {
+                    GetBoundsOfMesh(meshRenderer.Mesh);
+                }
+                else
+                {
+                    MinBound = -Vector3.One;
+                    MaxBound = Vector3.One;
+                }
+            }
 
-        private void ComputeObb()
-        {
             Vector3 scale = GetOwnerObject().Transform.GetGlobalModelMatrix().ExtractScale();
             halfSize = new Vector3(Math.Abs(MinBound.X - MaxBound.X) * scale.X, Math.Abs(MinBound.Y - MaxBound.Y) * scale.Y,
                 Math.Abs(MinBound.Z - MaxBound.Z) * scale.Z) * 0.5f;
             origin = new Vector3((MinBound.X + MaxBound.X) * scale.X, (MinBound.Y + MaxBound.Y) * scale.Y,
                 (MinBound.Z + MaxBound.Z) * scale.Z) * 0.5f;
+
+            radius = Math.Max(halfSize.X, Math.Max(halfSize.Y, halfSize.Z)) * 1.5f;
         }
 
         private Vector3 GetGlobalCenter()
