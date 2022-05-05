@@ -18,13 +18,7 @@ namespace TwoBRenn.Engine.Components.Render
         private Texture texture;
         private Dictionary<string, ShaderAttribute> attributes = new Dictionary<string, ShaderAttribute>();
         private bool isDetachedAttributes;
-
-        private VertexArrayObject vertexArray = new VertexArrayObject();
-        private BufferObject vertexBuffer = new BufferObject(BufferTarget.ArrayBuffer);
-        private BufferObject elementBuffer = new BufferObject(BufferTarget.ElementArrayBuffer);
-
-        private int subDataOffset;
-
+        
         public void SetShaderProgram(BaseShaderProgram shaderProgram)
         {
             attributes = shaderProgram.GetDefaultShaderAttributes();
@@ -39,33 +33,6 @@ namespace TwoBRenn.Engine.Components.Render
         public void SetTriangleMesh(Mesh mesh)
         {
             Mesh = mesh;
-        }
-
-        private void BindVertex()
-        {
-            if (Mesh?.Vertices == null) return;
-
-            vertexArray = new VertexArrayObject();
-            vertexBuffer = new BufferObject(BufferTarget.ArrayBuffer);
-            elementBuffer = new BufferObject(BufferTarget.ElementArrayBuffer);
-
-            int positionLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.VertexPositionAttribute);
-            int texCoordsLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.TextureCoordinatesAttribute);
-            int normalLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.VertexNormalAttribute);
-
-            vertexArray.Bind();
-
-            vertexBuffer.InitializeData(
-                Mesh.GetMeshDataSize(Mesh.VerticesArray, positionLocation) +
-                Mesh.GetMeshDataSize(Mesh.UVsArray, texCoordsLocation) +
-                Mesh.GetMeshDataSize(Mesh.NormalsArray, normalLocation));
-            SetData(Mesh.VerticesArray, 3, positionLocation);
-            SetData(Mesh.UVsArray, 2, texCoordsLocation);
-            SetData(Mesh.NormalsArray, 3, normalLocation);
-
-            elementBuffer.SetData(Mesh.Triangles);
-
-            vertexArray.Unbind();
         }
 
         public void SetShaderAttribute(string name, ShaderAttribute value)
@@ -106,7 +73,7 @@ namespace TwoBRenn.Engine.Components.Render
 
         public override void OnStart()
         {
-            if (Mesh != null && shaderProgram != null) BindVertex();
+            if (Mesh != null && shaderProgram != null) Mesh.InitMeshData(shaderProgram);
         }
 
         public override void OnUpdate()
@@ -119,24 +86,17 @@ namespace TwoBRenn.Engine.Components.Render
             Lighting.FillShaderProgram(shaderProgram);
 
             texture?.Use();
-            vertexArray.Draw(Mesh.Triangles.Length);
+            Mesh.Draw(shaderProgram);
+        }
 
-            shaderProgram.DeactiveProgram();
+        public override void OnLateUpdate()
+        {
+            shaderProgram.CancelStaticApplied();
         }
 
         public override void OnUnload()
         {
-            //vertexBuffer.Delete();
-            //elementBuffer.Delete();
-        }
 
-        private void SetData<T>(T[] data, int size, int location) where T : struct
-        {
-            if (data == null || data.Length == 0 || location == -1) return;
-            int length = data.Length * Marshal.SizeOf(data[0]);
-            vertexBuffer.SetSubData(data, subDataOffset);
-            vertexArray.SetDataPointer(location, size, 0, subDataOffset);
-            subDataOffset += length;
         }
     }
 }

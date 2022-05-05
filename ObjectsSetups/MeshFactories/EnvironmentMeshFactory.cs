@@ -11,9 +11,9 @@ namespace TwoBRenn.ObjectsSetups.MeshFactories
         Spruce,
     }
 
-    class EnvironmentMeshFactory
+    class EnvironmentMeshFactory : MeshFactory<EnvironmentMeshFactory, EnvironmentType>
     {
-        public static Mesh CreateMesh(EnvironmentType type)
+        protected override Mesh CreateMesh(EnvironmentType type)
         {
             switch (type)
             {

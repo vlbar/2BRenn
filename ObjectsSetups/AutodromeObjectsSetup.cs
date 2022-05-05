@@ -77,7 +77,7 @@ namespace TwoBRenn.ObjectsSetups
                 adFlag.AddComponent<BoxCollider>();
                 adFlag.AddComponent<FallingPillar>();
                 MeshRenderer barrierRenderer = adFlag.AddComponent<MeshRenderer>();
-                barrierRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdFlag));
+                barrierRenderer.SetTriangleMesh(EnvironmentMeshFactory.GetMesh(EnvironmentType.AdFlag));
                 barrierRenderer.SetShaderProgram(simpleShader);
                 barrierRenderer.SetTexture(sponsorsTexture);
                 objects.Add(adFlag);
@@ -92,7 +92,7 @@ namespace TwoBRenn.ObjectsSetups
                 adFlag.AddComponent<BoxCollider>();
                 adFlag.AddComponent<FallingPillar>();
                 MeshRenderer adFlagRenderer = adFlag.AddComponent<MeshRenderer>();
-                adFlagRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdFlag));
+                adFlagRenderer.SetTriangleMesh(EnvironmentMeshFactory.GetMesh(EnvironmentType.AdFlag));
                 adFlagRenderer.SetShaderProgram(simpleShader);
                 adFlagRenderer.SetTexture(sponsorsTexture);
                 objects.Add(adFlag);
@@ -107,7 +107,7 @@ namespace TwoBRenn.ObjectsSetups
                 adStand.AddComponent<Rigidbody>();
                 adStand.AddComponent<BoxCollider>();
                 MeshRenderer adStandRenderer = adStand.AddComponent<MeshRenderer>();
-                adStandRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdStand));
+                adStandRenderer.SetTriangleMesh(EnvironmentMeshFactory.GetMesh(EnvironmentType.AdStand));
                 adStandRenderer.SetShaderProgram(simpleShader);
                 adStandRenderer.SetTexture(sponsorsTexture);
                 objects.Add(adStand);
@@ -122,7 +122,7 @@ namespace TwoBRenn.ObjectsSetups
                 adStand.AddComponent<Rigidbody>();
                 adStand.AddComponent<BoxCollider>();
                 MeshRenderer adStandRenderer = adStand.AddComponent<MeshRenderer>();
-                adStandRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdStand));
+                adStandRenderer.SetTriangleMesh(EnvironmentMeshFactory.GetMesh(EnvironmentType.AdStand));
                 adStandRenderer.SetShaderProgram(simpleShader);
                 adStandRenderer.SetTexture(sponsorsTexture);
                 objects.Add(adStand);
@@ -135,7 +135,7 @@ namespace TwoBRenn.ObjectsSetups
                 adPlane.Transform.SetRotation(0f, 90f, 0f);
                 adPlane.Transform.SetScale(2f);
                 MeshRenderer adPlaneRenderer = adPlane.AddComponent<MeshRenderer>();
-                adPlaneRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdPlane));
+                adPlaneRenderer.SetTriangleMesh(EnvironmentMeshFactory.GetMesh(EnvironmentType.AdPlane));
                 adPlaneRenderer.SetShaderProgram(simpleShader);
                 adPlaneRenderer.SetTexture(sponsorsTexture);
                 objects.Add(adPlane);
@@ -152,7 +152,7 @@ namespace TwoBRenn.ObjectsSetups
                 fallingAd.BlockAxis = Vector3.UnitX;
                 fallingAd.FallenY = 0;
                 MeshRenderer adPlaneRenderer = adPlane.AddComponent<MeshRenderer>();
-                adPlaneRenderer.SetTriangleMesh(EnvironmentMeshFactory.CreateMesh(EnvironmentType.AdPlane));
+                adPlaneRenderer.SetTriangleMesh(EnvironmentMeshFactory.GetMesh(EnvironmentType.AdPlane));
                 adPlaneRenderer.SetShaderProgram(simpleShader);
                 adPlaneRenderer.SetTexture(sponsorsTexture);
                 objects.Add(adPlane);
@@ -193,6 +193,7 @@ namespace TwoBRenn.ObjectsSetups
             standTransform6.SetScale(9f, 8f, 9f);
             transforms.Add(standTransform6);
 
+            Mesh cube = PrimitiveMeshFactory.CreateCube();
             foreach (var transform in transforms)
             {
                 RennObject stand = new RennObject();
@@ -201,7 +202,7 @@ namespace TwoBRenn.ObjectsSetups
                 stand.Transform.SetScale(transform.scale);
                 stand.AddComponent<BoxCollider>();
                 MeshRenderer standRenderer = stand.AddComponent<MeshRenderer>();
-                standRenderer.SetTriangleMesh(PrimitiveMeshFactory.CreateCube());
+                standRenderer.SetTriangleMesh(cube);
                 standRenderer.SetShaderProgram(concreteShader);
                 standRenderer.SetTexture(plasticTexture);
                 objects.Add(stand);
@@ -218,7 +219,7 @@ namespace TwoBRenn.ObjectsSetups
                 barrier.Transform.SetScale(1f);
                 barrier.AddComponent<BoxCollider>();
                 MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
-                barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Barrier));
+                barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Barrier));
                 barrierRenderer.SetShaderProgram(simpleShader);
                 if (i % 2 == 1) barrierRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(0.937F, 0.341F, 0.250F, 1f));
                 barrierRenderer.SetTexture(plasticTexture);
@@ -234,7 +235,7 @@ namespace TwoBRenn.ObjectsSetups
                 delinator.AddComponent<BoxCollider>().IsTrigger = true;
                 delinator.AddComponent<FallingPillar>();
                 MeshRenderer delinatorRenderer = delinator.AddComponent<MeshRenderer>();
-                delinatorRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Delineator));
+                delinatorRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Delineator));
                 delinatorRenderer.SetShaderProgram(simpleShader);
                 delinatorRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(Color.LightGray));
                 delinatorRenderer.SetTexture(plasticTexture);
@@ -250,7 +251,7 @@ namespace TwoBRenn.ObjectsSetups
                 delinator.AddComponent<BoxCollider>().IsTrigger = true;
                 delinator.AddComponent<FallingPillar>();
                 MeshRenderer delinatorRenderer = delinator.AddComponent<MeshRenderer>();
-                delinatorRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Delineator));
+                delinatorRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Delineator));
                 delinatorRenderer.SetShaderProgram(simpleShader);
                 delinatorRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(Color.LightGray));
                 delinatorRenderer.SetTexture(plasticTexture);
@@ -280,19 +281,19 @@ namespace TwoBRenn.ObjectsSetups
             List<Transform> instanceTransforms = new List<Transform>();
 
             Random random = new Random();
-            Mesh pineMesh = EnvironmentMeshFactory.CreateMesh(EnvironmentType.Spruce);
+            Mesh pineMesh = EnvironmentMeshFactory.GetMesh(EnvironmentType.Spruce);
             for (int i = 0; i < forestMap.GetLength(0); i++)
             {
                 for (int j = 0; j < forestMap.GetLength(1); j++)
                 {
                     float value = forestMap[i, j];
-                    if (value < 0.5f)
+                    if (value < 0.04f)
                     {
                         RennObject tree = new RennObject();
                         tree.SetParent(forest);
                         tree.Transform.SetPosition(i + (float)random.NextDouble(), 0f, j + (float)random.NextDouble());
                         tree.Transform.SetRotation(0f, random.Next(180), 0f);
-                        float scale = (0.08f + (0.5f - value) * 0.2f) * (1 + random.Next(60) * 0.01f - 0.3f);
+                        float scale = (0.08f + (0.04f - value) * 0.2f) * (1 + random.Next(60) * 0.01f - 0.3f);
                         tree.Transform.SetScale(scale);
                         instanceTransforms.Add(tree.Transform);
                     }
@@ -344,10 +345,10 @@ namespace TwoBRenn.ObjectsSetups
             }
 
             roadPartsObjects[3].GetComponent<MeshRenderer>().SetTexture(gravelTexture);
-            roadPartsObjects[3].AddComponent<BoxCollider>();
+            roadPartsObjects[3].AddComponent<BoxCollider>().IsTrigger = true;
             roadPartsObjects[3].AddComponent<Selectable>();
             roadPartsObjects[6].GetComponent<MeshRenderer>().SetTexture(gravelTexture);
-            roadPartsObjects[6].AddComponent<BoxCollider>();
+            roadPartsObjects[6].AddComponent<BoxCollider>().IsTrigger = true;
             roadPartsObjects[6].AddComponent<Selectable>();
 
             RennObject curb = new RennObject();

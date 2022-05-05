@@ -15,9 +15,9 @@ namespace TwoBRenn.ObjectsSetups.MeshFactories
         Cylinder
     }
 
-    public class SecurityStructuresMeshFactory
+    class SecurityStructuresMeshFactory : MeshFactory<SecurityStructuresMeshFactory, StructureType>
     {
-        public static Mesh CreateStructure(StructureType type)
+        protected override Mesh CreateMesh(StructureType type)
         {
             switch (type)
             {

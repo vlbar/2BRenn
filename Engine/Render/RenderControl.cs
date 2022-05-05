@@ -14,6 +14,8 @@ namespace TwoBRenn.Engine.Render
 
         public Action OnSetup { get; set; }
 
+        public int CurrentShaderProgram = -1;
+
         public RenderControl()
         {
             camera = Camera.Camera.GetInstance();

@@ -39,7 +39,7 @@ namespace TwoBRenn.ObjectsSetups
             barrier.Transform.SetScale(1f);
             barrier.AddComponent<Selectable>();
             MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
-            barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Barrier));
+            barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Barrier));
             barrierRenderer.SetShaderProgram(SimpleShader);
             barrierRenderer.SetTexture(PlasticTexture);
             return barrier;
@@ -51,7 +51,7 @@ namespace TwoBRenn.ObjectsSetups
             barrier.Transform.SetRotation(0f, 0f, 0f);
             barrier.Transform.SetScale(1f);
             MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
-            barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Buffer));
+            barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Buffer));
             barrierRenderer.SetShaderProgram(OrangePlasticShader);
             barrierRenderer.SetTexture(PlasticTexture);
             return barrier;

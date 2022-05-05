@@ -6,7 +6,7 @@ using TwoBRenn.Engine.Render.Utils;
 
 namespace TwoBRenn.Engine.Common.Path
 {
-    public class RoadCreatorSettings
+    class RoadCreatorSettings
     {
         public bool IsClosed = true;
 
@@ -23,14 +23,14 @@ namespace TwoBRenn.Engine.Common.Path
         public float MinCurbWidth = 0.02f;
     }
 
-    public struct RoadPart
+    struct RoadPart
     {
         public Mesh Road;
         public Mesh Curb;
         public Mesh ExitZone;
     }
 
-    public static class RoadCreator
+    static class RoadCreator
     {
         private class AdditionalZone
         {

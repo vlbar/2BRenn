@@ -121,6 +121,7 @@
     <Compile Include="ObjectsSetups\AutodromeObjectsSetup.cs" />
     <Compile Include="ObjectsSetups\MeshFactories\CarsMeshFactory.cs" />
     <Compile Include="ObjectsSetups\MeshFactories\EnvironmentMeshFactory.cs" />
+    <Compile Include="ObjectsSetups\MeshFactories\MeshFactory.cs" />
     <Compile Include="ObjectsSetups\MeshFactories\SecurityStructuresMeshFactory.cs" />
     <Compile Include="ObjectsSetups\MeshFactories\PrimitiveMeshFactory.cs" />
     <Compile Include="ObjectsSetups\SecurityStructPlacerSetup.cs" />

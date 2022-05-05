@@ -213,8 +213,6 @@ namespace TwoBRenn.Engine.Components.Common
             MagnitudeSpeed = Vector3.Distance(currentPosition, lastPosition) / Math.Max(Time.DeltaTime, 0.001f);
             lastPosition = rennObject.Transform.GetGlobalModelMatrix().ExtractTranslation();
             MagnitudeSpeed *= CurrentSpeed < 0 ? -1 : 1;
-            DebugManager.Debug(1, MagnitudeSpeed.ToString());
-            DebugManager.Debug(2, CurrentSpeed.ToString());
         }
 
 

@@ -17,6 +17,15 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
                 new ShaderDefinition(ShaderType.FragmentShader, @"Engine/Render/Shaders/particleShader.frag")
             })
         {
+            StaticUniforms = new[]
+            {
+                ProjectionUniform,
+                DirectionalLightUniform.ColorUniform,
+                DirectionalLightUniform.IntensityUniform,
+                DirectionalLightUniform.DirectionUniform,
+                DirectionalLightUniform.DiffuseIntensityUniform
+            };
+
             SetDefaultShaderAttribute(BaseColorAttribute, ShaderAttribute.Value(Vector4.One));
         }
     }

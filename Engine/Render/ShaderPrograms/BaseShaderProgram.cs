@@ -24,33 +24,38 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
         public static string ProjectionUniform = "projection";
         public static DirectionalLightStruct DirectionalLightUniform = new DirectionalLightStruct();
 
-        private readonly int programId = 0;
+        public readonly int ProgramId;
         private readonly List<int> shaders = new List<int>();
 
         public Dictionary<string, ShaderAttribute> DefaultAttributes = new Dictionary<string, ShaderAttribute>();
 
+        private readonly Dictionary<string, int> attributeLocations = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> uniformLocations = new Dictionary<string, int>();
+        protected string[] StaticUniforms;
+        private bool[] isStaticUniformApplied;
+
         public BaseShaderProgram(List<ShaderDefinition> shaderDefinitions)
         {
-            programId = GL.CreateProgram();
+            ProgramId = GL.CreateProgram();
 
             foreach (var shaderDef in shaderDefinitions)
             {
                 int shaderId = CreateShader(shaderDef.Type, shaderDef.Path);
                 shaders.Add(shaderId);
-                GL.AttachShader(programId, shaderId);
+                GL.AttachShader(ProgramId, shaderId);
             }
 
-            GL.LinkProgram(programId);
-            GL.GetProgram(programId, GetProgramParameterName.LinkStatus, out int statusCode);
+            GL.LinkProgram(ProgramId);
+            GL.GetProgram(ProgramId, GetProgramParameterName.LinkStatus, out int statusCode);
             if (statusCode != (int)All.True)
             {
-                string infoLog = GL.GetProgramInfoLog(programId);
-                throw new Exception($"Shader program error in {programId}\n{infoLog}");
+                string infoLog = GL.GetProgramInfoLog(ProgramId);
+                throw new Exception($"Shader program error in {ProgramId}\n{infoLog}");
             }
 
             foreach (var shaderId in shaders)
             {
-                GL.DetachShader(programId, shaderId);
+                GL.DetachShader(ProgramId, shaderId);
                 GL.DeleteShader(shaderId);
             }
         }
@@ -63,22 +68,43 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
 
         public void ActiveProgram(Dictionary<string, ShaderAttribute> attributes)
         {
-            GL.UseProgram(programId);
+            if (RennEngine.Instance.RenderControl.CurrentShaderProgram != ProgramId)
+            {
+                GL.UseProgram(ProgramId);
+                RennEngine.Instance.RenderControl.CurrentShaderProgram = ProgramId;
+            }
+
             UniformAttributes(attributes);
         }
 
-        public void DeactiveProgram() => GL.UseProgram(0);
-        public void DeleteProgram() => GL.DeleteProgram(programId);
+        public void DeactiveProgram()
+        {
+            
+        }
+
+        public void DeleteProgram() => GL.DeleteProgram(ProgramId);
 
         // attributes
         public int GetAttributeLocation(string name)
         {
-            return GL.GetAttribLocation(programId, name);
+            if (attributeLocations.ContainsKey(name))
+            {
+                return attributeLocations[name];
+            }
+            int location = GL.GetAttribLocation(ProgramId, name);
+            attributeLocations.Add(name, location);
+            return location;
         }
 
         public int GetUniformLocation(string name)
         {
-            return GL.GetUniformLocation(programId, name);
+            if (uniformLocations.ContainsKey(name))
+            {
+                return uniformLocations[name];
+            }
+            int location = GL.GetUniformLocation(ProgramId, name);
+            uniformLocations.Add(name, location);
+            return location;
         }
 
         public Dictionary<string, ShaderAttribute> GetDefaultShaderAttributes()
@@ -104,32 +130,77 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
         {
             foreach (var attribute in attributes)
             {
-                int location = GL.GetUniformLocation(programId, attribute.Key);
+                int location = GetUniformLocation(attribute.Key);
                 attribute.Value.Uniform(location);
             }
         }
 
         public void SetMatrix4(string name, Matrix4 data)
         {
-            GL.UniformMatrix4(GetUniformLocation(name), false, ref data);
+            if (!IsStaticUniformSetted(name))
+            {
+                GL.UniformMatrix4(GetUniformLocation(name), false, ref data);
+            }
         }
 
         public void SetVector3(string name, Vector3 vector)
         {
-            GL.Uniform3(GetUniformLocation(name), vector);
+            if (!IsStaticUniformSetted(name))
+            {
+                GL.Uniform3(GetUniformLocation(name), vector);
+            }
         }
 
         public void SetInt(string name, int value)
         {
-            GL.Uniform1(GetUniformLocation(name), value);
+            if (!IsStaticUniformSetted(name))
+            {
+                GL.Uniform1(GetUniformLocation(name), value);
+            }
         }
 
         public void SetFloat(string name, float value)
         {
-            GL.Uniform1(GetUniformLocation(name), value);
+            if (!IsStaticUniformSetted(name))
+            {
+                GL.Uniform1(GetUniformLocation(name), value);
+            }
+        }
+
+        public void CancelStaticApplied()
+        {
+            for (int i = 0; i < isStaticUniformApplied.Length; i++)
+            {
+                isStaticUniformApplied[i] = false;
+            }
         }
 
         // utils
+        private bool IsStaticUniformSetted(string name)
+        {
+            if (StaticUniforms != null)
+            {
+                if (isStaticUniformApplied == null)
+                {
+                    isStaticUniformApplied = new bool[StaticUniforms.Length];
+                }
+
+                int index = Array.IndexOf(StaticUniforms, name);
+                if (index >= 0)
+                {
+                    if (!isStaticUniformApplied[index])
+                    {
+                        isStaticUniformApplied[index] = true;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         private int CreateShader(ShaderType shaderType, string path)
         {
             string shader = File.ReadAllText(path);

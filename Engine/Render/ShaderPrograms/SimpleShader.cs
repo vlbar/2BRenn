@@ -11,11 +11,20 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
         public static string TilingUniform = "tiling";
 
         public SimpleShader() 
-            : base(new List<ShaderDefinition>() { 
+            : base(new List<ShaderDefinition> { 
                 new ShaderDefinition(ShaderType.VertexShader, @"Engine/Render/Shaders/simpleShader.vert"),
                 new ShaderDefinition(ShaderType.FragmentShader, @"Engine/Render/Shaders/simpleShader.frag")
             })
         {
+            StaticUniforms = new[]
+            {
+                ProjectionUniform,
+                DirectionalLightUniform.ColorUniform,
+                DirectionalLightUniform.IntensityUniform,
+                DirectionalLightUniform.DirectionUniform,
+                DirectionalLightUniform.DiffuseIntensityUniform
+            };
+
             SetDefaultShaderAttribute(BaseColorUniform, ShaderAttribute.Value(Vector4.One));
             SetDefaultShaderAttribute(TilingUniform, ShaderAttribute.Value(1f, 1f));
         }

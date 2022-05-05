@@ -1,8 +1,30 @@
-﻿using OpenTK;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using OpenTK;
+using OpenTK.Graphics.OpenGL4;
+using TwoBRenn.Engine.Render.ShaderPrograms;
 
 namespace TwoBRenn.Engine.Render.Utils
 {
-    public class Mesh
+    struct MeshDataObject
+    {
+        public int ShaderProgramId;
+        public VertexArrayObject VertexArray;
+        public BufferObject VertexBuffer;
+        public BufferObject ElementBuffer;
+        public int SubDataOffset;
+
+        public MeshDataObject(int shaderProgramId)
+        {
+            ShaderProgramId = shaderProgramId;
+            VertexArray = new VertexArrayObject();
+            VertexBuffer = new BufferObject(BufferTarget.ArrayBuffer);
+            ElementBuffer = new BufferObject(BufferTarget.ElementArrayBuffer);
+            SubDataOffset = 0;
+        }
+    }
+
+    class Mesh
     {
         private float[] vertices;
         private float[] uvs;
@@ -12,6 +34,8 @@ namespace TwoBRenn.Engine.Render.Utils
         private Vector3[] verticesVectors;
         private Vector2[] uvsVectors;
         private Vector3[] normalsVectors;
+
+        private readonly List<MeshDataObject> meshDataObjects = new List<MeshDataObject>();
 
         public Vector3[] Vertices
         {
@@ -107,6 +131,50 @@ namespace TwoBRenn.Engine.Render.Utils
             return values.Length * sizeof(float);
         }
 
+
+        // GL arrays
+        public void InitMeshData(BaseShaderProgram shaderProgram)
+        {
+            if (Vertices == null) return;
+            MeshDataObject meshData = new MeshDataObject(shaderProgram.ProgramId);
+
+            int positionLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.VertexPositionAttribute);
+            int texCoordsLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.TextureCoordinatesAttribute);
+            int normalLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.VertexNormalAttribute);
+
+            meshData.VertexArray.Bind();
+
+            meshData.VertexBuffer.InitializeData(
+                Mesh.GetMeshDataSize(VerticesArray, positionLocation) +
+                Mesh.GetMeshDataSize(UVsArray, texCoordsLocation) +
+                Mesh.GetMeshDataSize(NormalsArray, normalLocation));
+            SetData(VerticesArray, 3, positionLocation, ref meshData);
+            SetData(UVsArray, 2, texCoordsLocation, ref meshData);
+            SetData(NormalsArray, 3, normalLocation, ref meshData);
+
+            meshData.ElementBuffer.SetData(Triangles);
+
+            meshData.VertexArray.Unbind();
+            meshDataObjects.Add(meshData);
+        }
+
+        private void SetData<T>(T[] data, int size, int location, ref MeshDataObject meshData) where T : struct
+        {
+            if (data == null || data.Length == 0 || location == -1) return;
+            int length = data.Length * Marshal.SizeOf(data[0]);
+            meshData.VertexBuffer.SetSubData(data, meshData.SubDataOffset);
+            meshData.VertexArray.SetDataPointer(location, size, 0, meshData.SubDataOffset);
+            meshData.SubDataOffset += length;
+        }
+
+        public void Draw(BaseShaderProgram shaderProgram)
+        {
+            int meshDataIndex = meshDataObjects.FindIndex(x => x.ShaderProgramId == shaderProgram.ProgramId);
+            if (meshDataIndex >= 0)
+            {
+                meshDataObjects[meshDataIndex].VertexArray.Draw(Triangles.Length);
+            }
+        }
 
         // == PART OF VECTORS CRINGE ==
         // data getters
