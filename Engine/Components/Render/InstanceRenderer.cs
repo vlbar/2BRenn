@@ -30,8 +30,9 @@ namespace TwoBRenn.Engine.Components.Render
         {
             if (CanRender()) return;
 
-            int positionLocation = Shader.GetAttributeLocation(InstanceShader.VertexPositionAttribute);
-            int texCoordsLocation = Shader.GetAttributeLocation(InstanceShader.TextureCoordinatesAttribute);
+            int positionLocation = Shader.GetAttributeLocation(BaseShaderProgram.VertexPositionAttribute);
+            int texCoordsLocation = Shader.GetAttributeLocation(BaseShaderProgram.TextureCoordinatesAttribute);
+            int normalLocation = Shader.GetAttributeLocation(BaseShaderProgram.VertexNormalAttribute);
 
             int[] modelMatrixLocation = GetAttributeLocations(Shader, InstanceShader.ModelMatrixAttribute);
 
@@ -39,11 +40,14 @@ namespace TwoBRenn.Engine.Components.Render
 
             vertexBuffer.InitializeData(
                 Mesh.GetMeshDataSize(Mesh.VerticesArray, positionLocation) +
-                Mesh.GetMeshDataSize(Mesh.UVsArray, texCoordsLocation));
+                Mesh.GetMeshDataSize(Mesh.UVsArray, texCoordsLocation) +
+                Mesh.GetMeshDataSize(Mesh.NormalsArray, normalLocation));
             SetData(Mesh.VerticesArray, 3, positionLocation);
             vertexArray.SetDivisor(positionLocation, 0);
             SetData(Mesh.UVsArray, 2, texCoordsLocation);
             vertexArray.SetDivisor(texCoordsLocation, 0);
+            SetData(Mesh.NormalsArray, 3, normalLocation);
+            vertexArray.SetDivisor(normalLocation, 0);
 
             elementBuffer.SetData(Mesh.Triangles);
 
@@ -73,8 +77,8 @@ namespace TwoBRenn.Engine.Components.Render
         {
             if (CanRender()) return;
             Shader.ActiveProgram();
-            Shader.SetMatrix4(InstanceShader.ViewUniform, Camera.GetViewMatrix());
-            Shader.SetMatrix4(InstanceShader.ProjectionUniform, Camera.GetProjectionMatrix());
+            Shader.SetMatrix4(BaseShaderProgram.ViewUniform, Camera.GetViewMatrix());
+            Shader.SetMatrix4(BaseShaderProgram.ProjectionUniform, Camera.GetProjectionMatrix());
             Lighting.FillShaderProgram(Shader);
 
             Texture?.Use();

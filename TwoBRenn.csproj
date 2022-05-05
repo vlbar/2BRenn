@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Engine\Common\Managers\DebugManager.cs" />
     <Compile Include="Engine\Common\Managers\Input.cs" />
+    <Compile Include="Engine\Common\Managers\Lighting.cs" />
     <Compile Include="Engine\Common\Managers\Physics.cs" />
     <Compile Include="Engine\Common\ObjectControl\ObjectPicker.cs" />
     <Compile Include="Engine\Common\ObjectControl\ObjectPlacer.cs" />
@@ -147,10 +148,10 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include=".gitignore" />
-    <None Include="Engine\Render\Shaders\baseFragmentShader.frag">
+    <None Include="Engine\Render\Shaders\simpleShader.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Engine\Render\Shaders\baseVertexShader.vert">
+    <None Include="Engine\Render\Shaders\simpleShader.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Engine\Render\Shaders\instanceShader.vert">

@@ -7,9 +7,11 @@ namespace TwoBRenn.Engine.Render.Utils
         private float[] vertices;
         private float[] uvs;
         private uint[] triangles;
+        private float[] normals;
 
         private Vector3[] verticesVectors;
         private Vector2[] uvsVectors;
+        private Vector3[] normalsVectors;
 
         public Vector3[] Vertices
         {
@@ -20,7 +22,7 @@ namespace TwoBRenn.Engine.Render.Utils
                 vertices = DecomposeVectors(value);
             }
         }
-        
+
         public Vector2[] UVs
         {
             get => GetVectoredDataOrDecompose(uvs, ref uvsVectors);
@@ -28,6 +30,24 @@ namespace TwoBRenn.Engine.Render.Utils
             {
                 uvsVectors = value;
                 uvs = DecomposeVectors(value);
+            }
+        }
+
+        public Vector3[] Normals
+        {
+            get
+            {
+                if (vertices == null && triangles == null) return null;
+                if (normals == null)
+                {
+                    normals = CalcNormals();
+                }
+                return GetVectoredDataOrDecompose(normals, ref normalsVectors);
+            }
+            set
+            {
+                normalsVectors = value;
+                normals = DecomposeVectors(value);
             }
         }
 
@@ -39,7 +59,19 @@ namespace TwoBRenn.Engine.Render.Utils
 
         public float[] VerticesArray => vertices;
         public float[] UVsArray => uvs;
-        
+
+        public float[] NormalsArray
+        {
+            get
+            {
+                if (vertices == null && triangles == null) return null;
+                if (normals != null) return normals;
+                float[] calculatedNormals = CalcNormals();
+                normals = calculatedNormals;
+                return calculatedNormals;
+            }
+        }
+
         public float[] CalcNormals()
         {
             Vector3[] verticesPos = Vertices;

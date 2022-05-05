@@ -51,14 +51,17 @@ namespace TwoBRenn.Engine.Components.Render
 
             int positionLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.VertexPositionAttribute);
             int texCoordsLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.TextureCoordinatesAttribute);
+            int normalLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.VertexNormalAttribute);
 
             vertexArray.Bind();
 
             vertexBuffer.InitializeData(
                 Mesh.GetMeshDataSize(Mesh.VerticesArray, positionLocation) +
-                Mesh.GetMeshDataSize(Mesh.UVsArray, texCoordsLocation));
+                Mesh.GetMeshDataSize(Mesh.UVsArray, texCoordsLocation) +
+                Mesh.GetMeshDataSize(Mesh.NormalsArray, normalLocation));
             SetData(Mesh.VerticesArray, 3, positionLocation);
             SetData(Mesh.UVsArray, 2, texCoordsLocation);
+            SetData(Mesh.NormalsArray, 3, normalLocation);
 
             elementBuffer.SetData(Mesh.Triangles);
 

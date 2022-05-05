@@ -10,12 +10,15 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
     {
         public string ColorUniform = "directionalLight.color";
         public string IntensityUniform = "directionalLight.intensity";
+        public string DirectionUniform = "directionalLight.direction";
+        public string DiffuseIntensityUniform = "directionalLight.diffuseIntensity";
     }
 
     class BaseShaderProgram
     {
         public static string VertexPositionAttribute = "aVertexPos";
         public static string TextureCoordinatesAttribute = "aTexCoords";
+        public static string VertexNormalAttribute = "aNormal";
         public static string ModelUniform = "model";
         public static string ViewUniform = "view";
         public static string ProjectionUniform = "projection";

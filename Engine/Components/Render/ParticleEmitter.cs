@@ -2,6 +2,7 @@
 using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using TwoBRenn.Engine.Common.Managers;
 using TwoBRenn.Engine.Common.ParticleSystem;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
@@ -105,6 +106,7 @@ namespace TwoBRenn.Engine.Components.Render
             ShaderProgram.ActiveProgram();
             ShaderProgram.SetMatrix4(BaseShaderProgram.ViewUniform, Camera.GetViewMatrix());
             ShaderProgram.SetMatrix4(BaseShaderProgram.ProjectionUniform, Camera.GetProjectionMatrix());
+            Lighting.FillShaderProgram(ShaderProgram);
 
             Texture?.Use();
 

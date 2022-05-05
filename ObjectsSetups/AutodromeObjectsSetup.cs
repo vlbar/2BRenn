@@ -43,11 +43,11 @@ namespace TwoBRenn.ObjectsSetups
 
         public AutodromeObjectsSetup()
         {
-            groundShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(50, 50));
-            roadShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 30));
-            curbShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 60));
-            treeShader.SetDefaultShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(5, 5));
-            concreteShader.SetDefaultShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(Color.DarkGray));
+            groundShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(50, 50));
+            roadShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(1, 30));
+            curbShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(1, 60));
+            treeShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(5, 5));
+            concreteShader.SetDefaultShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(Color.DarkGray));
         }
 
         public HashSet<RennObject> GetObjects()
@@ -220,7 +220,7 @@ namespace TwoBRenn.ObjectsSetups
                 MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
                 barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Barrier));
                 barrierRenderer.SetShaderProgram(simpleShader);
-                if (i % 2 == 1) barrierRenderer.SetShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(0.937F, 0.341F, 0.250F, 1f));
+                if (i % 2 == 1) barrierRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(0.937F, 0.341F, 0.250F, 1f));
                 barrierRenderer.SetTexture(plasticTexture);
                 objects.Add(barrier);
             }
@@ -236,7 +236,7 @@ namespace TwoBRenn.ObjectsSetups
                 MeshRenderer delinatorRenderer = delinator.AddComponent<MeshRenderer>();
                 delinatorRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Delineator));
                 delinatorRenderer.SetShaderProgram(simpleShader);
-                delinatorRenderer.SetShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(Color.LightGray));
+                delinatorRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(Color.LightGray));
                 delinatorRenderer.SetTexture(plasticTexture);
                 objects.Add(delinator);
             }
@@ -252,7 +252,7 @@ namespace TwoBRenn.ObjectsSetups
                 MeshRenderer delinatorRenderer = delinator.AddComponent<MeshRenderer>();
                 delinatorRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.CreateStructure(StructureType.Delineator));
                 delinatorRenderer.SetShaderProgram(simpleShader);
-                delinatorRenderer.SetShaderAttribute(SimpleShader.BASE_COLOR, ShaderAttribute.Value(Color.LightGray));
+                delinatorRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(Color.LightGray));
                 delinatorRenderer.SetTexture(plasticTexture);
                 objects.Add(delinator);
             }
@@ -372,7 +372,7 @@ namespace TwoBRenn.ObjectsSetups
             techRoad1.SetParent(road);
             MeshRenderer techRoadRenderer = techRoad1.AddComponent<MeshRenderer>();
             techRoadRenderer.SetShaderProgram(roadShader);
-            techRoadRenderer.SetShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 2));
+            techRoadRenderer.SetShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(1, 2));
             techRoadRenderer.SetTriangleMesh(techRoadPart1.Road);
             techRoadRenderer.SetTexture(gravelTexture);
 
@@ -385,7 +385,7 @@ namespace TwoBRenn.ObjectsSetups
             techRoad2.SetParent(road);
             MeshRenderer techRoadRenderer2 = techRoad2.AddComponent<MeshRenderer>();
             techRoadRenderer2.SetShaderProgram(roadShader);
-            techRoadRenderer2.SetShaderAttribute(SimpleShader.TILING, ShaderAttribute.Value(1, 2));
+            techRoadRenderer2.SetShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(1, 2));
             techRoadRenderer2.SetTriangleMesh(techRoadPart2.Road);
             techRoadRenderer2.SetTexture(gravelTexture);
         }

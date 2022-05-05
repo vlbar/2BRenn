@@ -16,7 +16,7 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
             : base(new List<ShaderDefinition>
             {
                 new ShaderDefinition(ShaderType.VertexShader, @"Engine/Render/Shaders/instanceShader.vert"),
-                new ShaderDefinition(ShaderType.FragmentShader, @"Engine/Render/Shaders/baseFragmentShader.frag")
+                new ShaderDefinition(ShaderType.FragmentShader, @"Engine/Render/Shaders/simpleShader.frag")
             })
         {
             SetDefaultShaderAttribute(BaseColorUniform, ShaderAttribute.Value(Vector4.One));
