@@ -32,13 +32,13 @@ namespace TwoBRenn
             
             engine.Setup(smoothGlControl, this);
             engine.RenderControl.Skybox = new Skybox(new string[] {
-                @"Assets\Textures\skybox\right.png",
-                @"Assets\Textures\skybox\left.png",
-                @"Assets\Textures\skybox\top.png",
-                @"Assets\Textures\skybox\bottom.png",
-                @"Assets\Textures\skybox\front.png",
-                @"Assets\Textures\skybox\back.png"
-            });
+                @"Assets\Textures\Skybox\right.jpg",
+                @"Assets\Textures\Skybox\left.jpg",
+                @"Assets\Textures\Skybox\top.jpg",
+                @"Assets\Textures\Skybox\bottom.jpg",
+                @"Assets\Textures\Skybox\front.jpg",
+                @"Assets\Textures\Skybox\back.jpg"
+            }, MathHelper.DegreesToRadians(-30));
 
             SecurityStructPlacerSetup securityStructPlacer = new SecurityStructPlacerSetup();
             engine.ObjectPlacer.ObjectsCreators = securityStructPlacer.GetObjectCreators();

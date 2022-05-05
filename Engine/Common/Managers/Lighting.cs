@@ -22,8 +22,8 @@ namespace TwoBRenn.Engine.Common.Managers
         public void Setup()
         {
             directionalLight.Color = Color.White;
-            directionalLight.Intensity = 0.6f;
-            directionalLight.Direction = new Vector3(-0.2f, -1.0f, -0.3f);
+            directionalLight.Intensity = 0.65f;
+            directionalLight.Direction = new Vector3(0.2f, -1.0f, -0.3f);
             directionalLight.DiffuseIntensity = 0.5f;
         }
 

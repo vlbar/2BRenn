@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 
@@ -11,6 +12,8 @@ namespace TwoBRenn.Engine.Render.Textures
         private int cubemap;
         private int vertexArray;
         private int vertexBuffer;
+
+        private Matrix4 model;
 
         float[] skyboxVertices = {
             -1.0f,  1.0f, -1.0f,
@@ -57,7 +60,7 @@ namespace TwoBRenn.Engine.Render.Textures
         };
 
         // right, left, top, bottom, front, back
-        public Skybox(string[] facesPaths)
+        public Skybox(string[] facesPaths, float rotationInRadians)
         {
             BindVertex();
             cubemap = CreateCubemapTexture(facesPaths);
@@ -66,6 +69,9 @@ namespace TwoBRenn.Engine.Render.Textures
             shaderProgram.ActiveProgram();
             shaderProgram.SetInt(SkyboxShader.SkyboxUniform, 0);
             shaderProgram.DeactiveProgram();
+
+            // model matrix
+            model = Matrix4.CreateRotationY(rotationInRadians);
         }
 
         private int CreateCubemapTexture(string[] facesPaths)
@@ -107,7 +113,7 @@ namespace TwoBRenn.Engine.Render.Textures
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
             GL.BufferData(BufferTarget.ArrayBuffer, skyboxVertices.Length * sizeof(float), skyboxVertices, BufferUsageHint.StaticDraw);
 
-            int positionLocation = shaderProgram.GetAttributeLocation("aVertexPos");
+            int positionLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.VertexPositionAttribute);
             GL.EnableVertexAttribArray(positionLocation);
             GL.VertexAttribPointer(positionLocation, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
 
@@ -123,6 +129,7 @@ namespace TwoBRenn.Engine.Render.Textures
             shaderProgram.ActiveProgram();
             shaderProgram.SetMatrix4(BaseShaderProgram.ViewUniform, Camera.Camera.GetViewMatrix().ClearTranslation());
             shaderProgram.SetMatrix4(BaseShaderProgram.ProjectionUniform, Camera.Camera.GetProjectionMatrix());
+            shaderProgram.SetMatrix4(BaseShaderProgram.ModelUniform, model);
 
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.TextureCubeMap, cubemap);

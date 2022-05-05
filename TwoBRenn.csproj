@@ -229,22 +229,22 @@
     <Content Include="Assets\Textures\road.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Textures\skybox\back.png">
+    <Content Include="Assets\Textures\skybox\back.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Textures\skybox\bottom.png">
+    <Content Include="Assets\Textures\skybox\bottom.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Textures\skybox\front.png">
+    <Content Include="Assets\Textures\skybox\front.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Textures\skybox\left.png">
+    <Content Include="Assets\Textures\skybox\left.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Textures\skybox\right.png">
+    <Content Include="Assets\Textures\skybox\right.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Textures\skybox\top.png">
+    <Content Include="Assets\Textures\skybox\top.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
