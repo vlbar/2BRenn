@@ -82,6 +82,7 @@
     <Compile Include="Engine\Common\RayCasting\Ray.cs" />
     <Compile Include="Engine\Common\RayCasting\Raycast.cs" />
     <Compile Include="Engine\Common\RayCasting\RaycastHit.cs" />
+    <Compile Include="Engine\Components\Light\PointLight.cs" />
     <Compile Include="Engine\Components\Physic\BoxCollider.cs" />
     <Compile Include="Engine\Components\Common\CarController.cs" />
     <Compile Include="Engine\Components\Physic\FallingPillar.cs" />

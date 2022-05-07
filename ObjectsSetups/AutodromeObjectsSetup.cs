@@ -6,6 +6,7 @@ using TwoBRenn.Engine;
 using TwoBRenn.Engine.Common.ObjectsPlacers;
 using TwoBRenn.Engine.Common.Path;
 using TwoBRenn.Engine.Components.Common;
+using TwoBRenn.Engine.Components.Light;
 using TwoBRenn.Engine.Components.Physic;
 using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Interfaces;
@@ -500,12 +501,7 @@ namespace TwoBRenn.ObjectsSetups
             cockpitRenderer.SetShaderProgram(simpleShader);
             cockpitRenderer.SetTriangleMesh(CarsMeshFactory.CreateCar(CarType.SportCar));
             cockpitRenderer.SetTexture(carTexture);
-
-            RennObject cameraTarget = new RennObject();
-            cameraTarget.SetParent(cockpit);
-            cameraTarget.Transform.SetPosition(0, 2f, 0);
-            Camera.GetInstance().Controller.Target = cameraTarget.Transform;
-
+            
             // wheels
             RennObject wheelsContainer = new RennObject();
             wheelsContainer.Transform.SetPosition(0, 0, 0);
@@ -555,6 +551,19 @@ namespace TwoBRenn.ObjectsSetups
             }
             carController.ForwardWheels = new[] { wheels[0], wheels[1] };
             carController.BackwardWheels = new[] { wheels[2], wheels[3] };
+
+            // utils
+            RennObject cameraTarget = new RennObject();
+            cameraTarget.SetParent(cockpit);
+            cameraTarget.Transform.SetPosition(0, 2f, 0);
+            Camera.GetInstance().Controller.Target = cameraTarget.Transform;
+
+            RennObject rearLights = new RennObject();
+            rearLights.SetParent(cockpit);
+            rearLights.Transform.SetPosition(0, 0.5f, -3);
+            PointLight carRearPointLight = rearLights.AddComponent<PointLight>();
+            carRearPointLight.Color = Color.Red;
+            carController.RearPointLight = carRearPointLight;
 
             RennObject carSmoke = new RennObject();
             carSmoke.Transform.SetPosition(0, 0, -2f);

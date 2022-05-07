@@ -8,10 +8,21 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
 {
     public class DirectionalLightStruct
     {
-        public string ColorUniform = "directionalLight.color";
-        public string IntensityUniform = "directionalLight.intensity";
+        public string ColorUniform = "directionalLight.light.color";
+        public string IntensityUniform = "directionalLight.light.ambientIntensity";
         public string DirectionUniform = "directionalLight.direction";
-        public string DiffuseIntensityUniform = "directionalLight.diffuseIntensity";
+        public string DiffuseIntensityUniform = "directionalLight.light.diffuseIntensity";
+    }
+
+    public class PointLightStruct
+    {
+        public string ColorUniform = "light.color";
+        public string AmbientIntensityUniform = "light.ambientIntensity";
+        public string DiffuseIntensityUniform = "light.diffuseIntensity";
+        public string PositionUniform = "position";
+        public string ConstantAttenuationUniform = "constantAttenuation";
+        public string LinearAttenuationUniform = "linearAttenuation";
+        public string QuadraticAttenuationUniform = "quadraticAttenuation";
     }
 
     class BaseShaderProgram
@@ -22,7 +33,10 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
         public static string ModelUniform = "model";
         public static string ViewUniform = "view";
         public static string ProjectionUniform = "projection";
+        public static string PointLightsUniform = "pointLights";
+        public static string PointLightsCountUniform = "pointLightsCount";
         public static DirectionalLightStruct DirectionalLightUniform = new DirectionalLightStruct();
+        public static PointLightStruct PointLightUniform = new PointLightStruct();
 
         public readonly int ProgramId;
         private readonly List<int> shaders = new List<int>();

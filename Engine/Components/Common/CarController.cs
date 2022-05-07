@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Input;
 using TwoBRenn.Engine.Common.Managers;
+using TwoBRenn.Engine.Components.Light;
 using TwoBRenn.Engine.Components.Physic;
 using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Render.Utils;
@@ -53,6 +54,7 @@ namespace TwoBRenn.Engine.Components.Common
         private bool handBreak;
 
         // others
+        public PointLight RearPointLight;
         private KeyboardState input;
         private Vector3 lastPosition;
         private static Random random = new Random();
@@ -84,6 +86,8 @@ namespace TwoBRenn.Engine.Components.Common
         public override void OnUpdate()
         {
             input = Keyboard.GetState();
+            if(RearPointLight != null) RearPointLight.IsEnabled = handBreak || input.IsKeyDown(Key.S);
+
             UpdateVectors();
             Move();
             Rotate();

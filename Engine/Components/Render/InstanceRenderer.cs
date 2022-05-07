@@ -79,7 +79,7 @@ namespace TwoBRenn.Engine.Components.Render
             Shader.ActiveProgram();
             Shader.SetMatrix4(BaseShaderProgram.ViewUniform, Camera.GetViewMatrix());
             Shader.SetMatrix4(BaseShaderProgram.ProjectionUniform, Camera.GetProjectionMatrix());
-            Lighting.FillShaderProgram(Shader);
+            Lighting.FillDirectionalLight(Shader);
 
             Texture?.Use();
             vertexArray.DrawInstanced(Mesh.Triangles.Length, InstanceTransforms.Count);

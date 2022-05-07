@@ -83,7 +83,8 @@ namespace TwoBRenn.Engine.Components.Render
             shaderProgram.SetMatrix4(BaseShaderProgram.ModelUniform, rennObject.Transform.GetGlobalModelMatrix());
             shaderProgram.SetMatrix4(BaseShaderProgram.ViewUniform, Camera.GetViewMatrix());
             shaderProgram.SetMatrix4(BaseShaderProgram.ProjectionUniform, Camera.GetProjectionMatrix());
-            Lighting.FillShaderProgram(shaderProgram);
+            Lighting.FillDirectionalLight(shaderProgram);
+            Lighting.FillPointLights(shaderProgram);
 
             texture?.Use();
             Mesh.Draw(shaderProgram);

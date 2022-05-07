@@ -106,7 +106,7 @@ namespace TwoBRenn.Engine.Components.Render
             ShaderProgram.ActiveProgram();
             ShaderProgram.SetMatrix4(BaseShaderProgram.ViewUniform, Camera.GetViewMatrix());
             ShaderProgram.SetMatrix4(BaseShaderProgram.ProjectionUniform, Camera.GetProjectionMatrix());
-            Lighting.FillShaderProgram(ShaderProgram);
+            Lighting.FillDirectionalLight(ShaderProgram);
 
             Texture?.Use();
 

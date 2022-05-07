@@ -3,10 +3,12 @@
     abstract class Component
     {
         public RennObject rennObject { get; set; }
+        public bool IsEnabled = true;
         private bool isFirstUpdate = true;
 
         public void UpdateComponent()
         {
+            if (!IsEnabled) return;
             if (isFirstUpdate)
             {
                 OnStart();
