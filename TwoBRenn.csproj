@@ -72,6 +72,7 @@
     <Compile Include="Engine\Common\Managers\Input.cs" />
     <Compile Include="Engine\Common\Managers\Lighting.cs" />
     <Compile Include="Engine\Common\Managers\Physics.cs" />
+    <Compile Include="Engine\Common\Managers\Shadows.cs" />
     <Compile Include="Engine\Common\ObjectControl\ObjectPicker.cs" />
     <Compile Include="Engine\Common\ObjectControl\ObjectPlacer.cs" />
     <Compile Include="Engine\Common\ObjectsPlacers\ImageMap.cs" />
@@ -103,7 +104,10 @@
     <Compile Include="Engine\Render\Camera\OrbitCameraController.cs" />
     <Compile Include="Engine\Render\ShaderPrograms\InstanceShader.cs" />
     <Compile Include="Engine\Render\ShaderPrograms\ParticleShader.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\ShadowsShader.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\DwarfishShader.cs" />
     <Compile Include="Engine\Render\Utils\BufferObject.cs" />
+    <Compile Include="Engine\Render\Utils\FrameBufferObject.cs" />
     <Compile Include="Engine\Render\Utils\Mesh.cs" />
     <Compile Include="Engine\Render\RenderControl.cs" />
     <Compile Include="Engine\Render\ShaderPrograms\BaseShaderProgram.cs" />
@@ -150,6 +154,18 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include=".gitignore" />
+    <None Include="Engine\Render\Shaders\DwarfishShader.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\DwarfishShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\shadowsShader.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\shadowsShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Engine\Render\Shaders\simpleShader.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

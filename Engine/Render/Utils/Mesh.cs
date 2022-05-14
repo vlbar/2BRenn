@@ -145,13 +145,34 @@ namespace TwoBRenn.Engine.Render.Utils
             meshData.VertexArray.Bind();
 
             meshData.VertexBuffer.InitializeData(
-                Mesh.GetMeshDataSize(VerticesArray, positionLocation) +
-                Mesh.GetMeshDataSize(UVsArray, texCoordsLocation) +
-                Mesh.GetMeshDataSize(NormalsArray, normalLocation));
+                GetMeshDataSize(VerticesArray, positionLocation) +
+                GetMeshDataSize(UVsArray, texCoordsLocation) +
+                GetMeshDataSize(NormalsArray, normalLocation));
             SetData(VerticesArray, 3, positionLocation, ref meshData);
             SetData(UVsArray, 2, texCoordsLocation, ref meshData);
             SetData(NormalsArray, 3, normalLocation, ref meshData);
 
+            shaderProgram.SetInt(BaseShaderProgram.TextureUniform, 0);
+            shaderProgram.SetInt(BaseShaderProgram.ShadowMapTextureUniform, 1);
+
+            meshData.ElementBuffer.SetData(Triangles);
+
+            meshData.VertexArray.Unbind();
+            meshDataObjects.Add(meshData);
+        }
+
+        public void InitMeshVertexData(BaseShaderProgram shaderProgram)
+        {
+            if (Vertices == null) return;
+            MeshDataObject meshData = new MeshDataObject(shaderProgram.ProgramId);
+
+            int positionLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.VertexPositionAttribute);
+            int texCoordsLocation = shaderProgram.GetAttributeLocation(BaseShaderProgram.TextureCoordinatesAttribute);
+
+            meshData.VertexArray.Bind();
+            meshData.VertexBuffer.InitializeData(GetMeshDataSize(VerticesArray, positionLocation) + GetMeshDataSize(UVsArray, texCoordsLocation));
+            SetData(VerticesArray, 3, positionLocation, ref meshData);
+            SetData(UVsArray, 2, texCoordsLocation, ref meshData);
             meshData.ElementBuffer.SetData(Triangles);
 
             meshData.VertexArray.Unbind();
@@ -173,6 +194,11 @@ namespace TwoBRenn.Engine.Render.Utils
             if (meshDataIndex >= 0)
             {
                 meshDataObjects[meshDataIndex].VertexArray.Draw(Triangles.Length);
+            }
+            else
+            {
+                InitMeshData(shaderProgram);
+                meshDataObjects[meshDataObjects.Count - 1].VertexArray.Draw(Triangles.Length);
             }
         }
 

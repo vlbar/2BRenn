@@ -8,13 +8,15 @@ namespace TwoBRenn.Engine.Render.Camera
     class Camera : IUpdatableEnginePart
     {
         private static Camera _instance;
+        public static Camera Instance => _instance ?? (_instance = new Camera());
+
         public CameraController Controller { get; set; }
         private int width;
         private int height;
-        private bool isOrthographic = false;
+        private bool isOrthographic;
         private float fov = 75;
         private readonly float clipingNear = 0.1f;
-        private readonly float clipingFar = 100f;
+        private readonly float clipingFar = 500f;
 
         private static Matrix4 _projection;
         private static Matrix4 _view;
@@ -47,17 +49,20 @@ namespace TwoBRenn.Engine.Render.Camera
             }
         }
 
-        public static Camera GetInstance()
-        {
-            return _instance ?? (_instance = new Camera());
-        }
-
         public void OnUpdate()
         {
             Controller.OnUpdate();
         }
 
         public static Matrix4 GetViewMatrix() => _view;
+        public static Vector3 Position => _view.Inverted().ExtractTranslation();
+
+        public static bool IsOrthographic
+        {
+            get => Instance.isOrthographic;
+            set => Instance.isOrthographic = value;
+        }
+
         public static Matrix4 GetProjectionMatrix() => _projection;
         public void SetViewMatrix(Matrix4 view) => _view = view;
 

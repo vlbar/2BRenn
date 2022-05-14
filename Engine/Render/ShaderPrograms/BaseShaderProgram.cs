@@ -33,8 +33,11 @@ namespace TwoBRenn.Engine.Render.ShaderPrograms
         public static string ModelUniform = "model";
         public static string ViewUniform = "view";
         public static string ProjectionUniform = "projection";
+        public static string TextureUniform = "texture0";
+        public static string ShadowMapTextureUniform = "shadowMap";
         public static string PointLightsUniform = "pointLights";
         public static string PointLightsCountUniform = "pointLightsCount";
+        public static string LightSpaceMatrixUniform = "lightSpaceMatrix";
         public static DirectionalLightStruct DirectionalLightUniform = new DirectionalLightStruct();
         public static PointLightStruct PointLightUniform = new PointLightStruct();
 

@@ -63,7 +63,7 @@ namespace TwoBRenn.ObjectsSetups
             AddStands(objects);
             AddTrainCart(objects);
             AddMovableCar(objects);
-
+            
             return objects;
         }
 
@@ -556,7 +556,7 @@ namespace TwoBRenn.ObjectsSetups
             RennObject cameraTarget = new RennObject();
             cameraTarget.SetParent(cockpit);
             cameraTarget.Transform.SetPosition(0, 2f, 0);
-            Camera.GetInstance().Controller.Target = cameraTarget.Transform;
+            Camera.Instance.Controller.Target = cameraTarget.Transform;
 
             RennObject rearLights = new RennObject();
             rearLights.SetParent(cockpit);

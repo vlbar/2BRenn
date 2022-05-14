@@ -27,7 +27,8 @@ namespace TwoBRenn.Engine
         private SceneManager sceneManager;
         private Input inputManager;
         private Physics physicsManager;
-        public Lighting LightingManager;
+        private Shadows shadowsManager;
+        private Lighting lightingManager;
         public DebugManager DebugManager;
         public ObjectPlacer ObjectPlacer = new ObjectPlacer();
         public ObjectPicker ObjectPicker = new ObjectPicker();
@@ -50,28 +51,33 @@ namespace TwoBRenn.Engine
         {
             GlControl = glControl;
             Form = form;
-            camera = Camera.GetInstance();
+            camera = Camera.Instance;
             inputManager = Input.Instance;
             physicsManager = Physics.Instance;
             DebugManager = DebugManager.Instance;
-            LightingManager = Lighting.Instance;
+            lightingManager = Lighting.Instance;
+            shadowsManager = Shadows.Instance;
 
             sceneManager = new SceneManager();
             ObjectPlacer.SceneManager = sceneManager;
             RenderControl.SetupGlControl(glControl);
             inputManager.Setup(glControl, form);
-            LightingManager.Setup();
+            lightingManager.Setup();
+            shadowsManager.Setup();
 
             preciseTimer = new Stopwatch();
             Timer renderTimer = new Timer();
             renderTimer.Interval = 1000 / maxFrameRate;
             renderTimer.Tick += delegate { UpdateCycle(); };
             renderTimer.Start();
+
+            sceneManager.OnUpdate();
         }
 
         private void UpdateCycle()
         {
             UpdateOtherParts();
+            shadowsManager.CalculateShadowsMap();
             RenderControl.PreRender();
             sceneManager.OnUpdate();
             RenderControl.PostRender();

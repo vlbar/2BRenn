@@ -16,9 +16,12 @@ namespace TwoBRenn.Engine.Render
 
         public int CurrentShaderProgram = -1;
 
+        private int controlWidth;
+        private int controlHeight;
+
         public RenderControl()
         {
-            camera = Camera.Camera.GetInstance();
+            camera = Camera.Camera.Instance;
         }
 
         public void SetupGlControl(GLControl glControl)
@@ -42,16 +45,17 @@ namespace TwoBRenn.Engine.Render
 
         private void SetupViewport()
         {
-            int width = glControl.Width;
-            int height = glControl.Height;
+            controlWidth = glControl.Width;
+            controlHeight = glControl.Height;
 
-            camera.SetupViewport(width, height);
+            camera.SetupViewport(controlWidth, controlHeight);
             glControl.Invalidate();
         }
 
         public void PreRender()
         {
             glControl.MakeCurrent();
+            GL.Viewport(0, 0, controlWidth, controlHeight);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.ClearColor(Color.LightBlue);
         }

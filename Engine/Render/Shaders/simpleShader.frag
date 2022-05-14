@@ -5,6 +5,7 @@
 in vec2 uv;
 in vec3 normal;
 in vec3 fragPos;
+in vec4 fragPosLightSpace;
 
 out vec4 outColor;
 
@@ -34,22 +35,50 @@ uniform DirectionalLight directionalLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform int pointLightsCount;
 uniform sampler2D texture0;
+uniform sampler2D shadowMap;
 uniform vec4 baseColor;
 uniform vec2 offset;
 uniform vec2 tiling;
+
+float ShadowCalculation(vec4 fragPosLightSpace)
+{
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    projCoords = projCoords * 0.5 + 0.5;
+    float closestDepth = texture(shadowMap, projCoords.xy).r;
+    float currentDepth = projCoords.z;
+    float bias = 0.005;
+
+    if(projCoords.z > 1.0)
+        return 1;
+
+    float shadow = 0.0;
+    vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+    for(int x = -1; x <= 1; ++x)
+    {
+        for(int y = -1; y <= 1; ++y)
+        {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth ? 0.5 : 0.0;
+        }
+    }
+    shadow /= 9.0;
+
+    return 1 - shadow;
+}
 
 vec4 CalcLight(BaseLight light, vec3 direction, vec3 normal)
 {
     vec4 ambientColor = vec4(light.color, 1.0f) * light.ambientIntensity;
     float diffuseFactor = max(dot(normal, -direction), 0.0f);
     vec4 diffuseColor = vec4(light.color, 1.0f) * light.diffuseIntensity * diffuseFactor;
-    return (ambientColor + diffuseColor);
+    float shadow = ShadowCalculation(fragPosLightSpace);
+    return shadow * (ambientColor + diffuseColor);
 }
 
-vec4 CalcDirectionalLight(vec3 normal)                                                      
-{                                                                                           
-    return CalcLight(directionalLight.light, directionalLight.direction, normal); 
-} 
+vec4 CalcDirectionalLight(vec3 normal)
+{
+    return CalcLight(directionalLight.light, directionalLight.direction, normal);
+}
 
 vec4 CalcPointLight(int index, vec3 normal)
 {

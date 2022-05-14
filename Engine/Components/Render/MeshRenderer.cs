@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using OpenTK;
-using OpenTK.Graphics.OpenGL4;
 using TwoBRenn.Engine.Common.Managers;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
@@ -14,6 +12,8 @@ namespace TwoBRenn.Engine.Components.Render
     class MeshRenderer : Component
     {
         public Mesh Mesh;
+        public bool IsCastShadows = true;
+
         private BaseShaderProgram shaderProgram;
         private Texture texture;
         private Dictionary<string, ShaderAttribute> attributes = new Dictionary<string, ShaderAttribute>();
@@ -73,7 +73,12 @@ namespace TwoBRenn.Engine.Components.Render
 
         public override void OnStart()
         {
-            if (Mesh != null && shaderProgram != null) Mesh.InitMeshData(shaderProgram);
+            if (Mesh != null && shaderProgram != null)
+            {
+                Mesh.InitMeshData(shaderProgram);
+            }
+
+            if(IsCastShadows) Shadows.AddMeshRenderer(this);
         }
 
         public override void OnUpdate()
@@ -85,6 +90,7 @@ namespace TwoBRenn.Engine.Components.Render
             shaderProgram.SetMatrix4(BaseShaderProgram.ProjectionUniform, Camera.GetProjectionMatrix());
             Lighting.FillDirectionalLight(shaderProgram);
             Lighting.FillPointLights(shaderProgram);
+            Shadows.FillUniforms(shaderProgram);
 
             texture?.Use();
             Mesh.Draw(shaderProgram);
@@ -98,6 +104,12 @@ namespace TwoBRenn.Engine.Components.Render
         public override void OnUnload()
         {
 
+        }
+
+        public void DrawWithShader(BaseShaderProgram shader)
+        {
+            shader.SetMatrix4(BaseShaderProgram.ModelUniform, rennObject.Transform.GetGlobalModelMatrix());
+            Mesh.Draw(shader);
         }
     }
 }

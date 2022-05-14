@@ -43,9 +43,9 @@ namespace TwoBRenn.Engine.Render.Textures
             }
         }
 
-        public void Use()
+        public void Use(TextureUnit textureUnit = TextureUnit.Texture0)
         {
-            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.ActiveTexture(textureUnit);
             GL.BindTexture(TextureTarget.Texture2D, texture);
         }
     }
