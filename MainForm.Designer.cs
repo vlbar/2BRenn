@@ -40,6 +40,7 @@ namespace TwoBRenn
             this.bottomContainer = new System.Windows.Forms.Panel();
             this.rightContainer = new System.Windows.Forms.Panel();
             this.structuresContainer = new System.Windows.Forms.Panel();
+            this.structuresListView = new System.Windows.Forms.ListView();
             this.structCountLabel = new System.Windows.Forms.Label();
             this.structCountTextLabel = new System.Windows.Forms.Label();
             this.structTextLabel = new System.Windows.Forms.Label();
@@ -54,6 +55,7 @@ namespace TwoBRenn
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.debugInfoLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.bottomContainer.SuspendLayout();
             this.rightContainer.SuspendLayout();
@@ -147,6 +149,7 @@ namespace TwoBRenn
             // 
             // structuresContainer
             // 
+            this.structuresContainer.Controls.Add(this.structuresListView);
             this.structuresContainer.Controls.Add(this.structCountLabel);
             this.structuresContainer.Controls.Add(this.structCountTextLabel);
             this.structuresContainer.Controls.Add(this.structTextLabel);
@@ -155,6 +158,25 @@ namespace TwoBRenn
             this.structuresContainer.Name = "structuresContainer";
             this.structuresContainer.Size = new System.Drawing.Size(707, 80);
             this.structuresContainer.TabIndex = 3;
+            // 
+            // structuresListView
+            // 
+            this.structuresListView.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.structuresListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.structuresListView.BackColor = System.Drawing.SystemColors.Control;
+            this.structuresListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.structuresListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.structuresListView.HideSelection = false;
+            this.structuresListView.Location = new System.Drawing.Point(174, 6);
+            this.structuresListView.Margin = new System.Windows.Forms.Padding(0);
+            this.structuresListView.MultiSelect = false;
+            this.structuresListView.Name = "structuresListView";
+            this.structuresListView.Size = new System.Drawing.Size(533, 74);
+            this.structuresListView.TabIndex = 4;
+            this.structuresListView.UseCompatibleStateImageBehavior = false;
+            this.structuresListView.ItemActivate += new System.EventHandler(this.structuresListView_ItemActivate);
             // 
             // structCountLabel
             // 
@@ -297,6 +319,10 @@ namespace TwoBRenn
             this.label1.Text = "Управление:\r\nWASD - перемещение камеры\r\nУдерживание средней кнопки мыши - вращени" +
     "е\r\nвокруг оси\r\nКолсео мыши - приближение/удаление";
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 50;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -353,6 +379,8 @@ namespace TwoBRenn
         private System.Windows.Forms.Panel bottomPanel;
         private System.Windows.Forms.Label debugInfoLabel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListView structuresListView;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }
 

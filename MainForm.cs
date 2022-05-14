@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using OpenTK;
 using TwoBRenn.Engine;
@@ -25,11 +27,12 @@ namespace TwoBRenn
 
             Controls.Remove(glControl);
             Controls.Add(smoothGlControl);
+
+            InitStructuresMenu();
         }
 
         private void glControl_Load(object sender, EventArgs e)
         {
-            
             engine.Setup(smoothGlControl, this);
             engine.RenderControl.Skybox = new Skybox(new string[] {
                 @"Assets\Textures\Skybox\right.jpg",
@@ -52,6 +55,55 @@ namespace TwoBRenn
         private void DisplayLogs()
         {
             debugInfoLabel.Text = engine.DebugManager.GetDynamicDebugInfo();
+        }
+
+        private void InitStructuresMenu()
+        {
+            ImageList imageList = new ImageList();
+            imageList.ImageSize = new Size(52, 52);
+            imageList.Images.Add(new Bitmap(@"Assets\UI\barrier-icon.jpg"));
+            imageList.Images.Add(new Bitmap(@"Assets\UI\buffer-icon.jpg"));
+            imageList.Images.Add(new Bitmap(@"Assets\UI\conus-icon.jpg"));
+            imageList.Images.Add(new Bitmap(@"Assets\UI\fence-icon.jpg"));
+            imageList.Images.Add(new Bitmap(@"Assets\UI\wheels-icon.jpg"));
+
+            structuresListView.LargeImageList = imageList;
+
+            List<ListViewItem> items = new List<ListViewItem>
+            {
+                new ListViewItem
+                {
+                    ImageIndex = 0,
+                    Text = "Барьер"
+                },
+                new ListViewItem
+                {
+                    ImageIndex = 1,
+                    Text = "Буфер"
+                },
+                new ListViewItem
+                {
+                    ImageIndex = 2,
+                    Text = "Конус"
+                },
+                new ListViewItem
+                {
+                    ImageIndex = 3,
+                    Text = "Ограждение"
+                },
+                new ListViewItem
+                {
+                    ImageIndex = 4,
+                    Text = "Стопка шин"
+                },
+            };
+
+            structuresListView.Items.AddRange(items.ToArray());
+        }
+
+        private void structuresListView_ItemActivate(object sender, EventArgs e)
+        {
+            engine.ObjectPlacer.SelectObject(structuresListView.SelectedItems[0].Index);
         }
     }
 }

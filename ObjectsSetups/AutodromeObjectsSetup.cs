@@ -556,7 +556,7 @@ namespace TwoBRenn.ObjectsSetups
             RennObject cameraTarget = new RennObject();
             cameraTarget.SetParent(cockpit);
             cameraTarget.Transform.SetPosition(0, 2f, 0);
-            Camera.Instance.Controller.Target = cameraTarget.Transform;
+            //Camera.Instance.Controller.Target = cameraTarget.Transform;
 
             RennObject rearLights = new RennObject();
             rearLights.SetParent(cockpit);
