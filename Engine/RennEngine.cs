@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 using OpenTK;
 using TwoBRenn.Engine.Common.Managers;
 using TwoBRenn.Engine.Common.ObjectControl;
+using TwoBRenn.Engine.Interfaces;
 using TwoBRenn.Engine.Render;
 using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.Utils;
@@ -47,7 +49,7 @@ namespace TwoBRenn.Engine
             time = Time.GetInstance();
         }
 
-        public void Setup(GLControl glControl, Form form)
+        public void Setup(GLControl glControl, Form form, HashSet<IObjectsSetup> objectsSetups)
         {
             GlControl = glControl;
             Form = form;
@@ -58,7 +60,7 @@ namespace TwoBRenn.Engine
             lightingManager = Lighting.Instance;
             shadowsManager = Shadows.Instance;
 
-            sceneManager = new SceneManager();
+            sceneManager = new SceneManager(objectsSetups);
             ObjectPlacer.SceneManager = sceneManager;
             RenderControl.SetupGlControl(glControl);
             inputManager.Setup(glControl, form);

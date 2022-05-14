@@ -1,18 +1,14 @@
 ﻿using System.Collections.Generic;
 using TwoBRenn.Engine.Interfaces;
-using TwoBRenn.ObjectsSetups;
 
 namespace TwoBRenn.Engine.Scene
 {
     class SceneManager : IUpdatableEnginePart
     {
         private readonly HashSet<RennObject> sceneGraph = new HashSet<RennObject>();
-        private readonly HashSet<IObjectsSetup> objectsSetups = new HashSet<IObjectsSetup>();
 
-        public SceneManager()
+        public SceneManager(HashSet<IObjectsSetup> objectsSetups)
         {
-            objectsSetups.Add(new AutodromeObjectsSetup());
-
             foreach (IObjectsSetup objectsSetup in objectsSetups)
             {
                 foreach (RennObject rennObject in objectsSetup.GetObjects())

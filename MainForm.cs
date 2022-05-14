@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using OpenTK;
 using TwoBRenn.Engine;
+using TwoBRenn.Engine.Interfaces;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.ObjectsSetups;
 
@@ -13,6 +14,7 @@ namespace TwoBRenn
     {
         private readonly RennEngine engine = RennEngine.Instance;
         private readonly GLControl smoothGlControl;
+        private AutodromeObjectsSetup autodromeObjectsSetup = new AutodromeObjectsSetup();
 
         public MainForm()
         {
@@ -33,7 +35,7 @@ namespace TwoBRenn
 
         private void glControl_Load(object sender, EventArgs e)
         {
-            engine.Setup(smoothGlControl, this);
+            engine.Setup(smoothGlControl, this, new HashSet<IObjectsSetup> { autodromeObjectsSetup });
             engine.RenderControl.Skybox = new Skybox(new string[] {
                 @"Assets\Textures\Skybox\right.jpg",
                 @"Assets\Textures\Skybox\left.jpg",

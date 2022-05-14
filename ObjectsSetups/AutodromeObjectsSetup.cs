@@ -10,7 +10,6 @@ using TwoBRenn.Engine.Components.Light;
 using TwoBRenn.Engine.Components.Physic;
 using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Interfaces;
-using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.Engine.Render.Utils;
@@ -21,29 +20,50 @@ namespace TwoBRenn.ObjectsSetups
 {
     class AutodromeObjectsSetup : IObjectsSetup
     {
-        private readonly Texture groundTexture = new Texture(@"Assets\Textures\ground.jpg");
-        private readonly Texture roadTexture = new Texture(@"Assets\Textures\road.jpg");
-        private readonly Texture curbTexture = new Texture(@"Assets\Textures\curb.png");
-        private readonly Texture gravelTexture = new Texture(@"Assets\Textures\gravel.jpg");
-        private readonly Texture plasticTexture = new Texture(@"Assets\Textures\plastic.jpg");
-        private readonly Texture carTexture = new Texture(@"Assets\Textures\Car\car.jpg");
-        private readonly Texture wheelTexture = new Texture(@"Assets\Textures\Car\wheel.jpg");
-        private readonly Texture sponsorsTexture = new Texture(@"Assets\Textures\Environment\sponsors.jpg");
-        private readonly Texture treeTexture = new Texture(@"Assets\Textures\Environment\spruce.jpg");
-        private readonly Texture smokeTexture = new Texture(@"Assets\Textures\Particles\smoke-puff.png");
-        private readonly SimpleShader simpleShader = new SimpleShader();
-        private readonly SimpleShader groundShader = new SimpleShader();
-        private readonly SimpleShader roadShader = new SimpleShader();
-        private readonly SimpleShader curbShader = new SimpleShader();
-        private readonly SimpleShader treeShader = new SimpleShader();
-        private readonly SimpleShader concreteShader = new SimpleShader();
-        private readonly ParticleShader particleShader = new ParticleShader();
-        private readonly InstanceShader instanceShader = new InstanceShader();
+        public Transform CarCameraTargetTransform;
+
+        private Texture groundTexture;
+        private Texture roadTexture;
+        private Texture curbTexture;
+        private Texture gravelTexture;
+        private Texture plasticTexture;
+        private Texture carTexture;
+        private Texture wheelTexture;
+        private Texture sponsorsTexture;
+        private Texture treeTexture;
+        private Texture smokeTexture;
+        private SimpleShader simpleShader;
+        private SimpleShader groundShader;
+        private SimpleShader roadShader;
+        private SimpleShader curbShader;
+        private SimpleShader treeShader;
+        private SimpleShader concreteShader;
+        private ParticleShader particleShader;
+        private InstanceShader instanceShader;
 
         private readonly float[,] forestMap = ImageMap.GenerateMap(@"Assets\Textures\Maps\forest-map.png", 24);
-
-        public AutodromeObjectsSetup()
+        
+        private void SetupAssets()
         {
+            groundTexture = new Texture(@"Assets\Textures\ground.jpg");
+            roadTexture = new Texture(@"Assets\Textures\road.jpg");
+            curbTexture = new Texture(@"Assets\Textures\curb.png");
+            gravelTexture = new Texture(@"Assets\Textures\gravel.jpg");
+            plasticTexture = new Texture(@"Assets\Textures\plastic.jpg");
+            carTexture = new Texture(@"Assets\Textures\Car\car.jpg");
+            wheelTexture = new Texture(@"Assets\Textures\Car\wheel.jpg");
+            sponsorsTexture = new Texture(@"Assets\Textures\Environment\sponsors.jpg");
+            treeTexture = new Texture(@"Assets\Textures\Environment\spruce.jpg");
+            smokeTexture = new Texture(@"Assets\Textures\Particles\smoke-puff.png");
+            simpleShader = new SimpleShader();
+            groundShader = new SimpleShader();
+            roadShader = new SimpleShader();
+            curbShader = new SimpleShader();
+            treeShader = new SimpleShader();
+            concreteShader = new SimpleShader();
+            particleShader = new ParticleShader();
+            instanceShader = new InstanceShader();
+
             groundShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(50, 50));
             roadShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(1, 30));
             curbShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(1, 60));
@@ -53,6 +73,7 @@ namespace TwoBRenn.ObjectsSetups
 
         public HashSet<RennObject> GetObjects()
         {
+            SetupAssets();
             HashSet<RennObject> objects = new HashSet<RennObject>();
 
             AddGround(objects);
@@ -556,7 +577,7 @@ namespace TwoBRenn.ObjectsSetups
             RennObject cameraTarget = new RennObject();
             cameraTarget.SetParent(cockpit);
             cameraTarget.Transform.SetPosition(0, 2f, 0);
-            //Camera.Instance.Controller.Target = cameraTarget.Transform;
+            CarCameraTargetTransform = cameraTarget.Transform;
 
             RennObject rearLights = new RennObject();
             rearLights.SetParent(cockpit);
