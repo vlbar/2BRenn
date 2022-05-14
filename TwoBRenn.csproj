@@ -277,6 +277,7 @@
     <Content Include="Assets\UI\fence-icon.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\UI\map.jpg" />
     <Content Include="Assets\UI\wheels-icon.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
