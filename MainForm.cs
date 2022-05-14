@@ -6,7 +6,9 @@ using System.Windows.Forms;
 using OpenTK;
 using TwoBRenn.Engine;
 using TwoBRenn.Engine.Components.Common;
+using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Interfaces;
+using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.ObjectsSetups;
 
@@ -127,6 +129,7 @@ namespace TwoBRenn
                 if(selectable == null) return;
                 selectedObjectNameLabel.Text = selectable.Name;
 
+                // transform
                 Vector3 position = selectedObject.Transform.position;
                 Vector3 rotation = selectedObject.Transform.rotation;
                 Vector3 scale = selectedObject.Transform.scale;
@@ -148,6 +151,29 @@ namespace TwoBRenn
                 objectXScaleLabel.Text = (objectXScaleTrackBar.Value / 10.0f).ToString(CultureInfo.CurrentCulture);
                 objectYScaleLabel.Text = (objectYScaleTrackBar.Value / 10.0f).ToString(CultureInfo.CurrentCulture);
                 objectZScaleLabel.Text = (objectZScaleTrackBar.Value / 10.0f).ToString(CultureInfo.CurrentCulture);
+
+                // materials
+                ImageList imageList = new ImageList();
+                imageList.ImageSize = new Size(20, 20);
+                List<Material> materials = selectable.Materials;
+                objectMaterialListView.Items.Clear();
+                if (materials == null || materials.Count == 0) return;
+
+                List<ListViewItem> items = new List<ListViewItem>();
+                int imageIndex = 0;
+                foreach (var material in materials)
+                {
+                    imageList.Images.Add(new Bitmap(material.Texture.Image));
+                    items.Add(new ListViewItem
+                    {
+                        Text = material.Name,
+                        BackColor = material.Color,
+                        ImageIndex = imageIndex++
+                    });
+                }
+
+                objectMaterialListView.SmallImageList = imageList;
+                objectMaterialListView.Items.AddRange(items.ToArray());
             }
             else
             {
@@ -201,6 +227,19 @@ namespace TwoBRenn
                 engine.ObjectPicker.CurrentObject = null;
                 sidebarContainer.Visible = false;
             }
+        }
+
+        private void objectMaterialListView_ItemActivate(object sender, EventArgs e)
+        {
+            MeshRenderer renderer = engine.ObjectPicker.CurrentObject.GetComponent<MeshRenderer>();
+            Selectable selectable = engine.ObjectPicker.CurrentObject.GetComponent<Selectable>();
+            List<Material> materials = selectable.Materials;
+            
+            int index = objectMaterialListView.SelectedItems[0].Index;
+            renderer.SetTexture(materials[index].Texture);
+            renderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(materials[index].Color));
+            Color color = materials[index].Color;
+            selectable.DefaultColor = new Vector4(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, 1f);
         }
     }
 }

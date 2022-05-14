@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using OpenTK;
 using TwoBRenn.Engine.Common.ObjectControl;
 using TwoBRenn.Engine.Components.Render;
@@ -11,8 +12,9 @@ namespace TwoBRenn.Engine.Components.Common
 {
     class Material
     {
-        public string Name;
+        public string Name = "Материал";
         public Texture Texture;
+        public Color Color = Color.White;
     }
 
     class Selectable : Component
@@ -25,7 +27,7 @@ namespace TwoBRenn.Engine.Components.Common
         private ObjectPicker objectPicker;
         private bool isSelected;
 
-        private Vector4 defaultColor;
+        public Vector4 DefaultColor;
         private float blinkAnimation;
 
         private MeshRenderer meshRenderer;
@@ -34,8 +36,8 @@ namespace TwoBRenn.Engine.Components.Common
         {
             objectPicker = RennEngine.Instance.ObjectPicker;
             meshRenderer = rennObject.GetComponent<MeshRenderer>();
-            defaultColor = meshRenderer.GetVector4Attribute(SimpleShader.BaseColorUniform);
-            defaultColor.W = 1;
+            DefaultColor = meshRenderer.GetVector4Attribute(SimpleShader.BaseColorUniform);
+            DefaultColor.W = 1;
             blinkAnimation = BlinkDuration;
         }
 
@@ -49,7 +51,7 @@ namespace TwoBRenn.Engine.Components.Common
             {
                 isSelected = false;
                 blinkAnimation = BlinkDuration;
-                meshRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(defaultColor));
+                meshRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(DefaultColor));
             }
 
             if (isSelected)
@@ -57,11 +59,11 @@ namespace TwoBRenn.Engine.Components.Common
                 blinkAnimation += Time.DeltaTime;
                 float limitedBlink = PingPong(blinkAnimation, BlinkDuration);
                 float color = limitedBlink / BlinkDuration;
-                if (defaultColor != Vector4.One)
+                if (DefaultColor != Vector4.One)
                 {
-                    float x = defaultColor.X / 2 + defaultColor.X / 2 * color;
-                    float y = defaultColor.Y / 2 + defaultColor.Y / 2 * color;
-                    float z = defaultColor.Z / 2 + defaultColor.Z / 2 * color;
+                    float x = DefaultColor.X / 2 + DefaultColor.X / 2 * color;
+                    float y = DefaultColor.Y / 2 + DefaultColor.Y / 2 * color;
+                    float z = DefaultColor.Z / 2 + DefaultColor.Z / 2 * color;
 
                     meshRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform,
                         ShaderAttribute.Value(x, y, z, 1f));

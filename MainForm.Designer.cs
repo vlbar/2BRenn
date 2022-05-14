@@ -352,7 +352,7 @@ namespace TwoBRenn
             this.groupBox4.Controls.Add(this.objectMaterialListView);
             this.groupBox4.Location = new System.Drawing.Point(3, 306);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(177, 100);
+            this.groupBox4.Size = new System.Drawing.Size(177, 152);
             this.groupBox4.TabIndex = 22;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Материал";
@@ -362,12 +362,16 @@ namespace TwoBRenn
             this.objectMaterialListView.BackColor = System.Drawing.SystemColors.Control;
             this.objectMaterialListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.objectMaterialListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.objectMaterialListView.GridLines = true;
             this.objectMaterialListView.HideSelection = false;
             this.objectMaterialListView.Location = new System.Drawing.Point(3, 16);
             this.objectMaterialListView.Name = "objectMaterialListView";
-            this.objectMaterialListView.Size = new System.Drawing.Size(171, 81);
+            this.objectMaterialListView.Size = new System.Drawing.Size(171, 133);
             this.objectMaterialListView.TabIndex = 0;
+            this.objectMaterialListView.TileSize = new System.Drawing.Size(20, 20);
             this.objectMaterialListView.UseCompatibleStateImageBehavior = false;
+            this.objectMaterialListView.View = System.Windows.Forms.View.SmallIcon;
+            this.objectMaterialListView.ItemActivate += new System.EventHandler(this.objectMaterialListView_ItemActivate);
             // 
             // groupBox3
             // 

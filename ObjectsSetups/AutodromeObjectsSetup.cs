@@ -26,6 +26,7 @@ namespace TwoBRenn.ObjectsSetups
         private Texture roadTexture;
         private Texture curbTexture;
         private Texture gravelTexture;
+        private Texture sandTexture;
         private Texture plasticTexture;
         private Texture carTexture;
         private Texture wheelTexture;
@@ -49,6 +50,7 @@ namespace TwoBRenn.ObjectsSetups
             roadTexture = new Texture(@"Assets\Textures\road.jpg");
             curbTexture = new Texture(@"Assets\Textures\curb.png");
             gravelTexture = new Texture(@"Assets\Textures\gravel.jpg");
+            sandTexture = new Texture(@"Assets\Textures\sand.jpg");
             plasticTexture = new Texture(@"Assets\Textures\plastic.jpg");
             carTexture = new Texture(@"Assets\Textures\Car\car.jpg");
             wheelTexture = new Texture(@"Assets\Textures\Car\wheel.jpg");
@@ -366,16 +368,37 @@ namespace TwoBRenn.ObjectsSetups
                 roadPartRenderer.SetTexture(roadTexture);
             }
 
+            List<Material> materials = new List<Material>
+            {
+                new Material
+                {
+                    Name = "Асфальт",
+                    Texture = roadTexture
+                },
+                new Material
+                {
+                    Name = "Гравий",
+                    Texture = gravelTexture
+                },
+                new Material
+                {
+                    Name = "Песок",
+                    Texture = sandTexture
+                }
+            };
+
             roadPartsObjects[3].GetComponent<MeshRenderer>().SetTexture(gravelTexture);
             roadPartsObjects[3].AddComponent<BoxCollider>().IsTrigger = true;
             Selectable roadPartSelectable3 = roadPartsObjects[3].AddComponent<Selectable>();
             roadPartSelectable3.Name = "Участок дороги №3";
             roadPartSelectable3.CanChangeTransform = false;
+            roadPartSelectable3.Materials = materials;
             roadPartsObjects[6].GetComponent<MeshRenderer>().SetTexture(gravelTexture);
             roadPartsObjects[6].AddComponent<BoxCollider>().IsTrigger = true;
             Selectable roadPartSelectable6 = roadPartsObjects[6].AddComponent<Selectable>();
             roadPartSelectable6.Name = "Участок дороги №6";
             roadPartSelectable6.CanChangeTransform = false;
+            roadPartSelectable6.Materials = materials;
 
             RennObject curb = new RennObject();
             curb.SetParent(road);

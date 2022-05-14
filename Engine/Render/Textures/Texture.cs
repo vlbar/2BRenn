@@ -7,12 +7,14 @@ namespace TwoBRenn.Engine.Render.Textures
     public class Texture
     {
         public int texture;
+        public Bitmap Image;
 
         public Texture(string path)
         {
             texture = GL.GenTexture();
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, texture);
+            Image = new Bitmap(path);
 
             using (var image = new Bitmap(path))
             {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using TwoBRenn.Engine;
-using TwoBRenn.Engine.Components;
 using TwoBRenn.Engine.Components.Common;
 using TwoBRenn.Engine.Components.Physic;
 using TwoBRenn.Engine.Components.Render;
@@ -16,11 +15,15 @@ namespace TwoBRenn.ObjectsSetups
     {
         private static readonly SimpleShader SimpleShader = new SimpleShader();
         private static readonly SimpleShader OrangePlasticShader = new SimpleShader();
+        private static readonly SimpleShader BlackShader = new SimpleShader();
         private static readonly Texture PlasticTexture = new Texture(@"Assets\Textures\plastic.jpg");
+        private static readonly Texture ConcreteTexture = new Texture(@"Assets\Textures\concrete.jpg");
+        private static readonly Texture CurbTexture = new Texture(@"Assets\Textures\curb.png");
 
         public SecurityStructPlacerSetup()
         {
             OrangePlasticShader.SetDefaultShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(Color.Coral));
+            BlackShader.SetDefaultShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(Color.Black));
         }
 
         public List<Func<RennObject>> GetObjectCreators()
@@ -38,10 +41,46 @@ namespace TwoBRenn.ObjectsSetups
 
         static RennObject BarrierPlacer()
         {
+            List<Material> materials = new List<Material>()
+            {
+                new Material
+                {
+                    Name = "Белый пластик",
+                    Color = Color.White,
+                    Texture = PlasticTexture
+                },
+                new Material
+                {
+                    Name = "Красный пластик",
+                    Color = Color.IndianRed,
+                    Texture = PlasticTexture
+                },
+                new Material
+                {
+                    Name = "Оранжевый пластик",
+                    Color = Color.Coral,
+                    Texture = PlasticTexture
+                },
+                new Material
+                {
+                    Name = "Синий пластик",
+                    Color = Color.DodgerBlue,
+                    Texture = PlasticTexture
+                },
+                new Material
+                {
+                    Name = "Бетон",
+                    Color = Color.White,
+                    Texture = ConcreteTexture
+                }
+            };
+
             RennObject barrier = new RennObject();
             barrier.Transform.SetRotation(0f, 0f, 0f);
             barrier.Transform.SetScale(1f);
-            barrier.AddComponent<Selectable>().Name = "Барьер";
+            Selectable selectable = barrier.AddComponent<Selectable>();
+            selectable.Name = "Барьер";
+            selectable.Materials = materials;
             barrier.AddComponent<BoxCollider>();
             MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
             barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Barrier));
@@ -52,10 +91,28 @@ namespace TwoBRenn.ObjectsSetups
 
         static RennObject BufferPlacer()
         {
+            List<Material> materials = new List<Material>()
+            {
+                new Material
+                {
+                    Name = "Белый пластик",
+                    Color = Color.White,
+                    Texture = PlasticTexture
+                },
+                new Material
+                {
+                    Name = "Оранжевый пластик",
+                    Color = Color.Coral,
+                    Texture = PlasticTexture
+                }
+            };
+
             RennObject buffer = new RennObject();
             buffer.Transform.SetRotation(0f, 0f, 0f);
             buffer.Transform.SetScale(1f);
-            buffer.AddComponent<Selectable>().Name = "Буфер";
+            Selectable selectable = buffer.AddComponent<Selectable>();
+            selectable.Name = "Буфер";
+            selectable.Materials = materials;
             buffer.AddComponent<BoxCollider>();
             buffer.AddComponent<Rigidbody>();
             MeshRenderer bufferRenderer = buffer.AddComponent<MeshRenderer>();
@@ -67,10 +124,33 @@ namespace TwoBRenn.ObjectsSetups
 
         static RennObject ConicalBufferPlacer()
         {
+            List<Material> materials = new List<Material>()
+            {
+                new Material
+                {
+                    Name = "Белый пластик",
+                    Color = Color.White,
+                    Texture = PlasticTexture
+                },
+                new Material
+                {
+                    Name = "Оранжевый пластик",
+                    Color = Color.Coral,
+                    Texture = PlasticTexture
+                },
+                new Material
+                {
+                    Name = "Полосатый пластик",
+                    Texture = CurbTexture
+                }
+            };
+
             RennObject buffer = new RennObject();
             buffer.Transform.SetRotation(0f, 0f, 0f);
             buffer.Transform.SetScale(0.5f);
-            buffer.AddComponent<Selectable>().Name = "Конус";
+            Selectable selectable = buffer.AddComponent<Selectable>();
+            selectable.Name = "Конус";
+            selectable.Materials = materials;
             buffer.AddComponent<BoxCollider>();
             buffer.AddComponent<Rigidbody>();
             MeshRenderer bufferRenderer = buffer.AddComponent<MeshRenderer>();
@@ -82,10 +162,28 @@ namespace TwoBRenn.ObjectsSetups
 
         static RennObject FencePlacer()
         {
+            List<Material> materials = new List<Material>()
+            {
+                new Material
+                {
+                    Name = "Серый металл",
+                    Color = Color.White,
+                    Texture = PlasticTexture
+                },
+                new Material
+                {
+                    Name = "Красный металл",
+                    Color = Color.IndianRed,
+                    Texture = PlasticTexture
+                }
+            };
+
             RennObject fence = new RennObject();
             fence.Transform.SetRotation(0f, 0f, 0f);
             fence.Transform.SetScale(1.5f);
-            fence.AddComponent<Selectable>().Name = "Ограждение";
+            Selectable selectable = fence.AddComponent<Selectable>();
+            selectable.Name = "Ограждение";
+            selectable.Materials = materials;
             fence.AddComponent<BoxCollider>();
             MeshRenderer fenceRenderer = fence.AddComponent<MeshRenderer>();
             fenceRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Fencing));
@@ -96,14 +194,31 @@ namespace TwoBRenn.ObjectsSetups
 
         static RennObject CylinderPlacer()
         {
+            List<Material> materials = new List<Material>()
+            {
+                new Material
+                {
+                    Name = "Черные покрышки",
+                    Color = Color.Black,
+                    Texture = PlasticTexture
+                },
+                new Material
+                {
+                    Name = "Бетон",
+                    Texture = ConcreteTexture
+                }
+            };
+
             RennObject cylinder = new RennObject();
             cylinder.Transform.SetRotation(0f, 0f, 0f);
             cylinder.Transform.SetScale(0.5f);
-            cylinder.AddComponent<Selectable>().Name = "Стопка шин";
+            Selectable selectable = cylinder.AddComponent<Selectable>();
+            selectable.Name = "Стопка шин";
+            selectable.Materials = materials;
             cylinder.AddComponent<BoxCollider>();
             MeshRenderer cylinderRenderer = cylinder.AddComponent<MeshRenderer>();
             cylinderRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Cylinder));
-            cylinderRenderer.SetShaderProgram(SimpleShader);
+            cylinderRenderer.SetShaderProgram(BlackShader);
             cylinderRenderer.SetTexture(PlasticTexture);
             return cylinder;
         }
