@@ -368,10 +368,14 @@ namespace TwoBRenn.ObjectsSetups
 
             roadPartsObjects[3].GetComponent<MeshRenderer>().SetTexture(gravelTexture);
             roadPartsObjects[3].AddComponent<BoxCollider>().IsTrigger = true;
-            roadPartsObjects[3].AddComponent<Selectable>();
+            Selectable roadPartSelectable3 = roadPartsObjects[3].AddComponent<Selectable>();
+            roadPartSelectable3.Name = "Участок дороги №3";
+            roadPartSelectable3.CanChangeTransform = false;
             roadPartsObjects[6].GetComponent<MeshRenderer>().SetTexture(gravelTexture);
             roadPartsObjects[6].AddComponent<BoxCollider>().IsTrigger = true;
-            roadPartsObjects[6].AddComponent<Selectable>();
+            Selectable roadPartSelectable6 = roadPartsObjects[6].AddComponent<Selectable>();
+            roadPartSelectable6.Name = "Участок дороги №6";
+            roadPartSelectable6.CanChangeTransform = false;
 
             RennObject curb = new RennObject();
             curb.SetParent(road);

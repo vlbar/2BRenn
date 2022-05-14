@@ -42,6 +42,7 @@ namespace TwoBRenn
             this.rightContainer = new System.Windows.Forms.Panel();
             this.structuresContainer = new System.Windows.Forms.Panel();
             this.structuresListView = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.structCountLabel = new System.Windows.Forms.Label();
             this.structCountTextLabel = new System.Windows.Forms.Label();
             this.structTextLabel = new System.Windows.Forms.Label();
@@ -52,27 +53,9 @@ namespace TwoBRenn
             this.testButton = new System.Windows.Forms.Button();
             this.mapContainer = new System.Windows.Forms.Panel();
             this.sidebarContainer = new System.Windows.Forms.Panel();
-            this.splitter1 = new System.Windows.Forms.Splitter();
-            this.debugInfoLabel = new System.Windows.Forms.Label();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.selectedObjectNameLabel = new System.Windows.Forms.Label();
-            this.objectXPositionUpDown = new System.Windows.Forms.NumericUpDown();
-            this.objectYPositionUpDown = new System.Windows.Forms.NumericUpDown();
-            this.objectZPositionUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.objectXRotationLabel = new System.Windows.Forms.Label();
-            this.objectXRotationTrackBar = new System.Windows.Forms.TrackBar();
-            this.objectYRotationTrackBar = new System.Windows.Forms.TrackBar();
-            this.objectZRotationTrackBar = new System.Windows.Forms.TrackBar();
-            this.objectYRotationLabel = new System.Windows.Forms.Label();
-            this.objectZRotationLabel = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.objectMaterialListView = new System.Windows.Forms.ListView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -83,28 +66,45 @@ namespace TwoBRenn
             this.objectZScaleTrackBar = new System.Windows.Forms.TrackBar();
             this.objectXScaleTrackBar = new System.Windows.Forms.TrackBar();
             this.objectYScaleTrackBar = new System.Windows.Forms.TrackBar();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.objectMaterialListView = new System.Windows.Forms.ListView();
-            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.objectZRotationLabel = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.objectYRotationLabel = new System.Windows.Forms.Label();
+            this.objectXRotationLabel = new System.Windows.Forms.Label();
+            this.objectZRotationTrackBar = new System.Windows.Forms.TrackBar();
+            this.objectXRotationTrackBar = new System.Windows.Forms.TrackBar();
+            this.objectYRotationTrackBar = new System.Windows.Forms.TrackBar();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.objectXPositionUpDown = new System.Windows.Forms.NumericUpDown();
+            this.objectYPositionUpDown = new System.Windows.Forms.NumericUpDown();
+            this.objectZPositionUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.selectedObjectNameLabel = new System.Windows.Forms.Label();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.debugInfoLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.bottomContainer.SuspendLayout();
             this.rightContainer.SuspendLayout();
             this.structuresContainer.SuspendLayout();
             this.bottomPanel.SuspendLayout();
             this.sidebarContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.objectXPositionUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectYPositionUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectZPositionUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectXRotationTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectYRotationTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectZRotationTrackBar)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectZScaleTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectXScaleTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectYScaleTrackBar)).BeginInit();
-            this.groupBox4.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectZRotationTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectXRotationTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectYRotationTrackBar)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectXPositionUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectYPositionUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectZPositionUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -168,6 +168,7 @@ namespace TwoBRenn
             this.glControl.TabIndex = 1;
             this.glControl.VSync = true;
             this.glControl.Load += new System.EventHandler(this.glControl_Load);
+            this.glControl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glControl_KeyDown);
             // 
             // bottomContainer
             // 
@@ -221,6 +222,10 @@ namespace TwoBRenn
             this.structuresListView.TabIndex = 4;
             this.structuresListView.UseCompatibleStateImageBehavior = false;
             this.structuresListView.ItemActivate += new System.EventHandler(this.structuresListView_ItemActivate);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 50;
             // 
             // structCountLabel
             // 
@@ -330,274 +335,39 @@ namespace TwoBRenn
             this.sidebarContainer.TabIndex = 4;
             this.sidebarContainer.Visible = false;
             // 
-            // splitter1
+            // label1
             // 
-            this.splitter1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitter1.Location = new System.Drawing.Point(719, 24);
-            this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(4, 477);
-            this.splitter1.TabIndex = 5;
-            this.splitter1.TabStop = false;
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 461);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(157, 13);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Нажмите Esc, чтобы закрыть";
             // 
-            // debugInfoLabel
+            // groupBox4
             // 
-            this.debugInfoLabel.AutoSize = true;
-            this.debugInfoLabel.Location = new System.Drawing.Point(4, 27);
-            this.debugInfoLabel.Name = "debugInfoLabel";
-            this.debugInfoLabel.Size = new System.Drawing.Size(36, 13);
-            this.debugInfoLabel.TabIndex = 6;
-            this.debugInfoLabel.Text = "0 FPS";
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Width = 50;
-            // 
-            // selectedObjectNameLabel
-            // 
-            this.selectedObjectNameLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.selectedObjectNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.selectedObjectNameLabel.Location = new System.Drawing.Point(0, 0);
-            this.selectedObjectNameLabel.Name = "selectedObjectNameLabel";
-            this.selectedObjectNameLabel.Size = new System.Drawing.Size(184, 24);
-            this.selectedObjectNameLabel.TabIndex = 0;
-            this.selectedObjectNameLabel.Text = "{SelectedObjectNameLabel}";
-            this.selectedObjectNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // objectXPositionUpDown
-            // 
-            this.objectXPositionUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.objectXPositionUpDown.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            this.objectXPositionUpDown.Location = new System.Drawing.Point(23, 19);
-            this.objectXPositionUpDown.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.objectXPositionUpDown.Minimum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            -2147483648});
-            this.objectXPositionUpDown.Name = "objectXPositionUpDown";
-            this.objectXPositionUpDown.Size = new System.Drawing.Size(149, 20);
-            this.objectXPositionUpDown.TabIndex = 1;
+            this.groupBox4.Controls.Add(this.objectMaterialListView);
+            this.groupBox4.Location = new System.Drawing.Point(3, 306);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(177, 100);
+            this.groupBox4.TabIndex = 22;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Материал";
             // 
-            // objectYPositionUpDown
+            // objectMaterialListView
             // 
-            this.objectYPositionUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.objectYPositionUpDown.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            this.objectYPositionUpDown.Location = new System.Drawing.Point(23, 40);
-            this.objectYPositionUpDown.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.objectYPositionUpDown.Minimum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            -2147483648});
-            this.objectYPositionUpDown.Name = "objectYPositionUpDown";
-            this.objectYPositionUpDown.Size = new System.Drawing.Size(149, 20);
-            this.objectYPositionUpDown.TabIndex = 3;
-            // 
-            // objectZPositionUpDown
-            // 
-            this.objectZPositionUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.objectZPositionUpDown.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            this.objectZPositionUpDown.Location = new System.Drawing.Point(23, 61);
-            this.objectZPositionUpDown.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.objectZPositionUpDown.Minimum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            -2147483648});
-            this.objectZPositionUpDown.Name = "objectZPositionUpDown";
-            this.objectZPositionUpDown.Size = new System.Drawing.Size(149, 20);
-            this.objectZPositionUpDown.TabIndex = 4;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(14, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "X";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 42);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(14, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Y";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 63);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(14, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Z";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 67);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(14, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Z";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 44);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(14, 13);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Y";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 21);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(14, 13);
-            this.label8.TabIndex = 9;
-            this.label8.Text = "X";
-            // 
-            // objectXRotationLabel
-            // 
-            this.objectXRotationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.objectXRotationLabel.AutoSize = true;
-            this.objectXRotationLabel.Location = new System.Drawing.Point(152, 20);
-            this.objectXRotationLabel.Name = "objectXRotationLabel";
-            this.objectXRotationLabel.Size = new System.Drawing.Size(25, 13);
-            this.objectXRotationLabel.TabIndex = 13;
-            this.objectXRotationLabel.Text = "999";
-            this.objectXRotationLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // objectXRotationTrackBar
-            // 
-            this.objectXRotationTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.objectXRotationTrackBar.AutoSize = false;
-            this.objectXRotationTrackBar.Location = new System.Drawing.Point(17, 19);
-            this.objectXRotationTrackBar.Maximum = 360;
-            this.objectXRotationTrackBar.Name = "objectXRotationTrackBar";
-            this.objectXRotationTrackBar.Size = new System.Drawing.Size(138, 20);
-            this.objectXRotationTrackBar.TabIndex = 14;
-            this.objectXRotationTrackBar.TickFrequency = 30;
-            this.objectXRotationTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
-            // objectYRotationTrackBar
-            // 
-            this.objectYRotationTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.objectYRotationTrackBar.AutoSize = false;
-            this.objectYRotationTrackBar.Location = new System.Drawing.Point(17, 40);
-            this.objectYRotationTrackBar.Maximum = 360;
-            this.objectYRotationTrackBar.Name = "objectYRotationTrackBar";
-            this.objectYRotationTrackBar.Size = new System.Drawing.Size(138, 20);
-            this.objectYRotationTrackBar.TabIndex = 15;
-            this.objectYRotationTrackBar.TickFrequency = 30;
-            this.objectYRotationTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
-            // objectZRotationTrackBar
-            // 
-            this.objectZRotationTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.objectZRotationTrackBar.AutoSize = false;
-            this.objectZRotationTrackBar.Location = new System.Drawing.Point(17, 63);
-            this.objectZRotationTrackBar.Maximum = 360;
-            this.objectZRotationTrackBar.Name = "objectZRotationTrackBar";
-            this.objectZRotationTrackBar.Size = new System.Drawing.Size(138, 20);
-            this.objectZRotationTrackBar.TabIndex = 16;
-            this.objectZRotationTrackBar.TickFrequency = 30;
-            this.objectZRotationTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
-            // objectYRotationLabel
-            // 
-            this.objectYRotationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.objectYRotationLabel.AutoSize = true;
-            this.objectYRotationLabel.Location = new System.Drawing.Point(152, 44);
-            this.objectYRotationLabel.Name = "objectYRotationLabel";
-            this.objectYRotationLabel.Size = new System.Drawing.Size(25, 13);
-            this.objectYRotationLabel.TabIndex = 17;
-            this.objectYRotationLabel.Text = "999";
-            this.objectYRotationLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // objectZRotationLabel
-            // 
-            this.objectZRotationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.objectZRotationLabel.AutoSize = true;
-            this.objectZRotationLabel.Location = new System.Drawing.Point(152, 67);
-            this.objectZRotationLabel.Name = "objectZRotationLabel";
-            this.objectZRotationLabel.Size = new System.Drawing.Size(25, 13);
-            this.objectZRotationLabel.TabIndex = 18;
-            this.objectZRotationLabel.Text = "999";
-            this.objectZRotationLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.objectXPositionUpDown);
-            this.groupBox1.Controls.Add(this.objectYPositionUpDown);
-            this.groupBox1.Controls.Add(this.objectZPositionUpDown);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Location = new System.Drawing.Point(3, 27);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(178, 87);
-            this.groupBox1.TabIndex = 19;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Положение";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.objectZRotationLabel);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.objectYRotationLabel);
-            this.groupBox2.Controls.Add(this.objectXRotationLabel);
-            this.groupBox2.Controls.Add(this.objectZRotationTrackBar);
-            this.groupBox2.Controls.Add(this.objectXRotationTrackBar);
-            this.groupBox2.Controls.Add(this.objectYRotationTrackBar);
-            this.groupBox2.Location = new System.Drawing.Point(3, 120);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(178, 87);
-            this.groupBox2.TabIndex = 20;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Поворот";
+            this.objectMaterialListView.BackColor = System.Drawing.SystemColors.Control;
+            this.objectMaterialListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.objectMaterialListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.objectMaterialListView.HideSelection = false;
+            this.objectMaterialListView.Location = new System.Drawing.Point(3, 16);
+            this.objectMaterialListView.Name = "objectMaterialListView";
+            this.objectMaterialListView.Size = new System.Drawing.Size(171, 81);
+            this.objectMaterialListView.TabIndex = 0;
+            this.objectMaterialListView.UseCompatibleStateImageBehavior = false;
             // 
             // groupBox3
             // 
@@ -685,12 +455,15 @@ namespace TwoBRenn
             | System.Windows.Forms.AnchorStyles.Right)));
             this.objectZScaleTrackBar.AutoSize = false;
             this.objectZScaleTrackBar.Location = new System.Drawing.Point(17, 63);
-            this.objectZScaleTrackBar.Maximum = 360;
+            this.objectZScaleTrackBar.Maximum = 50;
+            this.objectZScaleTrackBar.Minimum = 5;
             this.objectZScaleTrackBar.Name = "objectZScaleTrackBar";
             this.objectZScaleTrackBar.Size = new System.Drawing.Size(138, 20);
             this.objectZScaleTrackBar.TabIndex = 16;
             this.objectZScaleTrackBar.TickFrequency = 30;
             this.objectZScaleTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.objectZScaleTrackBar.Value = 5;
+            this.objectZScaleTrackBar.Scroll += new System.EventHandler(this.objectScaleTrackBar_Scroll);
             // 
             // objectXScaleTrackBar
             // 
@@ -698,12 +471,15 @@ namespace TwoBRenn
             | System.Windows.Forms.AnchorStyles.Right)));
             this.objectXScaleTrackBar.AutoSize = false;
             this.objectXScaleTrackBar.Location = new System.Drawing.Point(17, 19);
-            this.objectXScaleTrackBar.Maximum = 360;
+            this.objectXScaleTrackBar.Maximum = 50;
+            this.objectXScaleTrackBar.Minimum = 5;
             this.objectXScaleTrackBar.Name = "objectXScaleTrackBar";
             this.objectXScaleTrackBar.Size = new System.Drawing.Size(138, 20);
             this.objectXScaleTrackBar.TabIndex = 14;
             this.objectXScaleTrackBar.TickFrequency = 30;
             this.objectXScaleTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.objectXScaleTrackBar.Value = 5;
+            this.objectXScaleTrackBar.Scroll += new System.EventHandler(this.objectScaleTrackBar_Scroll);
             // 
             // objectYScaleTrackBar
             // 
@@ -711,46 +487,295 @@ namespace TwoBRenn
             | System.Windows.Forms.AnchorStyles.Right)));
             this.objectYScaleTrackBar.AutoSize = false;
             this.objectYScaleTrackBar.Location = new System.Drawing.Point(17, 40);
-            this.objectYScaleTrackBar.Maximum = 360;
+            this.objectYScaleTrackBar.Maximum = 50;
+            this.objectYScaleTrackBar.Minimum = 5;
             this.objectYScaleTrackBar.Name = "objectYScaleTrackBar";
             this.objectYScaleTrackBar.Size = new System.Drawing.Size(138, 20);
             this.objectYScaleTrackBar.TabIndex = 15;
             this.objectYScaleTrackBar.TickFrequency = 30;
             this.objectYScaleTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.objectYScaleTrackBar.Value = 5;
+            this.objectYScaleTrackBar.Scroll += new System.EventHandler(this.objectScaleTrackBar_Scroll);
             // 
-            // groupBox4
+            // groupBox2
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox4.Controls.Add(this.objectMaterialListView);
-            this.groupBox4.Location = new System.Drawing.Point(3, 306);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(177, 100);
-            this.groupBox4.TabIndex = 22;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Материал";
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.objectZRotationLabel);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Controls.Add(this.objectYRotationLabel);
+            this.groupBox2.Controls.Add(this.objectXRotationLabel);
+            this.groupBox2.Controls.Add(this.objectZRotationTrackBar);
+            this.groupBox2.Controls.Add(this.objectXRotationTrackBar);
+            this.groupBox2.Controls.Add(this.objectYRotationTrackBar);
+            this.groupBox2.Location = new System.Drawing.Point(3, 120);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(178, 87);
+            this.groupBox2.TabIndex = 20;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Поворот";
             // 
-            // objectMaterialListView
+            // label8
             // 
-            this.objectMaterialListView.BackColor = System.Drawing.SystemColors.Control;
-            this.objectMaterialListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.objectMaterialListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.objectMaterialListView.HideSelection = false;
-            this.objectMaterialListView.Location = new System.Drawing.Point(3, 16);
-            this.objectMaterialListView.Name = "objectMaterialListView";
-            this.objectMaterialListView.Size = new System.Drawing.Size(171, 81);
-            this.objectMaterialListView.TabIndex = 0;
-            this.objectMaterialListView.UseCompatibleStateImageBehavior = false;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 21);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(14, 13);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "X";
             // 
-            // label1
+            // label7
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 461);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(157, 13);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "Нажмите Esc, чтобы закрыть";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 44);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(14, 13);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Y";
+            // 
+            // objectZRotationLabel
+            // 
+            this.objectZRotationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectZRotationLabel.AutoSize = true;
+            this.objectZRotationLabel.Location = new System.Drawing.Point(152, 67);
+            this.objectZRotationLabel.Name = "objectZRotationLabel";
+            this.objectZRotationLabel.Size = new System.Drawing.Size(25, 13);
+            this.objectZRotationLabel.TabIndex = 18;
+            this.objectZRotationLabel.Text = "999";
+            this.objectZRotationLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 67);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(14, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Z";
+            // 
+            // objectYRotationLabel
+            // 
+            this.objectYRotationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectYRotationLabel.AutoSize = true;
+            this.objectYRotationLabel.Location = new System.Drawing.Point(152, 44);
+            this.objectYRotationLabel.Name = "objectYRotationLabel";
+            this.objectYRotationLabel.Size = new System.Drawing.Size(25, 13);
+            this.objectYRotationLabel.TabIndex = 17;
+            this.objectYRotationLabel.Text = "999";
+            this.objectYRotationLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // objectXRotationLabel
+            // 
+            this.objectXRotationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectXRotationLabel.AutoSize = true;
+            this.objectXRotationLabel.Location = new System.Drawing.Point(152, 20);
+            this.objectXRotationLabel.Name = "objectXRotationLabel";
+            this.objectXRotationLabel.Size = new System.Drawing.Size(25, 13);
+            this.objectXRotationLabel.TabIndex = 13;
+            this.objectXRotationLabel.Text = "999";
+            this.objectXRotationLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // objectZRotationTrackBar
+            // 
+            this.objectZRotationTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectZRotationTrackBar.AutoSize = false;
+            this.objectZRotationTrackBar.Location = new System.Drawing.Point(17, 63);
+            this.objectZRotationTrackBar.Maximum = 360;
+            this.objectZRotationTrackBar.Minimum = -360;
+            this.objectZRotationTrackBar.Name = "objectZRotationTrackBar";
+            this.objectZRotationTrackBar.Size = new System.Drawing.Size(138, 20);
+            this.objectZRotationTrackBar.TabIndex = 16;
+            this.objectZRotationTrackBar.TickFrequency = 30;
+            this.objectZRotationTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.objectZRotationTrackBar.Scroll += new System.EventHandler(this.objectRotationTrackBar_ValueChanged);
+            // 
+            // objectXRotationTrackBar
+            // 
+            this.objectXRotationTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectXRotationTrackBar.AutoSize = false;
+            this.objectXRotationTrackBar.Location = new System.Drawing.Point(17, 19);
+            this.objectXRotationTrackBar.Maximum = 360;
+            this.objectXRotationTrackBar.Minimum = -360;
+            this.objectXRotationTrackBar.Name = "objectXRotationTrackBar";
+            this.objectXRotationTrackBar.Size = new System.Drawing.Size(138, 20);
+            this.objectXRotationTrackBar.TabIndex = 14;
+            this.objectXRotationTrackBar.TickFrequency = 30;
+            this.objectXRotationTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.objectXRotationTrackBar.Scroll += new System.EventHandler(this.objectRotationTrackBar_ValueChanged);
+            // 
+            // objectYRotationTrackBar
+            // 
+            this.objectYRotationTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectYRotationTrackBar.AutoSize = false;
+            this.objectYRotationTrackBar.Location = new System.Drawing.Point(17, 40);
+            this.objectYRotationTrackBar.Maximum = 360;
+            this.objectYRotationTrackBar.Minimum = -360;
+            this.objectYRotationTrackBar.Name = "objectYRotationTrackBar";
+            this.objectYRotationTrackBar.Size = new System.Drawing.Size(138, 20);
+            this.objectYRotationTrackBar.TabIndex = 15;
+            this.objectYRotationTrackBar.TickFrequency = 30;
+            this.objectYRotationTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.objectYRotationTrackBar.Scroll += new System.EventHandler(this.objectRotationTrackBar_ValueChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.objectXPositionUpDown);
+            this.groupBox1.Controls.Add(this.objectYPositionUpDown);
+            this.groupBox1.Controls.Add(this.objectZPositionUpDown);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Location = new System.Drawing.Point(3, 27);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(178, 87);
+            this.groupBox1.TabIndex = 19;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Положение";
+            // 
+            // objectXPositionUpDown
+            // 
+            this.objectXPositionUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectXPositionUpDown.DecimalPlaces = 5;
+            this.objectXPositionUpDown.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.objectXPositionUpDown.Location = new System.Drawing.Point(23, 19);
+            this.objectXPositionUpDown.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.objectXPositionUpDown.Minimum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            -2147483648});
+            this.objectXPositionUpDown.Name = "objectXPositionUpDown";
+            this.objectXPositionUpDown.Size = new System.Drawing.Size(149, 20);
+            this.objectXPositionUpDown.TabIndex = 1;
+            this.objectXPositionUpDown.Tag = "X";
+            this.objectXPositionUpDown.ValueChanged += new System.EventHandler(this.objectPositionUpDown_ValueChanged);
+            // 
+            // objectYPositionUpDown
+            // 
+            this.objectYPositionUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectYPositionUpDown.DecimalPlaces = 5;
+            this.objectYPositionUpDown.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.objectYPositionUpDown.Location = new System.Drawing.Point(23, 40);
+            this.objectYPositionUpDown.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.objectYPositionUpDown.Minimum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            -2147483648});
+            this.objectYPositionUpDown.Name = "objectYPositionUpDown";
+            this.objectYPositionUpDown.Size = new System.Drawing.Size(149, 20);
+            this.objectYPositionUpDown.TabIndex = 3;
+            this.objectYPositionUpDown.Tag = "Y";
+            this.objectYPositionUpDown.ValueChanged += new System.EventHandler(this.objectPositionUpDown_ValueChanged);
+            // 
+            // objectZPositionUpDown
+            // 
+            this.objectZPositionUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectZPositionUpDown.DecimalPlaces = 5;
+            this.objectZPositionUpDown.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.objectZPositionUpDown.Location = new System.Drawing.Point(23, 61);
+            this.objectZPositionUpDown.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.objectZPositionUpDown.Minimum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            -2147483648});
+            this.objectZPositionUpDown.Name = "objectZPositionUpDown";
+            this.objectZPositionUpDown.Size = new System.Drawing.Size(149, 20);
+            this.objectZPositionUpDown.TabIndex = 4;
+            this.objectZPositionUpDown.Tag = "Z";
+            this.objectZPositionUpDown.ValueChanged += new System.EventHandler(this.objectPositionUpDown_ValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(14, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "X";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 42);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(14, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Y";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 63);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(14, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Z";
+            // 
+            // selectedObjectNameLabel
+            // 
+            this.selectedObjectNameLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.selectedObjectNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.selectedObjectNameLabel.Location = new System.Drawing.Point(0, 0);
+            this.selectedObjectNameLabel.Name = "selectedObjectNameLabel";
+            this.selectedObjectNameLabel.Size = new System.Drawing.Size(184, 24);
+            this.selectedObjectNameLabel.TabIndex = 0;
+            this.selectedObjectNameLabel.Text = "{SelectedObjectNameLabel}";
+            this.selectedObjectNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // splitter1
+            // 
+            this.splitter1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.splitter1.Location = new System.Drawing.Point(719, 24);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(4, 477);
+            this.splitter1.TabIndex = 5;
+            this.splitter1.TabStop = false;
+            // 
+            // debugInfoLabel
+            // 
+            this.debugInfoLabel.AutoSize = true;
+            this.debugInfoLabel.Location = new System.Drawing.Point(4, 27);
+            this.debugInfoLabel.Name = "debugInfoLabel";
+            this.debugInfoLabel.Size = new System.Drawing.Size(36, 13);
+            this.debugInfoLabel.TabIndex = 6;
+            this.debugInfoLabel.Text = "0 FPS";
             // 
             // MainForm
             // 
@@ -777,22 +802,22 @@ namespace TwoBRenn
             this.bottomPanel.PerformLayout();
             this.sidebarContainer.ResumeLayout(false);
             this.sidebarContainer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.objectXPositionUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectYPositionUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectZPositionUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectXRotationTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectYRotationTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectZRotationTrackBar)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectZScaleTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectXScaleTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectYScaleTrackBar)).EndInit();
-            this.groupBox4.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectZRotationTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectXRotationTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectYRotationTrackBar)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectXPositionUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectYPositionUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectZPositionUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

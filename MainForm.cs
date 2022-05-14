@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 using OpenTK;
 using TwoBRenn.Engine;
+using TwoBRenn.Engine.Components.Common;
 using TwoBRenn.Engine.Interfaces;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.ObjectsSetups;
@@ -26,11 +28,13 @@ namespace TwoBRenn
             smoothGlControl.Size = glControl.Size;
             smoothGlControl.TabIndex = glControl.TabIndex;
             smoothGlControl.Load += glControl_Load;
+            smoothGlControl.KeyDown += glControl_KeyDown;
 
             Controls.Remove(glControl);
             Controls.Add(smoothGlControl);
 
             InitStructuresMenu();
+            InitObjectPickerMenu();
         }
 
         private void glControl_Load(object sender, EventArgs e)
@@ -103,9 +107,100 @@ namespace TwoBRenn
             structuresListView.Items.AddRange(items.ToArray());
         }
 
+        private void InitObjectPickerMenu()
+        {
+            engine.ObjectPicker.OnObjectPicked += OnObjectSelect;
+        }
+
+        //
+        //
+        // EVENTS
+        //
+        //
+
+        private void OnObjectSelect(RennObject selectedObject)
+        {
+            if (selectedObject != null)
+            {
+                sidebarContainer.Visible = true;
+                Selectable selectable = selectedObject.GetComponent<Selectable>();
+                if(selectable == null) return;
+                selectedObjectNameLabel.Text = selectable.Name;
+
+                Vector3 position = selectedObject.Transform.position;
+                Vector3 rotation = selectedObject.Transform.rotation;
+                Vector3 scale = selectedObject.Transform.scale;
+
+                objectXPositionUpDown.Value = (decimal)position.X;
+                objectYPositionUpDown.Value = (decimal)position.Y;
+                objectZPositionUpDown.Value = (decimal)position.Z;
+
+                objectXRotationTrackBar.Value = (int)rotation.X;
+                objectYRotationTrackBar.Value = (int)rotation.Y;
+                objectZRotationTrackBar.Value = (int)rotation.Z;
+                objectXRotationLabel.Text = objectXRotationTrackBar.Value.ToString(CultureInfo.CurrentCulture);
+                objectYRotationLabel.Text = objectYRotationTrackBar.Value.ToString(CultureInfo.CurrentCulture);
+                objectZRotationLabel.Text = objectZRotationTrackBar.Value.ToString(CultureInfo.CurrentCulture);
+
+                objectXScaleTrackBar.Value = (int)(scale.X * 10);
+                objectYScaleTrackBar.Value = (int)(scale.Y * 10);
+                objectZScaleTrackBar.Value = (int)(scale.Z * 10);
+                objectXScaleLabel.Text = (objectXScaleTrackBar.Value / 10.0f).ToString(CultureInfo.CurrentCulture);
+                objectYScaleLabel.Text = (objectYScaleTrackBar.Value / 10.0f).ToString(CultureInfo.CurrentCulture);
+                objectZScaleLabel.Text = (objectZScaleTrackBar.Value / 10.0f).ToString(CultureInfo.CurrentCulture);
+            }
+            else
+            {
+                sidebarContainer.Visible = false;
+            }
+        }
+
         private void structuresListView_ItemActivate(object sender, EventArgs e)
         {
             engine.ObjectPlacer.SelectObject(structuresListView.SelectedItems[0].Index);
+        }
+
+        private void objectPositionUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (engine.ObjectPicker.CurrentObject.GetComponent<Selectable>().CanChangeTransform)
+            {
+                engine.ObjectPicker.CurrentObject.Transform.SetPosition((float)objectXPositionUpDown.Value,
+                    (float)objectYPositionUpDown.Value, (float)objectZPositionUpDown.Value);
+            }
+        }
+
+        private void objectRotationTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            if (engine.ObjectPicker.CurrentObject.GetComponent<Selectable>().CanChangeTransform)
+            {
+                engine.ObjectPicker.CurrentObject.Transform.SetRotation(objectXRotationTrackBar.Value,
+                    objectYRotationTrackBar.Value, objectZRotationTrackBar.Value);
+                objectXRotationLabel.Text = objectXRotationTrackBar.Value.ToString(CultureInfo.CurrentCulture);
+                objectYRotationLabel.Text = objectYRotationTrackBar.Value.ToString(CultureInfo.CurrentCulture);
+                objectZRotationLabel.Text = objectZRotationTrackBar.Value.ToString(CultureInfo.CurrentCulture);
+            }
+        }
+
+        private void objectScaleTrackBar_Scroll(object sender, EventArgs e)
+        {
+            if (engine.ObjectPicker.CurrentObject.GetComponent<Selectable>().CanChangeTransform)
+            {
+                engine.ObjectPicker.CurrentObject.Transform.SetScale(objectXScaleTrackBar.Value / 10.0f,
+                    objectYScaleTrackBar.Value / 10.0f, objectZScaleTrackBar.Value / 10.0f);
+                objectXScaleLabel.Text = (objectXScaleTrackBar.Value / 10.0f).ToString(CultureInfo.CurrentCulture);
+                objectYScaleLabel.Text = (objectYScaleTrackBar.Value / 10.0f).ToString(CultureInfo.CurrentCulture);
+                objectZScaleLabel.Text = (objectZScaleTrackBar.Value / 10.0f).ToString(CultureInfo.CurrentCulture);
+            }
+        }
+
+        private void glControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            Console.WriteLine(e.KeyCode.ToString());
+            if (e.KeyCode == Keys.Escape)
+            {
+                engine.ObjectPicker.CurrentObject = null;
+                sidebarContainer.Visible = false;
+            }
         }
     }
 }

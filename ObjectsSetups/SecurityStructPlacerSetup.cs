@@ -41,7 +41,7 @@ namespace TwoBRenn.ObjectsSetups
             RennObject barrier = new RennObject();
             barrier.Transform.SetRotation(0f, 0f, 0f);
             barrier.Transform.SetScale(1f);
-            barrier.AddComponent<Selectable>();
+            barrier.AddComponent<Selectable>().Name = "Барьер";
             barrier.AddComponent<BoxCollider>();
             MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
             barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Barrier));
@@ -55,7 +55,7 @@ namespace TwoBRenn.ObjectsSetups
             RennObject buffer = new RennObject();
             buffer.Transform.SetRotation(0f, 0f, 0f);
             buffer.Transform.SetScale(1f);
-            buffer.AddComponent<Selectable>();
+            buffer.AddComponent<Selectable>().Name = "Буфер";
             buffer.AddComponent<BoxCollider>();
             buffer.AddComponent<Rigidbody>();
             MeshRenderer bufferRenderer = buffer.AddComponent<MeshRenderer>();
@@ -69,8 +69,8 @@ namespace TwoBRenn.ObjectsSetups
         {
             RennObject buffer = new RennObject();
             buffer.Transform.SetRotation(0f, 0f, 0f);
-            buffer.Transform.SetScale(0.4f);
-            buffer.AddComponent<Selectable>();
+            buffer.Transform.SetScale(0.5f);
+            buffer.AddComponent<Selectable>().Name = "Конус";
             buffer.AddComponent<BoxCollider>();
             buffer.AddComponent<Rigidbody>();
             MeshRenderer bufferRenderer = buffer.AddComponent<MeshRenderer>();
@@ -85,7 +85,7 @@ namespace TwoBRenn.ObjectsSetups
             RennObject fence = new RennObject();
             fence.Transform.SetRotation(0f, 0f, 0f);
             fence.Transform.SetScale(1.5f);
-            fence.AddComponent<Selectable>();
+            fence.AddComponent<Selectable>().Name = "Ограждение";
             fence.AddComponent<BoxCollider>();
             MeshRenderer fenceRenderer = fence.AddComponent<MeshRenderer>();
             fenceRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Fencing));
@@ -99,7 +99,7 @@ namespace TwoBRenn.ObjectsSetups
             RennObject cylinder = new RennObject();
             cylinder.Transform.SetRotation(0f, 0f, 0f);
             cylinder.Transform.SetScale(0.5f);
-            cylinder.AddComponent<Selectable>();
+            cylinder.AddComponent<Selectable>().Name = "Стопка шин";
             cylinder.AddComponent<BoxCollider>();
             MeshRenderer cylinderRenderer = cylinder.AddComponent<MeshRenderer>();
             cylinderRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Cylinder));

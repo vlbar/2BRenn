@@ -17,7 +17,8 @@ namespace TwoBRenn.Engine.Components.Common
 
     class Selectable : Component
     {
-        public float BlinkDuration = 1.5f;
+        public string Name = "[RennObject]";
+        public float BlinkDuration = 1.4f;
         public bool CanChangeTransform = true;
         public List<Material> Materials;
 
@@ -34,6 +35,7 @@ namespace TwoBRenn.Engine.Components.Common
             objectPicker = RennEngine.Instance.ObjectPicker;
             meshRenderer = rennObject.GetComponent<MeshRenderer>();
             defaultColor = meshRenderer.GetVector4Attribute(SimpleShader.BaseColorUniform);
+            defaultColor.W = 1;
             blinkAnimation = BlinkDuration;
         }
 
