@@ -6,7 +6,7 @@ namespace TwoBRenn.Engine.Render.Camera
 {
     class OrbitCameraController : CameraController
     {
-        public float MovementSpeed = 5.5f;
+        public float MovementSpeed = 8.5f;
         public float RotationSensitivity = 0.2f;
         public float ZoomSensitivity = 15f;
 
@@ -135,6 +135,18 @@ namespace TwoBRenn.Engine.Render.Camera
             Rotate();
             Zoom();
             camera.SetViewMatrix(GetViewMatrix());
+        }
+
+        public override void SetPosition(Vector3 vector)
+        {
+            targetPosition = vector;
+        }
+
+        public override void SetRotation(Vector3 vector)
+        {
+            pitch = vector.X;
+            yaw = vector.Y;
+            zoomAmount = vector.Z;
         }
     }
 }

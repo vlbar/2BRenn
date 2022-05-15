@@ -88,6 +88,8 @@ namespace TwoBRenn.ObjectsSetups
         public HashSet<RennObject> GetObjects()
         {
             SetupAssets();
+            Camera.Instance.Controller.SetPosition(new Vector3(10, 0, 4));
+            Camera.Instance.Controller.SetRotation(new Vector3(20, 40, 15));
             HashSet<RennObject> objects = new HashSet<RennObject>();
 
             AddGround(objects);

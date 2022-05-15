@@ -13,5 +13,7 @@ namespace TwoBRenn.Engine.Render.Camera
             this.camera = camera;
         }
         public abstract void OnUpdate();
+        public abstract void SetPosition(Vector3 vector);
+        public abstract void SetRotation(Vector3 vector);
     }
 }
