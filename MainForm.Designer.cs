@@ -86,6 +86,7 @@ namespace TwoBRenn
             this.testMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeProjectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label9 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.bottomContainer.SuspendLayout();
             this.rightContainer.SuspendLayout();
@@ -759,6 +760,7 @@ namespace TwoBRenn
             // 
             // changeCarButton
             // 
+            this.changeCarButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.changeCarButton.Location = new System.Drawing.Point(7, 472);
             this.changeCarButton.Name = "changeCarButton";
             this.changeCarButton.Size = new System.Drawing.Size(114, 23);
@@ -789,11 +791,23 @@ namespace TwoBRenn
             this.exitMenuItem.Text = "Выход";
             this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(7, 417);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(312, 52);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "Управление:\r\nWASD - перемещение камеры\r\nУдерживание средней кнопки мыши - вращени" +
+    "e вокруг оси\r\nКолсео мыши - приближение/удаление\r\n";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(907, 611);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.changeCarButton);
             this.Controls.Add(this.debugInfoLabel);
             this.Controls.Add(this.glControl);
@@ -895,6 +909,7 @@ namespace TwoBRenn
         private System.Windows.Forms.ToolStripMenuItem testMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeProjectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitMenuItem;
+        private System.Windows.Forms.Label label9;
     }
 }
 
