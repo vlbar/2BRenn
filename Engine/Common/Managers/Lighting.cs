@@ -39,31 +39,32 @@ namespace TwoBRenn.Engine.Common.Managers
                 PointLight pointLight = Instance.pointLights[i];
                 if (pointLight.IsEnabled)
                 {
-                    pointLightsCount++;
+                    int index = pointLightsCount;
                     shaderProgram.SetVector3(
-                        BaseShaderProgram.PointLightsUniform + $"[{i}]." +
+                        BaseShaderProgram.PointLightsUniform + $"[{index}]." +
                         BaseShaderProgram.PointLightUniform.PositionUniform, pointLight.Position);
                     Vector3 color = new Vector3(pointLight.Color.R / 255.0f, pointLight.Color.G / 255.0f,
                         pointLight.Color.B / 255.0f);
                     shaderProgram.SetVector3(
-                        BaseShaderProgram.PointLightsUniform + $"[{i}]." +
+                        BaseShaderProgram.PointLightsUniform + $"[{index}]." +
                         BaseShaderProgram.PointLightUniform.ColorUniform, color);
                     shaderProgram.SetFloat(
-                        BaseShaderProgram.PointLightsUniform + $"[{i}]." +
+                        BaseShaderProgram.PointLightsUniform + $"[{index}]." +
                         BaseShaderProgram.PointLightUniform.AmbientIntensityUniform, pointLight.AmbientIntensity);
                     shaderProgram.SetFloat(
-                        BaseShaderProgram.PointLightsUniform + $"[{i}]." +
+                        BaseShaderProgram.PointLightsUniform + $"[{index}]." +
                         BaseShaderProgram.PointLightUniform.DiffuseIntensityUniform, pointLight.DiffuseIntensity);
 
                     shaderProgram.SetFloat(
-                        BaseShaderProgram.PointLightsUniform + $"[{i}]." +
+                        BaseShaderProgram.PointLightsUniform + $"[{index}]." +
                         BaseShaderProgram.PointLightUniform.ConstantAttenuationUniform, pointLight.ConstantAttenuation);
                     shaderProgram.SetFloat(
-                        BaseShaderProgram.PointLightsUniform + $"[{i}]." +
+                        BaseShaderProgram.PointLightsUniform + $"[{index}]." +
                         BaseShaderProgram.PointLightUniform.LinearAttenuationUniform, pointLight.LinearAttenuation);
                     shaderProgram.SetFloat(
-                        BaseShaderProgram.PointLightsUniform + $"[{i}]." +
+                        BaseShaderProgram.PointLightsUniform + $"[{index}]." +
                         BaseShaderProgram.PointLightUniform.QuadraticAttenuationUniform, pointLight.QuadraticAttenuation);
+                    pointLightsCount++;
                 }
             }
 
