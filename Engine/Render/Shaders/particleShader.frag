@@ -5,12 +5,17 @@ in vec4 color;
 
 out vec4 outColor;
 
+struct BaseLight                                                                    
+{                                                                                   
+    vec3 color;                                                                     
+    float ambientIntensity;                                                         
+    float diffuseIntensity;                                                         
+}; 
+
 struct DirectionalLight
 {
-    vec3 color;
-    float intensity;
+    BaseLight light;
     vec3 direction;
-    float diffuseIntensity;
 };
  
 uniform DirectionalLight directionalLight;
@@ -18,5 +23,7 @@ uniform sampler2D texture0;
 
 void main()
 {
-	outColor = vec4(directionalLight.color, 1.0) * (directionalLight.intensity + directionalLight.diffuseIntensity) * texture(texture0, uv) * color;
+	outColor = vec4(directionalLight.light.color, 1.0) * 
+        (directionalLight.light.ambientIntensity + directionalLight.light.diffuseIntensity) * 
+        texture(texture0, uv) * color;
 }
