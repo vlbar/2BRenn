@@ -43,6 +43,7 @@ namespace TwoBRenn.Engine.Components.Common
         private RennObject[] wheelsToMoveRotate;
         private float wheelRotateForward;
         private float cockpitXAngle;
+        private float cockpitZAngle;
 
         // drift
         public RennObject CockpitRotationCenter;
@@ -157,12 +158,17 @@ namespace TwoBRenn.Engine.Components.Common
             CurrentTurn = Stabilize(CurrentTurn, TurnSpeed, targetTurn);
 
             float rotateFactor = CalculateRotationFactor() * (CurrentSpeed >= 0 ? 1 : -1);
+
             rotation += new Vector3(0, (CurrentTurn + handBreakTurn) * TurnStrength * Time.DeltaTime * rotateFactor, 0);
             rennObject.Transform.SetRotation(rotation);
-
             cockpitXAngle = MathHelper.Clamp(cockpitXAngle, -1.5f, 1.5f);
             cockpitXAngle = Stabilize(cockpitXAngle, 5);
-            Cockpit.Transform.SetRotation(new Vector3(cockpitXAngle, 0, 0));
+
+            cockpitZAngle += 45f * CurrentTurn * rotateFactor * Time.DeltaTime;
+            cockpitZAngle = MathHelper.Clamp(cockpitZAngle, -3.5f, 3.5f);
+            cockpitZAngle = Stabilize(cockpitZAngle, 15);
+
+            Cockpit.Transform.SetRotation(new Vector3(cockpitXAngle, 0, cockpitZAngle));
         }
 
         private void HandBreak()
