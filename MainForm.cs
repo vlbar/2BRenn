@@ -12,6 +12,7 @@ using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.ObjectsSetups;
+using TwoBRenn.Properties;
 
 namespace TwoBRenn
 {
@@ -332,6 +333,41 @@ namespace TwoBRenn
             budgetLabel.Text = $@"{money:# ##0.00₽;(# ##0.00₽);0}";
             structuresCount++;
             structCountLabel.Text = structuresCount + @"/" + maxStructureCount;
+        }
+
+        private void testMenuItem_Click(object sender, EventArgs e)
+        {
+            if (drivingCar == -1)
+            {
+                DriveCar(0);
+                ChangePickerState(false);
+            }
+            else
+            {
+                DriveCar(-1);
+                ChangePickerState(true);
+            }
+        }
+
+        private void changeProjectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Camera.IsOrthographic = !Camera.IsOrthographic;
+        }
+
+        private void exitMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void aboutMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                Resources.about,
+                @"О программе",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1,
+                MessageBoxOptions.DefaultDesktopOnly);
         }
     }
 }

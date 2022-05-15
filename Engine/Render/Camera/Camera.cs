@@ -40,7 +40,7 @@ namespace TwoBRenn.Engine.Render.Camera
         {
             if (isOrthographic)
             {
-                _projection = Matrix4.CreateOrthographic(5, 5, clipingNear, clipingFar);
+                _projection = Matrix4.CreateOrthographic(15, 15, clipingNear, clipingFar);
             }
             else
             {
@@ -60,7 +60,11 @@ namespace TwoBRenn.Engine.Render.Camera
         public static bool IsOrthographic
         {
             get => Instance.isOrthographic;
-            set => Instance.isOrthographic = value;
+            set
+            {
+                Instance.isOrthographic = value; 
+                Instance.SetupProjection();
+            }
         }
 
         public static Matrix4 GetProjectionMatrix() => _projection;

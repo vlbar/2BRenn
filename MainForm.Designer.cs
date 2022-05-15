@@ -31,12 +31,8 @@ namespace TwoBRenn
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autodromToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.effectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.glControl = new OpenTK.GLControl();
             this.bottomContainer = new System.Windows.Forms.Panel();
             this.rightContainer = new System.Windows.Forms.Panel();
@@ -87,6 +83,9 @@ namespace TwoBRenn
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.debugInfoLabel = new System.Windows.Forms.Label();
             this.changeCarButton = new System.Windows.Forms.Button();
+            this.testMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeProjectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.bottomContainer.SuspendLayout();
             this.rightContainer.SuspendLayout();
@@ -111,53 +110,30 @@ namespace TwoBRenn
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
             this.autodromToolStripMenuItem,
-            this.effectsToolStripMenuItem,
-            this.windowToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.aboutMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(907, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.fileToolStripMenuItem.Text = "Файл";
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
-            this.editToolStripMenuItem.Text = "Изменить";
-            // 
             // autodromToolStripMenuItem
             // 
+            this.autodromToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.testMenuItem,
+            this.changeProjectionToolStripMenuItem,
+            this.exitMenuItem});
             this.autodromToolStripMenuItem.Name = "autodromToolStripMenuItem";
             this.autodromToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
             this.autodromToolStripMenuItem.Text = "Автодром";
             // 
-            // effectsToolStripMenuItem
+            // aboutMenuItem
             // 
-            this.effectsToolStripMenuItem.Name = "effectsToolStripMenuItem";
-            this.effectsToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.effectsToolStripMenuItem.Text = "Эффекты";
-            // 
-            // windowToolStripMenuItem
-            // 
-            this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.windowToolStripMenuItem.Text = "Окно";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
-            this.aboutToolStripMenuItem.Text = "О программе";
+            this.aboutMenuItem.Name = "aboutMenuItem";
+            this.aboutMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.aboutMenuItem.Text = "О программе";
+            this.aboutMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
             // 
             // glControl
             // 
@@ -792,6 +768,27 @@ namespace TwoBRenn
             this.changeCarButton.Visible = false;
             this.changeCarButton.Click += new System.EventHandler(this.changeCarButton_Click);
             // 
+            // testMenuItem
+            // 
+            this.testMenuItem.Name = "testMenuItem";
+            this.testMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.testMenuItem.Text = "Тест";
+            this.testMenuItem.Click += new System.EventHandler(this.testMenuItem_Click);
+            // 
+            // changeProjectionToolStripMenuItem
+            // 
+            this.changeProjectionToolStripMenuItem.Name = "changeProjectionToolStripMenuItem";
+            this.changeProjectionToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.changeProjectionToolStripMenuItem.Text = "Переключить проекцию";
+            this.changeProjectionToolStripMenuItem.Click += new System.EventHandler(this.changeProjectionToolStripMenuItem_Click);
+            // 
+            // exitMenuItem
+            // 
+            this.exitMenuItem.Name = "exitMenuItem";
+            this.exitMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.exitMenuItem.Text = "Выход";
+            this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -843,12 +840,8 @@ namespace TwoBRenn
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autodromToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem effectsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
         private OpenTK.GLControl glControl;
         private System.Windows.Forms.Panel bottomContainer;
         private System.Windows.Forms.Panel structuresContainer;
@@ -899,6 +892,9 @@ namespace TwoBRenn
         private System.Windows.Forms.TrackBar objectYScaleTrackBar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button changeCarButton;
+        private System.Windows.Forms.ToolStripMenuItem testMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeProjectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitMenuItem;
     }
 }
 

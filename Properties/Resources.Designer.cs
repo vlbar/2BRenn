@@ -59,5 +59,15 @@ namespace TwoBRenn.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 2BRenn (Bauen beste Rennen) – приложение на OpenGL 4 для построения гоночных трасс и послeдующей проверки их безопасности. 
+        ///Приложение создано в рамках курсовго проекта по дисциплине &apos;Программирование компьютерной графики&apos;, выполнил студент группы ПРИ-118 Баранов В.В..
+        /// </summary>
+        internal static string about {
+            get {
+                return ResourceManager.GetString("about", resourceCulture);
+            }
+        }
     }
 }

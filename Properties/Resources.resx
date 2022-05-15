@@ -114,4 +114,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="about" xml:space="preserve">
+	  <value>2BRenn (Bauen beste Rennen) – приложение на OpenGL 4 для построения гоночных трасс и послeдующей проверки их безопасности. 
+Приложение создано в рамках курсовго проекта по дисциплине 'Программирование компьютерной графики', выполнил студент группы ПРИ-118 Баранов В.В.</value>
+  </data>
 </root>
