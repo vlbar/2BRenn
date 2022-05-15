@@ -11,6 +11,7 @@ using TwoBRenn.Engine.Components.Light;
 using TwoBRenn.Engine.Components.Physic;
 using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Interfaces;
+using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.Engine.Render.Utils;
@@ -44,6 +45,7 @@ namespace TwoBRenn.ObjectsSetups
         private SimpleShader treeShader;
         private SimpleShader concreteShader;
         private SimpleShader animeShader;
+        private SimpleShader orangeShader;
         private ParticleShader particleShader;
         private InstanceShader instanceShader;
 
@@ -73,12 +75,14 @@ namespace TwoBRenn.ObjectsSetups
             particleShader = new ParticleShader();
             instanceShader = new InstanceShader();
             animeShader = new SimpleShader();
+            orangeShader = new SimpleShader();
 
             groundShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(50, 50));
             roadShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(1, 30));
             curbShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(1, 60));
             treeShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(5, 5));
             concreteShader.SetDefaultShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(Color.DarkGray));
+            orangeShader.SetDefaultShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(0.937F, 0.341F, 0.250F, 1f));
         }
 
         public HashSet<RennObject> GetObjects()
@@ -282,6 +286,41 @@ namespace TwoBRenn.ObjectsSetups
                 standRenderer.SetTexture(plasticTexture);
                 objects.Add(stand);
             }
+
+            // main building
+            objects.Add(SimpleObject(new Vector3(0, 10, -30), Vector3.Zero, new Vector3(40f, 2f, 15f), concreteShader, plasticTexture, cube));
+            objects.Add(SimpleObject(new Vector3(0, 6, -30), Vector3.Zero, new Vector3(38f, 8f, 14f), concreteShader, plasticTexture, cube));
+            objects.Add(SimpleObject(new Vector3(-10, 14, -30), Vector3.Zero, new Vector3(14f, 8f, 14f), concreteShader, plasticTexture, cube));
+            
+            // pit line under
+            objects.Add(SimpleObject(new Vector3(10, 0, -15), Vector3.Zero, new Vector3(60f, 0.3f, 14f), concreteShader, roadTexture, cube, false));
+
+            // start cell
+            objects.Add(SimpleObject(new Vector3(5, 2.5f, -10), Vector3.Zero, new Vector3(0.5f, 5f, 0.5f), concreteShader, roadTexture, cube));
+            objects.Add(SimpleObject(new Vector3(5, 2.5f, 6), Vector3.Zero, new Vector3(0.5f, 5f, 0.5f), concreteShader, roadTexture, cube));
+            objects.Add(SimpleObject(new Vector3(5, 5f, -2), Vector3.Zero, new Vector3(0.4f, 1f, 16f), concreteShader, plasticTexture, cube));
+
+            // tower
+            objects.Add(SimpleObject(new Vector3(-50, 5f, 30), Vector3.Zero, new Vector3(8f, 10f, 8f), concreteShader, plasticTexture, cube));
+            objects.Add(SimpleObject(new Vector3(-50, 11f, 30), Vector3.Zero, new Vector3(9f, 2f, 9f), concreteShader, plasticTexture, cube));
+            objects.Add(SimpleObject(new Vector3(-50, 12f, 30), Vector3.Zero, new Vector3(0.4f, 5f, 0.4f), concreteShader, roadTexture, cube));
+            
+            // tower place
+            objects.Add(SimpleObject(new Vector3(-40, 0f, 25), Vector3.Zero, new Vector3(30f, 0.3f, 20f), concreteShader, roadTexture, cube, false));
+        }
+
+        private RennObject SimpleObject(Vector3 position, Vector3 rotation, Vector3 scale, BaseShaderProgram shader, Texture texture, Mesh mesh, bool rigid = true)
+        {
+            RennObject cube = new RennObject();
+            cube.Transform.SetPosition(position);
+            cube.Transform.SetRotation(rotation);
+            cube.Transform.SetScale(scale);
+            if(rigid) cube.AddComponent<BoxCollider>();
+            MeshRenderer cubeRenderer = cube.AddComponent<MeshRenderer>();
+            cubeRenderer.SetTriangleMesh(mesh);
+            cubeRenderer.SetShaderProgram(shader);
+            cubeRenderer.SetTexture(texture);
+            return cube;
         }
 
         private void AddBarriers(HashSet<RennObject> objects)
@@ -296,7 +335,37 @@ namespace TwoBRenn.ObjectsSetups
                 MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
                 barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Barrier));
                 barrierRenderer.SetShaderProgram(simpleShader);
-                if (i % 2 == 1) barrierRenderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(0.937F, 0.341F, 0.250F, 1f));
+                if (i % 2 == 1) barrierRenderer.SetShaderProgram(orangeShader);
+                barrierRenderer.SetTexture(plasticTexture);
+                objects.Add(barrier);
+            }
+
+            for (int i = 0; i < 25; i++)
+            {
+                RennObject barrier = new RennObject();
+                barrier.Transform.SetPosition(-40f + i * 2.1f, 0.1f, 5f);
+                barrier.Transform.SetRotation(0f, 0f, 0f);
+                barrier.Transform.SetScale(1f);
+                barrier.AddComponent<BoxCollider>();
+                MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
+                barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Barrier));
+                barrierRenderer.SetShaderProgram(simpleShader);
+                if (i % 2 == 1) barrierRenderer.SetShaderProgram(orangeShader);
+                barrierRenderer.SetTexture(plasticTexture);
+                objects.Add(barrier);
+            }
+
+            for (int i = 0; i < 16; i++)
+            {
+                RennObject barrier = new RennObject();
+                barrier.Transform.SetPosition(-60f + i * 2.1f, 0.1f, 43f - 0.3f * i);
+                barrier.Transform.SetRotation(0f, 9f, 0f);
+                barrier.Transform.SetScale(1f);
+                barrier.AddComponent<BoxCollider>();
+                MeshRenderer barrierRenderer = barrier.AddComponent<MeshRenderer>();
+                barrierRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Barrier));
+                barrierRenderer.SetShaderProgram(simpleShader);
+                if (i % 2 == 1) barrierRenderer.SetShaderProgram(orangeShader);
                 barrierRenderer.SetTexture(plasticTexture);
                 objects.Add(barrier);
             }
@@ -332,6 +401,28 @@ namespace TwoBRenn.ObjectsSetups
                 delinatorRenderer.SetTexture(plasticTexture);
                 objects.Add(delinator);
             }
+
+            objects.Add(SimpleObject(new Vector3(-123.2f, 0f, 30.23f), Vector3.Zero, Vector3.One, 
+                orangeShader, plasticTexture, SecurityStructuresMeshFactory.GetMesh(StructureType.Buffer)));
+            objects.Add(SimpleObject(new Vector3(-120.7f, 0f, 32.24f), Vector3.Zero, Vector3.One,
+                orangeShader, plasticTexture, SecurityStructuresMeshFactory.GetMesh(StructureType.Buffer)));
+            objects.Add(SimpleObject(new Vector3(-119.9f, 0f, 34.88f), Vector3.Zero, Vector3.One,
+                orangeShader, plasticTexture, SecurityStructuresMeshFactory.GetMesh(StructureType.Buffer)));
+            objects.Add(SimpleObject(new Vector3(44.37f, 0f, -7.65f), Vector3.Zero, Vector3.One,
+                orangeShader, plasticTexture, SecurityStructuresMeshFactory.GetMesh(StructureType.Buffer)));
+            objects.Add(SimpleObject(new Vector3(13.99f, 0f, 5.08f), Vector3.Zero, Vector3.One,
+                orangeShader, plasticTexture, SecurityStructuresMeshFactory.GetMesh(StructureType.Buffer)));
+            objects.Add(SimpleObject(new Vector3(-107.83f, 0f, 23.81f), Vector3.Zero, Vector3.One,
+                orangeShader, plasticTexture, SecurityStructuresMeshFactory.GetMesh(StructureType.Buffer)));
+            objects.Add(SimpleObject(new Vector3(-103.35f, 0f, 20.86f), Vector3.Zero, Vector3.One,
+                orangeShader, plasticTexture, SecurityStructuresMeshFactory.GetMesh(StructureType.Buffer)));
+            objects.Add(SimpleObject(new Vector3(-87.3f, 0f, 7.5f), Vector3.Zero, Vector3.One,
+                orangeShader, plasticTexture, SecurityStructuresMeshFactory.GetMesh(StructureType.Buffer)));
+
+            objects.Add(SimpleObject(new Vector3(-90.5f, 0f, 9.39f), Vector3.UnitY * 28, Vector3.One,
+                simpleShader, plasticTexture, SecurityStructuresMeshFactory.GetMesh(StructureType.Barrier)));
+            objects.Add(SimpleObject(new Vector3(-93.1f, 0f, 10.22f), Vector3.Zero, Vector3.One,
+                orangeShader, plasticTexture, SecurityStructuresMeshFactory.GetMesh(StructureType.Barrier)));
         }
 
         private void AddGround(HashSet<RennObject> objects)
