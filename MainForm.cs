@@ -15,12 +15,24 @@ using TwoBRenn.ObjectsSetups;
 
 namespace TwoBRenn
 {
+    struct SecurityStructure
+    {
+        public string Name;
+        public int Price;
+    }
+
     public partial class MainForm : Form
     {
         private readonly RennEngine engine = RennEngine.Instance;
         private readonly GLControl smoothGlControl;
         private AutodromeObjectsSetup autodromeObjectsSetup = new AutodromeObjectsSetup();
         private int drivingCar = -1;
+
+        // game
+        private SecurityStructure[] securityStructures;
+        private int money = 1000000;
+        private int structuresCount;
+        private readonly int maxStructureCount = 128;
 
         public MainForm()
         {
@@ -36,8 +48,44 @@ namespace TwoBRenn
             Controls.Remove(glControl);
             Controls.Add(smoothGlControl);
 
-            InitStructuresMenu();
             InitObjectPickerMenu();
+            InitSecurityStructures();
+            InitStructuresMenu();
+
+            budgetLabel.Text = $@"{money:# ### ##0.00₽;(# ##0.00₽);0}";
+            structCountLabel.Text = structuresCount + "/" + maxStructureCount;
+        }
+
+        private void InitSecurityStructures()
+        {
+            securityStructures = new []
+            {
+                new SecurityStructure
+                {
+                    Name = "Барьер",
+                    Price = 2540
+                },
+                new SecurityStructure
+                {
+                    Name = "Буфер",
+                    Price = 9700
+                },
+                new SecurityStructure
+                {
+                    Name = "Конус",
+                    Price = 2970
+                },
+                new SecurityStructure
+                {
+                    Name = "Ограждение",
+                    Price = 5900
+                },
+                new SecurityStructure
+                {
+                    Name = "Стопка шин",
+                    Price = 12200
+                }
+            };
         }
 
         private void glControl_Load(object sender, EventArgs e)
@@ -69,7 +117,7 @@ namespace TwoBRenn
         private void InitStructuresMenu()
         {
             ImageList imageList = new ImageList();
-            imageList.ImageSize = new Size(52, 52);
+            imageList.ImageSize = new Size(42, 42);
             imageList.Images.Add(new Bitmap(@"Assets\UI\barrier-icon.jpg"));
             imageList.Images.Add(new Bitmap(@"Assets\UI\buffer-icon.jpg"));
             imageList.Images.Add(new Bitmap(@"Assets\UI\conus-icon.jpg"));
@@ -78,34 +126,17 @@ namespace TwoBRenn
 
             structuresListView.LargeImageList = imageList;
 
-            List<ListViewItem> items = new List<ListViewItem>
+            int i = 0;
+            List<ListViewItem> items = new List<ListViewItem>();
+            foreach (var securityStructure in securityStructures)
             {
-                new ListViewItem
+                ListViewItem item = new ListViewItem
                 {
-                    ImageIndex = 0,
-                    Text = "Барьер"
-                },
-                new ListViewItem
-                {
-                    ImageIndex = 1,
-                    Text = "Буфер"
-                },
-                new ListViewItem
-                {
-                    ImageIndex = 2,
-                    Text = "Конус"
-                },
-                new ListViewItem
-                {
-                    ImageIndex = 3,
-                    Text = "Ограждение"
-                },
-                new ListViewItem
-                {
-                    ImageIndex = 4,
-                    Text = "Стопка шин"
-                },
-            };
+                    ImageIndex = i++,
+                    Text = $@"{securityStructure.Name} - {securityStructure.Price}₽"
+                };
+                items.Add(item);
+            }
 
             structuresListView.Items.AddRange(items.ToArray());
         }
@@ -113,6 +144,7 @@ namespace TwoBRenn
         private void InitObjectPickerMenu()
         {
             engine.ObjectPicker.OnObjectPicked += OnObjectSelect;
+            engine.ObjectPlacer.OnObjectPlace += OnObjectPlace;
         }
 
         //
@@ -260,7 +292,7 @@ namespace TwoBRenn
             if (index == -1)
             {
                 Camera.Instance.Controller.Target = null;
-                autodromeObjectsSetup.CarControllers[drivingCar].IsInputReg = false;
+                if(drivingCar != -1) autodromeObjectsSetup.CarControllers[drivingCar].IsInputReg = false;
                 drivingCar = index;
                 ChangePickerState(true);
                 changeCarButton.Visible = false;
@@ -287,6 +319,19 @@ namespace TwoBRenn
             engine.ObjectPicker.CanPick = canPick;
             engine.ObjectPicker.CurrentObject = null;
             sidebarContainer.Visible = false;
+        }
+
+        private void OnObjectPlace(int index)
+        {
+            BuyStructure(securityStructures[index].Price);
+        }
+
+        private void BuyStructure(int price)
+        {
+            money -= price;
+            budgetLabel.Text = $@"{money:# ##0.00₽;(# ##0.00₽);0}";
+            structuresCount++;
+            structCountLabel.Text = structuresCount + @"/" + maxStructureCount;
         }
     }
 }

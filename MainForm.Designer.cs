@@ -339,12 +339,11 @@ namespace TwoBRenn
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 461);
+            this.label1.Location = new System.Drawing.Point(3, 448);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(157, 13);
+            this.label1.Size = new System.Drawing.Size(174, 26);
             this.label1.TabIndex = 23;
-            this.label1.Text = "Нажмите Esc, чтобы закрыть";
+            this.label1.Text = "Нажмите Esc или ПКМ, чтобы закрыть";
             // 
             // groupBox4
             // 
@@ -353,7 +352,7 @@ namespace TwoBRenn
             this.groupBox4.Controls.Add(this.objectMaterialListView);
             this.groupBox4.Location = new System.Drawing.Point(3, 306);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(177, 152);
+            this.groupBox4.Size = new System.Drawing.Size(177, 139);
             this.groupBox4.TabIndex = 22;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Материал";
@@ -367,7 +366,7 @@ namespace TwoBRenn
             this.objectMaterialListView.HideSelection = false;
             this.objectMaterialListView.Location = new System.Drawing.Point(3, 16);
             this.objectMaterialListView.Name = "objectMaterialListView";
-            this.objectMaterialListView.Size = new System.Drawing.Size(171, 133);
+            this.objectMaterialListView.Size = new System.Drawing.Size(171, 120);
             this.objectMaterialListView.TabIndex = 0;
             this.objectMaterialListView.TileSize = new System.Drawing.Size(20, 20);
             this.objectMaterialListView.UseCompatibleStateImageBehavior = false;
@@ -820,7 +819,6 @@ namespace TwoBRenn
             this.bottomPanel.ResumeLayout(false);
             this.bottomPanel.PerformLayout();
             this.sidebarContainer.ResumeLayout(false);
-            this.sidebarContainer.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();

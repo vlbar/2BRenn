@@ -114,7 +114,6 @@ namespace TwoBRenn.ObjectsSetups
             selectable.Name = "Буфер";
             selectable.Materials = materials;
             buffer.AddComponent<BoxCollider>();
-            buffer.AddComponent<Rigidbody>();
             MeshRenderer bufferRenderer = buffer.AddComponent<MeshRenderer>();
             bufferRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.Buffer));
             bufferRenderer.SetShaderProgram(OrangePlasticShader);
@@ -152,7 +151,6 @@ namespace TwoBRenn.ObjectsSetups
             selectable.Name = "Конус";
             selectable.Materials = materials;
             buffer.AddComponent<BoxCollider>();
-            buffer.AddComponent<Rigidbody>();
             MeshRenderer bufferRenderer = buffer.AddComponent<MeshRenderer>();
             bufferRenderer.SetTriangleMesh(SecurityStructuresMeshFactory.GetMesh(StructureType.ConicalBuffer));
             bufferRenderer.SetShaderProgram(OrangePlasticShader);

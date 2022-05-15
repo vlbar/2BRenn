@@ -18,10 +18,14 @@ namespace TwoBRenn.Engine.Common.ObjectControl
         public SceneManager SceneManager;
         public RennObject ObjectToPlace;
 
+        private int objectIndex;
+        public Action<int> OnObjectPlace; 
+
         public void SelectObject(int index)
         {
             if (ObjectToPlace == null)
             {
+                objectIndex = index;
                 ObjectToPlace = ObjectsCreators[index]();
                 ShaderAttribute_Vector4 baseColorAttribute =
                     (ShaderAttribute_Vector4)ObjectToPlace.GetComponent<MeshRenderer>().GetShaderAttributes()[
@@ -46,6 +50,7 @@ namespace TwoBRenn.Engine.Common.ObjectControl
                             SimpleShader.BaseColorUniform];
                     baseColorAttribute.Vector.W = 1f;
 
+                    OnObjectPlace?.Invoke(objectIndex);
                     ObjectToPlace = null;
                     return;
                 }
