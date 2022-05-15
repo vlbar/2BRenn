@@ -86,6 +86,7 @@ namespace TwoBRenn
             this.selectedObjectNameLabel = new System.Windows.Forms.Label();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.debugInfoLabel = new System.Windows.Forms.Label();
+            this.changeCarButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.bottomContainer.SuspendLayout();
             this.rightContainer.SuspendLayout();
@@ -168,7 +169,6 @@ namespace TwoBRenn
             this.glControl.TabIndex = 1;
             this.glControl.VSync = true;
             this.glControl.Load += new System.EventHandler(this.glControl_Load);
-            this.glControl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glControl_KeyDown);
             // 
             // bottomContainer
             // 
@@ -308,6 +308,7 @@ namespace TwoBRenn
             this.testButton.TabIndex = 3;
             this.testButton.Text = "Тест";
             this.testButton.UseVisualStyleBackColor = true;
+            this.testButton.Click += new System.EventHandler(this.testButton_Click);
             // 
             // mapContainer
             // 
@@ -781,21 +782,35 @@ namespace TwoBRenn
             this.debugInfoLabel.TabIndex = 6;
             this.debugInfoLabel.Text = "0 FPS";
             // 
+            // changeCarButton
+            // 
+            this.changeCarButton.Location = new System.Drawing.Point(7, 472);
+            this.changeCarButton.Name = "changeCarButton";
+            this.changeCarButton.Size = new System.Drawing.Size(114, 23);
+            this.changeCarButton.TabIndex = 7;
+            this.changeCarButton.Text = "Переключить авто";
+            this.changeCarButton.UseVisualStyleBackColor = true;
+            this.changeCarButton.Visible = false;
+            this.changeCarButton.Click += new System.EventHandler(this.changeCarButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(907, 611);
+            this.Controls.Add(this.changeCarButton);
             this.Controls.Add(this.debugInfoLabel);
             this.Controls.Add(this.glControl);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.sidebarContainer);
             this.Controls.Add(this.bottomContainer);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "MainForm";
             this.Text = "2BRenn";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.bottomContainer.ResumeLayout(false);
@@ -885,6 +900,7 @@ namespace TwoBRenn
         private System.Windows.Forms.TrackBar objectXScaleTrackBar;
         private System.Windows.Forms.TrackBar objectYScaleTrackBar;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button changeCarButton;
     }
 }
 

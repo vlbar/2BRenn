@@ -211,6 +211,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Assets\Textures\Car\bronirovany.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Textures\Car\car.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

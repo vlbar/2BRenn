@@ -7,11 +7,13 @@ namespace TwoBRenn.Engine.Common.ObjectControl
 {
     class ObjectPicker
     {
+        public bool CanPick = true;
         public RennObject CurrentObject;
         public Action<RennObject> OnObjectPicked;
 
         public void OnUpdate()
         {
+            if (!CanPick) return;
             if (Input.IsMouseButtonDown(MouseButtons.Left))
             {
                 if (Physics.Raycast(Camera.ScreenPointToRay(Input.MouseRelativePosition), out var hit))

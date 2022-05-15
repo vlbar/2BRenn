@@ -13,6 +13,7 @@ namespace TwoBRenn.Engine.Components.Common
     class CarController : Component
     {
         private Rigidbody rigidbody;
+        public bool IsInputReg = true;
 
         // forward speed
         public float ForwardSpeed = 8;
@@ -85,7 +86,8 @@ namespace TwoBRenn.Engine.Components.Common
 
         public override void OnUpdate()
         {
-            input = Keyboard.GetState();
+            input = IsInputReg ? Keyboard.GetState() : new KeyboardState();
+
             if(RearPointLight != null) RearPointLight.IsEnabled = handBreak || input.IsKeyDown(Key.S);
 
             UpdateVectors();

@@ -8,6 +8,7 @@ using TwoBRenn.Engine;
 using TwoBRenn.Engine.Components.Common;
 using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Interfaces;
+using TwoBRenn.Engine.Render.Camera;
 using TwoBRenn.Engine.Render.ShaderPrograms;
 using TwoBRenn.Engine.Render.Textures;
 using TwoBRenn.ObjectsSetups;
@@ -19,6 +20,7 @@ namespace TwoBRenn
         private readonly RennEngine engine = RennEngine.Instance;
         private readonly GLControl smoothGlControl;
         private AutodromeObjectsSetup autodromeObjectsSetup = new AutodromeObjectsSetup();
+        private int drivingCar = -1;
 
         public MainForm()
         {
@@ -30,7 +32,6 @@ namespace TwoBRenn
             smoothGlControl.Size = glControl.Size;
             smoothGlControl.TabIndex = glControl.TabIndex;
             smoothGlControl.Load += glControl_Load;
-            smoothGlControl.KeyDown += glControl_KeyDown;
 
             Controls.Remove(glControl);
             Controls.Add(smoothGlControl);
@@ -219,16 +220,6 @@ namespace TwoBRenn
             }
         }
 
-        private void glControl_KeyDown(object sender, KeyEventArgs e)
-        {
-            Console.WriteLine(e.KeyCode.ToString());
-            if (e.KeyCode == Keys.Escape)
-            {
-                engine.ObjectPicker.CurrentObject = null;
-                sidebarContainer.Visible = false;
-            }
-        }
-
         private void objectMaterialListView_ItemActivate(object sender, EventArgs e)
         {
             MeshRenderer renderer = engine.ObjectPicker.CurrentObject.GetComponent<MeshRenderer>();
@@ -240,6 +231,62 @@ namespace TwoBRenn
             renderer.SetShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(materials[index].Color));
             Color color = materials[index].Color;
             selectable.DefaultColor = new Vector4(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, 1f);
+        }
+
+        private void testButton_Click(object sender, EventArgs e)
+        {
+            DriveCar(0);
+            ChangePickerState(false);
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                ChangePickerState(false);
+                DriveCar(-1);
+            }
+        }
+
+        private void changeCarButton_Click(object sender, EventArgs e)
+        {
+            smoothGlControl.Focus();
+            int index = drivingCar == autodromeObjectsSetup.CarControllers.Length - 1 ? 0 : drivingCar + 1;
+            DriveCar(index);
+        }
+
+        private void DriveCar(int index)
+        {
+            if (index == -1)
+            {
+                Camera.Instance.Controller.Target = null;
+                autodromeObjectsSetup.CarControllers[drivingCar].IsInputReg = false;
+                drivingCar = index;
+                ChangePickerState(true);
+                changeCarButton.Visible = false;
+            }
+            else
+            {
+                if (drivingCar != -1)
+                {
+                    Camera.Instance.Controller.Target = null;
+                    autodromeObjectsSetup.CarControllers[drivingCar].IsInputReg = false;
+                    drivingCar = index;
+                }
+
+                drivingCar = index;
+                Camera.Instance.Controller.Target = autodromeObjectsSetup.CarCameraTargetTransforms[drivingCar];
+                autodromeObjectsSetup.CarControllers[drivingCar].IsInputReg = true;
+                changeCarButton.Visible = true;
+            }
+            
+        }
+
+        private void ChangePickerState(bool canPick)
+        {
+            engine.ObjectPicker.CanPick = canPick;
+            engine.ObjectPicker.CurrentObject = null;
+            sidebarContainer.Visible = false;
         }
     }
 }
