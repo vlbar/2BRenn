@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using TwoBRenn.Engine.Common.Managers;
+using TwoBRenn.Engine.Components.Common;
 using TwoBRenn.Engine.Render.Camera;
 
 namespace TwoBRenn.Engine.Common.ObjectControl
@@ -18,8 +19,11 @@ namespace TwoBRenn.Engine.Common.ObjectControl
             {
                 if (Physics.Raycast(Camera.ScreenPointToRay(Input.MouseRelativePosition), out var hit))
                 {
-                    CurrentObject = hit.HitObject;
-                    OnObjectPicked?.Invoke(CurrentObject);
+                    if (hit.HitObject.GetComponent<Selectable>() != null)
+                    {
+                        CurrentObject = hit.HitObject;
+                        OnObjectPicked?.Invoke(CurrentObject);
+                    }
                 }
             }
 
