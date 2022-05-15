@@ -84,6 +84,7 @@
     <Compile Include="Engine\Common\RayCasting\Raycast.cs" />
     <Compile Include="Engine\Common\RayCasting\RaycastHit.cs" />
     <Compile Include="Common\FractalTextureGenerator.cs" />
+    <Compile Include="Engine\Components\Common\TextureAnimation.cs" />
     <Compile Include="Engine\Components\Light\PointLight.cs" />
     <Compile Include="Engine\Components\Physic\BoxCollider.cs" />
     <Compile Include="Engine\Components\Common\CarController.cs" />
@@ -213,6 +214,9 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\Textures\Car\bronirovany.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Car\car-chill-animation.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\Car\car.jpg">

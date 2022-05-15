@@ -36,12 +36,14 @@ namespace TwoBRenn.ObjectsSetups
         private Texture sponsorsTexture;
         private Texture treeTexture;
         private Texture smokeTexture;
+        private Texture animeTexture;
         private SimpleShader simpleShader;
         private SimpleShader groundShader;
         private SimpleShader roadShader;
         private SimpleShader curbShader;
         private SimpleShader treeShader;
         private SimpleShader concreteShader;
+        private SimpleShader animeShader;
         private ParticleShader particleShader;
         private InstanceShader instanceShader;
 
@@ -61,6 +63,7 @@ namespace TwoBRenn.ObjectsSetups
             sponsorsTexture = new Texture(@"Assets\Textures\Environment\sponsors.jpg");
             treeTexture = new Texture(@"Assets\Textures\Environment\spruce.jpg");
             smokeTexture = new Texture(@"Assets\Textures\Particles\smoke-puff.png");
+            animeTexture = new Texture(@"Assets\Textures\Car\car-chill-animation.jpg");
             simpleShader = new SimpleShader();
             groundShader = new SimpleShader();
             roadShader = new SimpleShader();
@@ -69,6 +72,7 @@ namespace TwoBRenn.ObjectsSetups
             concreteShader = new SimpleShader();
             particleShader = new ParticleShader();
             instanceShader = new InstanceShader();
+            animeShader = new SimpleShader();
 
             groundShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(50, 50));
             roadShader.SetDefaultShaderAttribute(SimpleShader.TilingUniform, ShaderAttribute.Value(1, 30));
@@ -186,6 +190,48 @@ namespace TwoBRenn.ObjectsSetups
                 adPlaneRenderer.SetTexture(sponsorsTexture);
                 objects.Add(adPlane);
             }
+
+            RennObject adScreen = new RennObject();
+            adScreen.Transform.SetPosition(-10, 6f, -22f);
+            adScreen.Transform.SetRotation(0f, 0f, 0f);
+            adScreen.Transform.SetScale(3.99f, 3.0f, 1f);
+            adScreen.AddComponent<TextureAnimation>();
+            MeshRenderer adScreenRenderer = adScreen.AddComponent<MeshRenderer>();
+            adScreenRenderer.SetTriangleMesh(PrimitiveMeshFactory.CreateCube());
+            adScreenRenderer.SetShaderProgram(animeShader);
+            adScreenRenderer.SetTexture(animeTexture);
+            objects.Add(adScreen);
+
+            RennObject frame = new RennObject();
+            frame.Transform.SetPosition(-10f, 5.95f, -22.1f);
+            frame.Transform.SetRotation(0f, 0f, 0f);
+            frame.Transform.SetScale(4.1f, 3.1f, 1f);
+            MeshRenderer frameRenderer = frame.AddComponent<MeshRenderer>();
+            frameRenderer.SetTriangleMesh(PrimitiveMeshFactory.CreateCube());
+            frameRenderer.SetShaderProgram(simpleShader);
+            frameRenderer.SetTexture(plasticTexture);
+            objects.Add(frame);
+
+            RennObject adScreen2 = new RennObject();
+            adScreen2.Transform.SetPosition(-3, 6f, -22f);
+            adScreen2.Transform.SetRotation(0f, 0f, 0f);
+            adScreen2.Transform.SetScale(3.99f, 3.0f, 1f);
+            adScreen2.AddComponent<TextureAnimation>();
+            MeshRenderer adScreenRenderer2 = adScreen2.AddComponent<MeshRenderer>();
+            adScreenRenderer2.SetTriangleMesh(PrimitiveMeshFactory.CreateCube());
+            adScreenRenderer2.SetShaderProgram(animeShader);
+            adScreenRenderer2.SetTexture(animeTexture);
+            objects.Add(adScreen2);
+
+            RennObject frame2 = new RennObject();
+            frame2.Transform.SetPosition(-3f, 5.95f, -22.1f);
+            frame2.Transform.SetRotation(0f, 0f, 0f);
+            frame2.Transform.SetScale(4.1f, 3.1f, 1f);
+            MeshRenderer frameRenderer2 = frame2.AddComponent<MeshRenderer>();
+            frameRenderer2.SetTriangleMesh(PrimitiveMeshFactory.CreateCube());
+            frameRenderer2.SetShaderProgram(simpleShader);
+            frameRenderer2.SetTexture(plasticTexture);
+            objects.Add(frame2);
         }
 
         private void AddStands(HashSet<RennObject> objects)
