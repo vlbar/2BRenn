@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using TwoBRenn.Common;
 using TwoBRenn.Engine;
 using TwoBRenn.Engine.Components.Common;
 using TwoBRenn.Engine.Components.Physic;
@@ -20,10 +21,14 @@ namespace TwoBRenn.ObjectsSetups
         private static readonly Texture ConcreteTexture = new Texture(@"Assets\Textures\concrete.jpg");
         private static readonly Texture CurbTexture = new Texture(@"Assets\Textures\curb.png");
 
+        private FractalTextureGenerator fractalTextureGenerator = new FractalTextureGenerator();
+        private static Texture NotHecklerButKochTexture;
+
         public SecurityStructPlacerSetup()
         {
             OrangePlasticShader.SetDefaultShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(Color.Coral));
             BlackShader.SetDefaultShaderAttribute(SimpleShader.BaseColorUniform, ShaderAttribute.Value(Color.Black));
+            NotHecklerButKochTexture = fractalTextureGenerator.GetTexture(FractalTextureGenerator.Fractal.Koch);
         }
 
         public List<Func<RennObject>> GetObjectCreators()
@@ -72,6 +77,12 @@ namespace TwoBRenn.ObjectsSetups
                     Name = "Бетон",
                     Color = Color.White,
                     Texture = ConcreteTexture
+                },
+                new Material
+                {
+                    Name = "Кривая коха",
+                    Color = Color.White,
+                    Texture = NotHecklerButKochTexture
                 }
             };
 
