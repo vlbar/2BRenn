@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using OpenTK;
+using TwoBRenn.Common;
 using TwoBRenn.Engine;
 using TwoBRenn.Engine.Components.Common;
 using TwoBRenn.Engine.Components.Render;
@@ -27,6 +28,7 @@ namespace TwoBRenn
         private readonly RennEngine engine = RennEngine.Instance;
         private readonly GLControl smoothGlControl;
         private AutodromeObjectsSetup autodromeObjectsSetup = new AutodromeObjectsSetup();
+        private TextureTransformationManager textureTransformation = new TextureTransformationManager();
         private int drivingCar = -1;
 
         // game
@@ -368,6 +370,18 @@ namespace TwoBRenn
                 MessageBoxIcon.Information,
                 MessageBoxDefaultButton.Button1,
                 MessageBoxOptions.DefaultDesktopOnly);
+        }
+
+        private void filterButton_Click(object sender, EventArgs e)
+        {
+            MeshRenderer renderer = engine.ObjectPicker.CurrentObject.GetComponent<MeshRenderer>();
+            renderer.SetTexture(textureTransformation.ApplyFilter(TextureTransformationManager.Filter.Sharpening, renderer.Texture));
+        }
+
+        private void revertFilterButton_Click(object sender, EventArgs e)
+        {
+            MeshRenderer renderer = engine.ObjectPicker.CurrentObject.GetComponent<MeshRenderer>();
+            renderer.SetTexture(textureTransformation.RevertFilter(renderer.Texture));
         }
     }
 }

@@ -15,7 +15,7 @@ namespace TwoBRenn.Engine.Components.Render
         public bool IsCastShadows = true;
 
         private BaseShaderProgram shaderProgram;
-        private Texture texture;
+        public Texture Texture;
         private Dictionary<string, ShaderAttribute> attributes = new Dictionary<string, ShaderAttribute>();
         private bool isDetachedAttributes;
         
@@ -27,7 +27,7 @@ namespace TwoBRenn.Engine.Components.Render
 
         public void SetTexture(Texture texture)
         {
-            this.texture = texture;
+            this.Texture = texture;
         }
 
         public void SetTriangleMesh(Mesh mesh)
@@ -92,7 +92,7 @@ namespace TwoBRenn.Engine.Components.Render
             Lighting.FillPointLights(shaderProgram);
             Shadows.FillUniforms(shaderProgram);
 
-            texture?.Use();
+            Texture?.Use();
             Mesh.Draw(shaderProgram);
         }
 

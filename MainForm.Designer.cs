@@ -32,6 +32,9 @@ namespace TwoBRenn
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.autodromToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeProjectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.glControl = new OpenTK.GLControl();
             this.bottomContainer = new System.Windows.Forms.Panel();
@@ -51,6 +54,8 @@ namespace TwoBRenn
             this.sidebarContainer = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.revertFilterButton = new System.Windows.Forms.Button();
+            this.filterButton = new System.Windows.Forms.Button();
             this.objectMaterialListView = new System.Windows.Forms.ListView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -83,9 +88,6 @@ namespace TwoBRenn
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.debugInfoLabel = new System.Windows.Forms.Label();
             this.changeCarButton = new System.Windows.Forms.Button();
-            this.testMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeProjectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label9 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.bottomContainer.SuspendLayout();
@@ -128,6 +130,27 @@ namespace TwoBRenn
             this.autodromToolStripMenuItem.Name = "autodromToolStripMenuItem";
             this.autodromToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
             this.autodromToolStripMenuItem.Text = "Автодром";
+            // 
+            // testMenuItem
+            // 
+            this.testMenuItem.Name = "testMenuItem";
+            this.testMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.testMenuItem.Text = "Тест";
+            this.testMenuItem.Click += new System.EventHandler(this.testMenuItem_Click);
+            // 
+            // changeProjectionToolStripMenuItem
+            // 
+            this.changeProjectionToolStripMenuItem.Name = "changeProjectionToolStripMenuItem";
+            this.changeProjectionToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.changeProjectionToolStripMenuItem.Text = "Переключить проекцию";
+            this.changeProjectionToolStripMenuItem.Click += new System.EventHandler(this.changeProjectionToolStripMenuItem_Click);
+            // 
+            // exitMenuItem
+            // 
+            this.exitMenuItem.Name = "exitMenuItem";
+            this.exitMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.exitMenuItem.Text = "Выход";
+            this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
             // aboutMenuItem
             // 
@@ -326,6 +349,8 @@ namespace TwoBRenn
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Controls.Add(this.revertFilterButton);
+            this.groupBox4.Controls.Add(this.filterButton);
             this.groupBox4.Controls.Add(this.objectMaterialListView);
             this.groupBox4.Location = new System.Drawing.Point(3, 306);
             this.groupBox4.Name = "groupBox4";
@@ -334,16 +359,40 @@ namespace TwoBRenn
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Материал";
             // 
+            // revertFilterButton
+            // 
+            this.revertFilterButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.revertFilterButton.Location = new System.Drawing.Point(155, 33);
+            this.revertFilterButton.Name = "revertFilterButton";
+            this.revertFilterButton.Size = new System.Drawing.Size(22, 23);
+            this.revertFilterButton.TabIndex = 2;
+            this.revertFilterButton.Text = "↺";
+            this.revertFilterButton.UseVisualStyleBackColor = true;
+            this.revertFilterButton.Click += new System.EventHandler(this.revertFilterButton_Click);
+            // 
+            // filterButton
+            // 
+            this.filterButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.filterButton.Location = new System.Drawing.Point(155, 9);
+            this.filterButton.Name = "filterButton";
+            this.filterButton.Size = new System.Drawing.Size(22, 23);
+            this.filterButton.TabIndex = 1;
+            this.filterButton.Text = "⁂";
+            this.filterButton.UseVisualStyleBackColor = true;
+            this.filterButton.Click += new System.EventHandler(this.filterButton_Click);
+            // 
             // objectMaterialListView
             // 
+            this.objectMaterialListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.objectMaterialListView.BackColor = System.Drawing.SystemColors.Control;
             this.objectMaterialListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.objectMaterialListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectMaterialListView.GridLines = true;
             this.objectMaterialListView.HideSelection = false;
             this.objectMaterialListView.Location = new System.Drawing.Point(3, 16);
             this.objectMaterialListView.Name = "objectMaterialListView";
-            this.objectMaterialListView.Size = new System.Drawing.Size(171, 120);
+            this.objectMaterialListView.Size = new System.Drawing.Size(152, 120);
             this.objectMaterialListView.TabIndex = 0;
             this.objectMaterialListView.TileSize = new System.Drawing.Size(20, 20);
             this.objectMaterialListView.UseCompatibleStateImageBehavior = false;
@@ -770,27 +819,6 @@ namespace TwoBRenn
             this.changeCarButton.Visible = false;
             this.changeCarButton.Click += new System.EventHandler(this.changeCarButton_Click);
             // 
-            // testMenuItem
-            // 
-            this.testMenuItem.Name = "testMenuItem";
-            this.testMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.testMenuItem.Text = "Тест";
-            this.testMenuItem.Click += new System.EventHandler(this.testMenuItem_Click);
-            // 
-            // changeProjectionToolStripMenuItem
-            // 
-            this.changeProjectionToolStripMenuItem.Name = "changeProjectionToolStripMenuItem";
-            this.changeProjectionToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.changeProjectionToolStripMenuItem.Text = "Переключить проекцию";
-            this.changeProjectionToolStripMenuItem.Click += new System.EventHandler(this.changeProjectionToolStripMenuItem_Click);
-            // 
-            // exitMenuItem
-            // 
-            this.exitMenuItem.Name = "exitMenuItem";
-            this.exitMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.exitMenuItem.Text = "Выход";
-            this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
-            // 
             // label9
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -910,6 +938,8 @@ namespace TwoBRenn
         private System.Windows.Forms.ToolStripMenuItem changeProjectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitMenuItem;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button filterButton;
+        private System.Windows.Forms.Button revertFilterButton;
     }
 }
 

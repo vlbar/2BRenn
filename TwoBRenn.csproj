@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\TextureTransformationManager.cs" />
     <Compile Include="Engine\Common\Managers\DebugManager.cs" />
     <Compile Include="Engine\Common\Managers\Input.cs" />
     <Compile Include="Engine\Common\Managers\Lighting.cs" />
