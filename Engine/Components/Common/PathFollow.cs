@@ -23,13 +23,14 @@ namespace TwoBRenn.Engine.Components.Common
         public override void OnUpdate()
         {
             t += MoveSpeed * Time.DeltaTime;
+            additionalDriftAngle = MathHelper.Clamp(additionalDriftAngle, -20, 20);
             if (additionalDriftAngle > 0)
             {
-                additionalDriftAngle -= 0.3f;
+                additionalDriftAngle -= 3f * Time.DeltaTime;
                 if (additionalDriftAngle < 0) additionalDriftAngle = 0;
             } else if (additionalDriftAngle < 0)
             {
-                additionalDriftAngle += 0.3f;
+                additionalDriftAngle += 3f * Time.DeltaTime;
                 if (additionalDriftAngle > 0) additionalDriftAngle = 0;
             }
             
@@ -54,7 +55,7 @@ namespace TwoBRenn.Engine.Components.Common
             if (delta > DriftAngle)
             {
                 if (DriftParticle != null) DriftParticle.Play(1);
-                additionalDriftAngle += 1.2f * (lastRotation - rotY > 0 ? -1 : 1);
+                additionalDriftAngle += 12.3f * (lastRotation - rotY > 0 ? -1 : 1) * Time.DeltaTime;
             }
             lastRotation = rotY;
 
