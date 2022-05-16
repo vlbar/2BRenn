@@ -22,7 +22,7 @@ namespace TwoBRenn.Engine.Components.Physic
         private float radius;
 
         public bool IsDynamic { get; set; }
-        public bool IsTrigger { get; set; }
+        public bool IsTrigger { get; set; } = false;
         public Action<IntersectionResult> OnCollisionEnter { get; set; }
 
         public override void OnStart()

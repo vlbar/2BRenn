@@ -52,10 +52,10 @@ namespace TwoBRenn.Engine.Common.Managers
 
         public void OnUpdate()
         {
-            foreach (var rigidbody in Rigidbodies)
+            foreach (var rigidbody in Instance.Rigidbodies)
             {
                 ICollider colliderA = rigidbody.Collider;
-                foreach (var colliderB in Colliders)
+                foreach (var colliderB in Instance.Colliders)
                 {
                     IntersectionResult intersectionResult = new IntersectionResult();
                     for (int i = 0; i < 64; i++)
@@ -84,6 +84,11 @@ namespace TwoBRenn.Engine.Common.Managers
 
                         colliderA.OnCollisionEnter?.Invoke(intersectionResult);
                         colliderB.OnCollisionEnter?.Invoke(intersectionResult);
+
+                        if (colliderB.IsDynamic)
+                        {
+                            colliderB.GetOwnerObject().GetComponent<Rigidbody>().AddForce(rigidbody.Force / 3);
+                        }
                     }
                 }
             }
