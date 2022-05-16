@@ -598,6 +598,8 @@ namespace TwoBRenn.ObjectsSetups
             carRenderer.SetShaderProgram(simpleShader);
             carRenderer.SetTriangleMesh(CarsMeshFactory.CreateCar(CarType.SportCar));
             carRenderer.SetTexture(carTexture);
+            car.AddComponent<BoxCollider>();
+            car.AddComponent<Rigidbody>().IsEnabled = false;
             PathFollow carPathFollow = car.AddComponent<PathFollow>();
             carPathFollow.Path = path;
             carPathFollow.MoveSpeed = 0.34f;

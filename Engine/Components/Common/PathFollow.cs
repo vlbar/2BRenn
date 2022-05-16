@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenTK;
 using TwoBRenn.Engine.Common.Path;
+using TwoBRenn.Engine.Components.Physic;
 using TwoBRenn.Engine.Components.Render;
 using TwoBRenn.Engine.Render.Utils;
 
@@ -20,8 +21,33 @@ namespace TwoBRenn.Engine.Components.Common
         private Vector3 lastPosition = Vector3.Zero;
         private float lastRotation;
 
+        private bool isRun = true;
+
+        public override void OnStart()
+        {
+            rennObject.GetComponent<BoxCollider>().OnCollisionEnter += Stop;
+        }
+
+        private void Stop(IntersectionResult intersectionResult)
+        {
+            if(!isRun) return;
+            isRun = false;
+            rennObject.GetComponent<Rigidbody>().IsEnabled = true;
+            rennObject.GetComponent<Rigidbody>().Force = intersectionResult.Force;
+            foreach (var rennObjectChildObject in rennObject.ChildObjects)
+            {
+                LoopRotation lr = rennObjectChildObject.GetComponent<LoopRotation>();
+                if (lr != null) lr.IsEnabled = false;
+            }
+        }
+
         public override void OnUpdate()
         {
+            if (!isRun)
+            {
+                return;
+            }
+
             t += MoveSpeed * Time.DeltaTime;
             additionalDriftAngle = MathHelper.Clamp(additionalDriftAngle, -20, 20);
             if (additionalDriftAngle > 0)
