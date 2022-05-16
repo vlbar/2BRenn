@@ -68,29 +68,73 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\TextureTransformationManager.cs" />
+    <Compile Include="Engine\Common\Managers\DebugManager.cs" />
+    <Compile Include="Engine\Common\Managers\Input.cs" />
+    <Compile Include="Engine\Common\Managers\Lighting.cs" />
+    <Compile Include="Engine\Common\Managers\Physics.cs" />
+    <Compile Include="Engine\Common\Managers\Shadows.cs" />
+    <Compile Include="Engine\Common\ObjectControl\ObjectPicker.cs" />
+    <Compile Include="Engine\Common\ObjectControl\ObjectPlacer.cs" />
+    <Compile Include="Engine\Common\ObjectsPlacers\ImageMap.cs" />
+    <Compile Include="Engine\Common\ParticleSystem\Particle.cs" />
+    <Compile Include="Engine\Common\Path\Bezier.cs" />
+    <Compile Include="Engine\Common\Path\Path.cs" />
+    <Compile Include="Engine\Common\Path\RoadCreator.cs" />
+    <Compile Include="Engine\Common\RayCasting\Ray.cs" />
+    <Compile Include="Engine\Common\RayCasting\Raycast.cs" />
+    <Compile Include="Engine\Common\RayCasting\RaycastHit.cs" />
+    <Compile Include="Common\FractalTextureGenerator.cs" />
+    <Compile Include="Engine\Components\Common\TextureAnimation.cs" />
+    <Compile Include="Engine\Components\Light\PointLight.cs" />
+    <Compile Include="Engine\Components\Physic\BoxCollider.cs" />
+    <Compile Include="Engine\Components\Common\CarController.cs" />
+    <Compile Include="Engine\Components\Physic\FallingPillar.cs" />
+    <Compile Include="Engine\Components\Physic\ICollider.cs" />
     <Compile Include="Engine\Components\Component.cs" />
-    <Compile Include="Engine\Components\MeshRenderer.cs" />
-    <Compile Include="Engine\Core\Interfaces\IComponent.cs" />
-    <Compile Include="Engine\Core\Render\Camera.cs" />
-    <Compile Include="Engine\Core\Render\CameraControllers\CameraController.cs" />
-    <Compile Include="Engine\Core\Render\CameraControllers\OrbitCameraController.cs" />
-    <Compile Include="Engine\Core\Render\Mesh.cs" />
-    <Compile Include="Engine\Core\Render\RenderControl.cs" />
-    <Compile Include="Engine\Core\Render\BaseShaderProgram.cs" />
-    <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderAttribute.cs" />
-    <Compile Include="Engine\Core\Render\ShaderPrograms\ShaderDefinition.cs" />
-    <Compile Include="Engine\Core\Render\ShaderPrograms\SimpleShader.cs" />
-    <Compile Include="Engine\Core\Render\ShaderPrograms\SkyboxShader.cs" />
-    <Compile Include="Engine\Core\Render\Skybox.cs" />
-    <Compile Include="Engine\Core\Render\Texture.cs" />
-    <Compile Include="Engine\Core\Render\Time.cs" />
-    <Compile Include="Engine\Core\RennEngine.cs" />
-    <Compile Include="Engine\Core\RennObject.cs" />
-    <Compile Include="Engine\Core\Scene\SceneManager.cs" />
-    <Compile Include="Engine\Core\Interfaces\IObjectsSetup.cs" />
-    <Compile Include="ObjectsSetups\PrimitiveMeshFactory.cs" />
+    <Compile Include="Engine\Components\Physic\IntersectionResult.cs" />
+    <Compile Include="Engine\Components\Render\InstanceRenderer.cs" />
+    <Compile Include="Engine\Components\Common\LoopRotation.cs" />
+    <Compile Include="Engine\Components\Render\MeshRenderer.cs" />
+    <Compile Include="Engine\Components\Render\ParticleEmitter.cs" />
+    <Compile Include="Engine\Components\Common\PathFollow.cs" />
+    <Compile Include="Engine\Components\Physic\Rigidbody.cs" />
+    <Compile Include="Engine\Components\Common\Selectable.cs" />
+    <Compile Include="Engine\Interfaces\IComponent.cs" />
+    <Compile Include="Engine\Interfaces\IUpdatableEnginePart.cs" />
+    <Compile Include="Engine\Render\Camera\Camera.cs" />
+    <Compile Include="Engine\Render\Camera\CameraController.cs" />
+    <Compile Include="Engine\Render\Camera\OrbitCameraController.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\InstanceShader.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\ParticleShader.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\ShadowsShader.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\DwarfishShader.cs" />
+    <Compile Include="Engine\Render\Utils\BufferObject.cs" />
+    <Compile Include="Engine\Render\Utils\FrameBufferObject.cs" />
+    <Compile Include="Engine\Render\Utils\Mesh.cs" />
+    <Compile Include="Engine\Render\RenderControl.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\BaseShaderProgram.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\ShaderAttribute.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\ShaderDefinition.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\SimpleShader.cs" />
+    <Compile Include="Engine\Render\ShaderPrograms\SkyboxShader.cs" />
+    <Compile Include="Engine\Render\Textures\Skybox.cs" />
+    <Compile Include="Engine\Render\Textures\Texture.cs" />
+    <Compile Include="Engine\Render\Utils\Time.cs" />
+    <Compile Include="Engine\Render\Utils\VertexArrayObject.cs" />
+    <Compile Include="Engine\RennEngine.cs" />
+    <Compile Include="Engine\RennObject.cs" />
+    <Compile Include="Engine\Scene\SceneManager.cs" />
+    <Compile Include="Engine\Interfaces\IObjectsSetup.cs" />
+    <Compile Include="ObjectsSetups\AutodromeObjectsSetup.cs" />
+    <Compile Include="ObjectsSetups\MeshFactories\CarsMeshFactory.cs" />
+    <Compile Include="ObjectsSetups\MeshFactories\EnvironmentMeshFactory.cs" />
+    <Compile Include="ObjectsSetups\MeshFactories\MeshFactory.cs" />
+    <Compile Include="ObjectsSetups\MeshFactories\SecurityStructuresMeshFactory.cs" />
+    <Compile Include="ObjectsSetups\MeshFactories\PrimitiveMeshFactory.cs" />
+    <Compile Include="ObjectsSetups\SecurityStructPlacerSetup.cs" />
     <Compile Include="ObjectsSetups\TestObjectsSetup.cs" />
-    <Compile Include="Engine\Core\Transform.cs" />
+    <Compile Include="Engine\Utils\Transform.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,16 +157,37 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include=".gitignore" />
-    <None Include="Engine\Core\Render\Shaders\baseFragmentShader.frag">
+    <None Include="Engine\Render\Shaders\DwarfishShader.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Engine\Core\Render\Shaders\baseVertexShader.vert">
+    <None Include="Engine\Render\Shaders\DwarfishShader.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Engine\Core\Render\Shaders\skyboxShader.frag">
+    <None Include="Engine\Render\Shaders\shadowsShader.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Engine\Core\Render\Shaders\skyboxShader.vert">
+    <None Include="Engine\Render\Shaders\shadowsShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\simpleShader.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\simpleShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\instanceShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\particleShader.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\particleShader.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\skyboxShader.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Render\Shaders\skyboxShader.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="OpenTK.dll.config" />
@@ -147,32 +212,88 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Engine\Utils\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Textures\ground.jpg">
+    <Content Include="Assets\Textures\Car\bronirovany.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Textures\skybox\back.png">
+    <Content Include="Assets\Textures\Car\car-chill-animation.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Textures\skybox\bottom.png">
+    </Content>
+    <Content Include="Assets\Textures\Car\car.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Textures\skybox\front.png">
+    </Content>
+    <Content Include="Assets\Textures\Car\wheel.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Textures\skybox\left.png">
+    </Content>
+    <Content Include="Assets\Textures\concrete.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Textures\skybox\right.png">
+    </Content>
+    <Content Include="Assets\Textures\container.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Textures\skybox\top.png">
+    </Content>
+    <Content Include="Assets\Textures\curb.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <Content Include="Textures\container.png">
+    </Content>
+    <Content Include="Assets\Textures\Environment\sponsors.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Environment\spruce.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\gravel.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\ground.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Maps\forest-map.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\Particles\smoke-puff.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\plastic.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\road.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\sand.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\skybox\back.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\skybox\bottom.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\skybox\front.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\skybox\left.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\skybox\right.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\skybox\top.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\barrier-icon.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\buffer-icon.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\conus-icon.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\fence-icon.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\map.jpg" />
+    <Content Include="Assets\UI\wheels-icon.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
